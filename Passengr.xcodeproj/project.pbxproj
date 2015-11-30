@@ -19,6 +19,7 @@
 		F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */; };
 		F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */; };
 		F776E6B01C0CEC4000A4D6FE /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AE1C0CEC4000A4D6FE /* Pass.swift */; };
+		F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -63,6 +64,7 @@
 		F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passengr.xcdatamodel; sourceTree = "<group>"; };
 		F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pass+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F776E6AE1C0CEC4000A4D6FE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
+		F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataSource.swift; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				F776E6AE1C0CEC4000A4D6FE /* Pass.swift */,
 				F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */,
 				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
+				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */,
 				F7C417751C065BE7009C5DA0 /* DetailViewController.swift in Sources */,
 				F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */,
+				F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */,
 				F7E4F1021C051C3D00071A37 /* PassViewController.swift in Sources */,
 				F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */,
 			);

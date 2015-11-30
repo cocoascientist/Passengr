@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+protocol ManagedObjectType {
+    static var entityName: String { get }
+}
+
 public func createMainContext() -> NSManagedObjectContext {
     let coordinator = NSPersistentStoreCoordinator.coordinatorWithModelName(applicationModelName())
     let context = NSManagedObjectContext.mainContextForCoordinator(coordinator)

@@ -14,7 +14,8 @@ import CoreData
 
 extension Pass {
 
-    @NSManaged var name: String?
-    @NSManaged var url: String?
-
+    @NSManaged var name: String
+    @NSManaged var url: String
+    @NSManaged var order: NSNumber
+    @NSManaged var enabled: NSNumber
 }

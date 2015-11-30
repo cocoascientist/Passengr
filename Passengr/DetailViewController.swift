@@ -14,10 +14,9 @@ class DetailViewController: UICollectionViewController {
     
     var indexPath = NSIndexPath(forRow: 0, inSection: 0)
     
-    private var passes: [String] {
-        return ["Blewett", "Cayuse", "Chinook", "Disautel", "Manastash", "Sherman", "Snoqualmie", "Stevens", "Wauconda", "White"]
+    private var passes: [Pass] {
+        return PassDataSource.sharedInstance.visiblePasses
     }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -72,7 +71,8 @@ class DetailViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
         
         if let cell = cell as? PassListCell {
-            cell.titleLabel.text = passes[indexPath.row]
+            let pass = passes[indexPath.row]
+            cell.titleLabel.text = pass.name
             cell.backgroundColor = UIColor.whiteColor()
         }
         
@@ -120,7 +120,8 @@ class DetailViewController: UICollectionViewController {
     // MARK: - Private
     
     private func setTitleTextFromIndexPath(indexPath: NSIndexPath) -> Void {
-        self.title = passes[indexPath.row]
+        let pass = passes[indexPath.row]
+        self.title = pass.name
     }
 }
 

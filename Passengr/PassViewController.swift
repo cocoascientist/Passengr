@@ -17,8 +17,8 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         case ShowEditView = "ShowEditView"
     }
     
-    private var passes: [String] {
-        return ["Blewett", "Cayuse", "Chinook", "Disautel", "Manastash", "Sherman", "Snoqualmie", "Stevens", "Wauconda", "White"]
+    private var passes: [Pass] {
+        return PassDataSource.sharedInstance.visiblePasses
     }
     
     override func awakeFromNib() {
@@ -69,7 +69,8 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
         
         if let cell = cell as? PassListCell {
-            cell.titleLabel.text = passes[indexPath.row]
+            let pass = passes[indexPath.row]
+            cell.titleLabel.text = pass.name
             cell.backgroundColor = UIColor.whiteColor()
         }
     

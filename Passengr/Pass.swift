@@ -15,3 +15,9 @@ class Pass: NSManagedObject {
 // Insert code here to add functionality to your managed object subclass
 
 }
+
+extension Pass: ManagedObjectType {
+    static var entityName: String {
+        return "Pass"
+    }
+}
