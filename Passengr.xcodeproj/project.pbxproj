@@ -192,11 +192,11 @@
 		F776E6A91C0CEBF400A4D6FE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */,
+				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
 				F776E6AE1C0CEC4000A4D6FE /* Pass.swift */,
+				F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */,
 				F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */,
 				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
-				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

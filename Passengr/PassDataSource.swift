@@ -9,10 +9,12 @@
 import Foundation
 import CoreData
 
-class PassDataSource {
+public let PassesDidChangeNotification = "PassesDidChangeNotification"
+
+class PassDataSource: NSObject {
     static let sharedInstance = PassDataSource()
     
-    let context = createMainContext()
+    private let context = createMainContext()
     
     var visiblePasses: [Pass] {
         return self.passes.filter { $0.enabled == true }
@@ -20,11 +22,35 @@ class PassDataSource {
     
     private(set) var passes: [Pass] = []
     
-    init() {
+    override init() {
+        self.passes = []
+        super.init()
+        
         self.passes = self.initialModel()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("reloadModel:"), name: NSManagedObjectContextDidSaveNotification, object: nil)
     }
     
-    lazy var seedDictionary: [String: String] = {
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - Public
+    
+    func saveDataStore() {
+        self.context.saveOrRollBack()
+    }
+    
+    // MARK: - Notifications
+    
+    func reloadModel(notification: NSNotification) {
+        self.passes = initialModel()
+        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+    }
+    
+    // MARK: - Private
+    
+    private lazy var seedDictionary: [String: String] = {
         return [
             "Blewett": "http://www.wsdot.com/traffic/passes/blewett/",
             "Manastash": "http://www.wsdot.com/traffic/passes/manastash/",
@@ -80,5 +106,6 @@ class PassDataSource {
         
         context.saveOrRollBack()
     }
+    
 }
  

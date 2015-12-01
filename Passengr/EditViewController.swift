@@ -51,7 +51,16 @@ class EditViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        // TODO: reorder passes
+        var passes = self.passes
+        
+        let pass = passes.removeAtIndex(sourceIndexPath.row)
+        passes.insert(pass, atIndex: destinationIndexPath.row)
+        
+        var order = 0
+        for pass in passes {
+            pass.order = order
+            order += 1
+        }
     }
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
@@ -65,17 +74,16 @@ class EditViewController: UITableViewController {
     // MARK: - Actions
 
     @IBAction func handleDoneButton(sender: AnyObject) {
-        PassDataSource.sharedInstance.context.saveOrRollBack()
-        
+        PassDataSource.sharedInstance.saveDataStore()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    @IBAction func handleEnableSwitchChange(sender: AnyObject) {
-        guard let enableSwitch = sender as? UISwitch else { return }
-        let index = enableSwitch.tag - 1
+    @IBAction func handleSwitchChange(sender: AnyObject) {
+        guard let swtch = sender as? UISwitch else { return }
+        let index = swtch.tag - 1
         let pass = self.passes[index]
         
-        pass.enabled = enableSwitch.on
+        pass.enabled = swtch.on
     }
     
     // MARK: - Private
@@ -91,7 +99,7 @@ class EditViewController: UITableViewController {
         
         swtch.tag = indexPath.row + 1
         swtch.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-        swtch.addTarget(self, action: "handleEnableSwitchChange:", forControlEvents: .ValueChanged)
+        swtch.addTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .ValueChanged)
         
         cell.contentView.addSubview(swtch)
         
