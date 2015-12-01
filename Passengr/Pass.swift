@@ -9,6 +9,14 @@
 import Foundation
 import CoreData
 
+struct PassInfoKeys {
+    static let Title = "title"
+    static let ReferenceURL = "referenceURL"
+    static let Conditions = "conditions"
+    static let Westbound = "westbound"
+    static let Eastbound = "eastbound"
+    static let LastUpdated = "last_updated"
+}
 
 class Pass: NSManagedObject {
 

@@ -22,6 +22,12 @@
 		F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
 		F776E6B81C0D56DC00A4D6FE /* HideDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */; };
 		F776E6B91C0D56DC00A4D6FE /* ShowDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */; };
+		F776E6BC1C0D587C00A4D6FE /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BA1C0D587C00A4D6FE /* Future.swift */; };
+		F776E6BD1C0D587C00A4D6FE /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BB1C0D587C00A4D6FE /* Result.swift */; };
+		F776E6BF1C0D588D00A4D6FE /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BE1C0D588D00A4D6FE /* NetworkController.swift */; };
+		F776E6C11C0D58A700A4D6FE /* Signaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C01C0D58A700A4D6FE /* Signaller.swift */; };
+		F776E6C31C0D58FB00A4D6FE /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C21C0D58FB00A4D6FE /* Parser.swift */; };
+		F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6CB1C0D59CA00A4D6FE /* HTML.swift */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -69,6 +75,13 @@
 		F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataSource.swift; sourceTree = "<group>"; };
 		F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideDetailAnimator.swift; sourceTree = "<group>"; };
 		F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetailAnimator.swift; sourceTree = "<group>"; };
+		F776E6BA1C0D587C00A4D6FE /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
+		F776E6BB1C0D587C00A4D6FE /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		F776E6BE1C0D588D00A4D6FE /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		F776E6C01C0D58A700A4D6FE /* Signaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signaller.swift; sourceTree = "<group>"; };
+		F776E6C21C0D58FB00A4D6FE /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parser.swift; path = Passengr/Parser.swift; sourceTree = "<group>"; };
+		F776E6CB1C0D59CA00A4D6FE /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTML.swift; path = Passengr/HTML.swift; sourceTree = "<group>"; };
+		F776E6CE1C0D5A6800A4D6FE /* Passengr-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Passengr-Bridging-Header.h"; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -129,9 +142,11 @@
 				F7754D681C0B4D350080D572 /* View */,
 				F7754D691C0B4D5C0080D572 /* Controller */,
 				F776E6A91C0CEBF400A4D6FE /* Model */,
+				F776E6CD1C0D5A0B00A4D6FE /* XML Object Mapping */,
 				F776E6B51C0D56CB00A4D6FE /* Animations */,
 				F7754D6B1C0B4DB10080D572 /* Layouts */,
 				F7754D6A1C0B4D820080D572 /* Types & Protocols */,
+				F776E6CE1C0D5A6800A4D6FE /* Passengr-Bridging-Header.h */,
 				F71B3FC91C038AD20012CD3D /* Main.storyboard */,
 				F71B3FCC1C038AD20012CD3D /* Assets.xcassets */,
 				F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */,
@@ -170,6 +185,7 @@
 		F7754D691C0B4D5C0080D572 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F776E6BE1C0D588D00A4D6FE /* NetworkController.swift */,
 				F7754D651C0AB8E00080D572 /* EditViewController.swift */,
 				F7E4F1011C051C3D00071A37 /* PassViewController.swift */,
 				F7C417741C065BE7009C5DA0 /* DetailViewController.swift */,
@@ -180,6 +196,8 @@
 		F7754D6A1C0B4D820080D572 /* Types & Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				F776E6BA1C0D587C00A4D6FE /* Future.swift */,
+				F776E6BB1C0D587C00A4D6FE /* Result.swift */,
 				F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */,
 			);
 			name = "Types & Protocols";
@@ -197,9 +215,10 @@
 		F776E6A91C0CEBF400A4D6FE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
 				F776E6AE1C0CEC4000A4D6FE /* Pass.swift */,
 				F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */,
+				F776E6C01C0D58A700A4D6FE /* Signaller.swift */,
+				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
 				F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */,
 				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
 			);
@@ -213,6 +232,16 @@
 				F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		F776E6CD1C0D5A0B00A4D6FE /* XML Object Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				F776E6CB1C0D59CA00A4D6FE /* HTML.swift */,
+				F776E6C21C0D58FB00A4D6FE /* Parser.swift */,
+			);
+			name = "XML Object Mapping";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,21 +376,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */,
 				F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */,
 				F7754D661C0AB8E00080D572 /* EditViewController.swift in Sources */,
+				F776E6BC1C0D587C00A4D6FE /* Future.swift in Sources */,
 				F776E6A81C0CEBC700A4D6FE /* CoreData+Extensions.swift in Sources */,
 				F7C417731C063E95009C5DA0 /* ListViewLayout.swift in Sources */,
 				F776E6B01C0CEC4000A4D6FE /* Pass.swift in Sources */,
 				F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */,
 				F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */,
+				F776E6BF1C0D588D00A4D6FE /* NetworkController.swift in Sources */,
 				F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */,
 				F7C417751C065BE7009C5DA0 /* DetailViewController.swift in Sources */,
 				F776E6B81C0D56DC00A4D6FE /* HideDetailAnimator.swift in Sources */,
+				F776E6C31C0D58FB00A4D6FE /* Parser.swift in Sources */,
 				F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */,
 				F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */,
 				F7E4F1021C051C3D00071A37 /* PassViewController.swift in Sources */,
+				F776E6BD1C0D587C00A4D6FE /* Result.swift in Sources */,
 				F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */,
 				F776E6B91C0D56DC00A4D6FE /* ShowDetailAnimator.swift in Sources */,
+				F776E6C11C0D58A700A4D6FE /* Signaller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,9 +487,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -490,8 +527,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-lxml2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -501,6 +540,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Passengr/Info.plist;
@@ -509,6 +549,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoascientist.Passengr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Passengr/Passengr-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -516,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Passengr/Info.plist;
@@ -524,6 +567,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoascientist.Passengr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Passengr/Passengr-Bridging-Header.h";
 			};
 			name = Release;
 		};
