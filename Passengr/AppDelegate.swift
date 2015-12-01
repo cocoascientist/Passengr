@@ -14,7 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
+        navController.delegate = self
+        
         return true
     }
 
@@ -43,3 +45,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UINavigationControllerDelegate {
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if let _ = toVC as? DetailViewController, let _ = fromVC as? PassViewController {
+            return ShowDetailAnimator()
+        }
+        else if let _ = fromVC as? DetailViewController, let _ = toVC as? PassViewController {
+            return HideDetailAnimator()
+        }
+        
+        return nil
+    }
+}

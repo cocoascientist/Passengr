@@ -20,6 +20,8 @@
 		F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */; };
 		F776E6B01C0CEC4000A4D6FE /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AE1C0CEC4000A4D6FE /* Pass.swift */; };
 		F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
+		F776E6B81C0D56DC00A4D6FE /* HideDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */; };
+		F776E6B91C0D56DC00A4D6FE /* ShowDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -65,6 +67,8 @@
 		F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pass+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F776E6AE1C0CEC4000A4D6FE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 		F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataSource.swift; sourceTree = "<group>"; };
+		F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideDetailAnimator.swift; sourceTree = "<group>"; };
+		F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetailAnimator.swift; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				F7754D681C0B4D350080D572 /* View */,
 				F7754D691C0B4D5C0080D572 /* Controller */,
 				F776E6A91C0CEBF400A4D6FE /* Model */,
+				F776E6B51C0D56CB00A4D6FE /* Animations */,
 				F7754D6B1C0B4DB10080D572 /* Layouts */,
 				F7754D6A1C0B4D820080D572 /* Types & Protocols */,
 				F71B3FC91C038AD20012CD3D /* Main.storyboard */,
@@ -199,6 +204,15 @@
 				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		F776E6B51C0D56CB00A4D6FE /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */,
+				F776E6B71C0D56DC00A4D6FE /* ShowDetailAnimator.swift */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,10 +356,12 @@
 				F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */,
 				F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */,
 				F7C417751C065BE7009C5DA0 /* DetailViewController.swift in Sources */,
+				F776E6B81C0D56DC00A4D6FE /* HideDetailAnimator.swift in Sources */,
 				F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */,
 				F776E6B21C0CEDDC00A4D6FE /* PassDataSource.swift in Sources */,
 				F7E4F1021C051C3D00071A37 /* PassViewController.swift in Sources */,
 				F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */,
+				F776E6B91C0D56DC00A4D6FE /* ShowDetailAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

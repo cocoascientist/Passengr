@@ -127,6 +127,6 @@ class DetailViewController: UICollectionViewController {
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return DetailViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
+        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
     }
 }
