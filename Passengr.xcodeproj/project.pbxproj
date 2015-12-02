@@ -13,9 +13,10 @@
 		F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */; };
 		F71B3FDB1C038AD20012CD3D /* PassengrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FDA1C038AD20012CD3D /* PassengrTests.swift */; };
 		F71B3FE61C038AD20012CD3D /* PassengrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FE51C038AD20012CD3D /* PassengrUITests.swift */; };
+		F757CBF31C0F7BB300319D26 /* PassDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF21C0F7BB300319D26 /* PassDataController.swift */; };
+		F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */; };
 		F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */; };
 		F7754D661C0AB8E00080D572 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7754D651C0AB8E00080D572 /* EditViewController.swift */; };
-		F776E6A81C0CEBC700A4D6FE /* CoreData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */; };
 		F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */; };
 		F776E6AF1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */; };
 		F776E6B01C0CEC4000A4D6FE /* Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AE1C0CEC4000A4D6FE /* Pass.swift */; };
@@ -68,9 +69,10 @@
 		F71B3FE11C038AD20012CD3D /* PassengrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PassengrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71B3FE51C038AD20012CD3D /* PassengrUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassengrUITests.swift; sourceTree = "<group>"; };
 		F71B3FE71C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F757CBF21C0F7BB300319D26 /* PassDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataController.swift; sourceTree = "<group>"; };
+		F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectType.swift; sourceTree = "<group>"; };
 		F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		F7754D651C0AB8E00080D572 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
-		F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
 		F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passengr.xcdatamodel; sourceTree = "<group>"; };
 		F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pass+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F776E6AE1C0CEC4000A4D6FE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				F776E6BA1C0D587C00A4D6FE /* Future.swift */,
 				F776E6BB1C0D587C00A4D6FE /* Result.swift */,
 				F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */,
+				F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */,
 			);
 			name = "Types & Protocols";
 			sourceTree = "<group>";
@@ -225,7 +228,7 @@
 				F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */,
 				F776E6C01C0D58A700A4D6FE /* Signaller.swift */,
 				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
-				F776E6A71C0CEBC700A4D6FE /* CoreData+Extensions.swift */,
+				F757CBF21C0F7BB300319D26 /* PassDataController.swift */,
 				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
 			);
 			name = Model;
@@ -383,17 +386,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */,
 				F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */,
 				F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */,
 				F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */,
 				F7754D661C0AB8E00080D572 /* EditViewController.swift in Sources */,
 				F776E6BC1C0D587C00A4D6FE /* Future.swift in Sources */,
-				F776E6A81C0CEBC700A4D6FE /* CoreData+Extensions.swift in Sources */,
 				F7C417731C063E95009C5DA0 /* ListViewLayout.swift in Sources */,
 				F776E6B01C0CEC4000A4D6FE /* Pass.swift in Sources */,
 				F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */,
 				F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */,
 				F776E6BF1C0D588D00A4D6FE /* NetworkController.swift in Sources */,
+				F757CBF31C0F7BB300319D26 /* PassDataController.swift in Sources */,
 				F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */,
 				F7C417751C065BE7009C5DA0 /* DetailViewController.swift in Sources */,
 				F776E6B81C0D56DC00A4D6FE /* HideDetailAnimator.swift in Sources */,

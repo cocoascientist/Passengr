@@ -12,11 +12,20 @@ private let reuseIdentifier = "Cell"
 
 class DetailViewController: UICollectionViewController {
     
+    var dataSource: PassDataSource?
+    
     var indexPath = NSIndexPath(forRow: 0, inSection: 0)
     
     private var passes: [Pass] {
-        return PassDataSource.sharedInstance.visiblePasses
+        guard let dataSource = dataSource else {
+            fatalError("data source is missing")
+        }
+        
+        return dataSource.visiblePasses
     }
+    
+    // MARK: - Lifecycle
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -30,8 +39,6 @@ class DetailViewController: UICollectionViewController {
         // Register cell classes
         let nib = UINib(nibName: "PassListCell", bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,22 +48,7 @@ class DetailViewController: UICollectionViewController {
         self.setTitleTextFromIndexPath(self.indexPath)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1

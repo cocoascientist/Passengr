@@ -12,23 +12,26 @@ import CoreData
 public let PassesDidChangeNotification = "PassesDidChangeNotification"
 
 class PassDataSource: NSObject {
-    static let sharedInstance = PassDataSource()
+    private let controller = PassDataController()
     
-    private let context = createMainContext()
+    var context: NSManagedObjectContext {
+        return controller.managedObjectContext
+    }
     
     var visiblePasses: [Pass] {
-        return self.passes.filter { $0.enabled == true }
+        return self.orderedPasses.filter { $0.enabled == true }
+    }
+    
+    var orderedPasses: [Pass] {
+        return self.passes.sort { Int($0.order) < Int($1.order) }
     }
     
     private(set) var passes: [Pass] = []
     
     override init() {
-        self.passes = []
         super.init()
         
-        self.passes = self.initialModel()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("reloadModel:"), name: NSManagedObjectContextDidSaveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("initializeModel:"), name: DataControllerInitializedNotification, object: nil)
     }
     
     deinit {
@@ -38,14 +41,20 @@ class PassDataSource: NSObject {
     // MARK: - Public
     
     func saveDataStore() {
-        self.context.saveOrRollBack()
+        do {
+            try context.save()
+            
+            
+        } catch {
+            print("error saving context: \(error)")
+            context.rollback()
+        }
     }
     
     // MARK: - Notifications
     
-    func reloadModel(notification: NSNotification) {
-        self.passes = initialModel()
-        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+    func initializeModel(notification: NSNotification) {
+        loadOrCreateInitialModel()
     }
     
     // MARK: - Private
@@ -61,30 +70,39 @@ class PassDataSource: NSObject {
         ]
     }()
     
-    private func initialModel() -> [Pass] {
-        do {
-            let request = NSFetchRequest(entityName: Pass.entityName)
-            
-            var results = try context.executeFetchRequest(request)
-            if results.count == 0 {
-                self.createInitialModel()
+    private func loadOrCreateInitialModel() {
+        self.context.performBlock { () -> Void in
+            do {
+                let request = NSFetchRequest(entityName: Pass.entityName)
                 
-                results = try context.executeFetchRequest(request)
-                assert(results.count > 0, "results should be greater than zero")
+                var results = try self.context.executeFetchRequest(request)
+                if results.count == 0 {
+                    self.createInitialModel()
+                    
+                    results = try self.context.executeFetchRequest(request)
+                    assert(results.count > 0, "results should be greater than zero")
+                }
+                
+                if self.context.hasChanges {
+                    self.saveDataStore()
+                }
+                
+                let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
+                let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
+                
+                guard let passes = array as? [Pass] else { return }
+                
+                // TODO: remove
+                assert(NSThread.isMainThread(), "expecting main thread")
+                
+                self.passes = passes
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
             }
-            
-            let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
-            let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
-            
-            guard let passes = array as? [Pass] else { return [] }
-            
-            return passes
+            catch {
+                print("error executing fetch request: \(error)")
+            }
         }
-        catch {
-            print("error executing fetch request: \(error)")
-        }
-        
-        return []
     }
     
     private func createInitialModel() {
@@ -103,8 +121,6 @@ class PassDataSource: NSObject {
             guard let url = seedDictionary[key] else { return }
             pass.url = url
         }
-        
-        context.saveOrRollBack()
     }
     
 }

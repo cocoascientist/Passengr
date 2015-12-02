@@ -12,17 +12,29 @@ private let reuseIdentifier = "PassEditCell"
 
 class EditViewController: UITableViewController {
     
+    var dataSource: PassDataSource?
+    
     private var passes: [Pass] {
-        return PassDataSource.sharedInstance.passes
+        guard let dataSource = dataSource else {
+            fatalError("data source is missing")
+        }
+        
+        return dataSource.orderedPasses
     }
-
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.title = NSLocalizedString("Edit Passes", comment: "Edit Passes")
         self.tableView.editing = true
+        
+        let nib = UINib(nibName: "PassEditCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: reuseIdentifier)
     }
 
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -33,17 +45,11 @@ class EditViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier)
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as? PassEditCell else { fatalError() }
         
-        if cell == nil {
-            cell = newCellForIndexPath(indexPath)
-        }
+        configureCell(cell, forIndexPath: indexPath)
         
-        guard let _ = cell else { fatalError() }
-        
-        configureCell(cell!, forIndexPath: indexPath)
-        
-        return cell!
+        return cell
     }
     
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -61,12 +67,16 @@ class EditViewController: UITableViewController {
             pass.order = order
             order += 1
         }
+        
+        dataSource?.saveDataStore()
     }
+    
+    // MARK: - UITableViewDelegate
     
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .None
     }
-    
+
     override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
@@ -74,44 +84,37 @@ class EditViewController: UITableViewController {
     // MARK: - Actions
 
     @IBAction func handleDoneButton(sender: AnyObject) {
-        PassDataSource.sharedInstance.saveDataStore()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        defer {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        guard let dataSource = dataSource else {
+            return }
+        
+        dataSource.saveDataStore()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
     }
 
     @IBAction func handleSwitchChange(sender: AnyObject) {
         guard let swtch = sender as? UISwitch else { return }
-        let index = swtch.tag - 1
-        let pass = self.passes[index]
+        let pass = self.passes[swtch.tag]
         
         pass.enabled = swtch.on
     }
     
     // MARK: - Private
     
-    private func newCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: reuseIdentifier)
-        
-        let swtch = UISwitch()
-        let switchSize = swtch.sizeThatFits(CGSizeZero)
-        swtch.frame = CGRectMake(cell.contentView.bounds.width - switchSize.width - 15.0,
-            (cell.contentView.bounds.height - switchSize.height) / 2.0,
-            switchSize.width, switchSize.height)
-        
-        swtch.tag = indexPath.row + 1
-        swtch.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-        swtch.addTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .ValueChanged)
-        
-        cell.contentView.addSubview(swtch)
-        
-        return cell
-    }
-    
     private func configureCell(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
-        let pass = passes[indexPath.row]
-        cell.textLabel?.text = pass.name
+        guard let cell = cell as? PassEditCell else { return }
         
-        if let swtch = cell.contentView.viewWithTag(indexPath.row + 1) as? UISwitch {
-            swtch.on = pass.enabled.boolValue
-        }
+        let pass = passes[indexPath.row]
+        cell.titleLabel.text = pass.name
+        cell.swtch.tag = indexPath.row
+        cell.swtch.on = pass.enabled.boolValue
+
+        cell.swtch.removeTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .TouchUpInside)
+        cell.swtch.addTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .TouchUpInside)
     }
 }

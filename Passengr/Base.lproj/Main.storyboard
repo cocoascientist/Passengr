@@ -25,9 +25,10 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="uDK-DV-tq3">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="217-fR-oA9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="67D-Th-Lm1">
                             <connections>
-                                <segue destination="3Q2-hg-rm1" kind="presentation" identifier="ShowEditView" modalTransitionStyle="flipHorizontal" id="MRv-dr-sAY"/>
+                                <action selector="handleEditButton:" destination="LAc-g3-Xi3" id="7Qa-yx-heX"/>
+                                <segue destination="3Q2-hg-rm1" kind="presentation" identifier="ShowEditView" modalTransitionStyle="flipHorizontal" id="3gV-5i-ctu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -12,10 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let dataSource = PassDataSource()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
-        navController.delegate = self
+//        navController.delegate = self
+        
+        guard let viewController = navController.childViewControllers.first as? PassViewController else { return false }
+        viewController.dataSource = dataSource
         
         return true
     }
