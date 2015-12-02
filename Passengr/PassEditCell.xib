@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="PassEditCell" customModule="Passengr" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2z-ZR-HG5">
+                        <rect key="frame" x="16" y="11.5" width="42" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZGz-4U-Lbb">
+                        <rect key="frame" x="247" y="6" width="51" height="31"/>
+                    </switch>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ZGz-4U-Lbb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="A4O-px-n5c"/>
+                    <constraint firstItem="ZGz-4U-Lbb" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-16" id="Ezz-cF-o0g"/>
+                    <constraint firstItem="R2z-ZR-HG5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PcR-d0-InJ"/>
+                    <constraint firstItem="R2z-ZR-HG5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="bu3-YX-s4O"/>
+                    <constraint firstItem="ZGz-4U-Lbb" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="16" id="jHY-Gt-GeC"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ZGz-4U-Lbb" secondAttribute="trailing" constant="16" id="vtT-bQ-kSy"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="Ezz-cF-o0g"/>
+                        <exclude reference="jHY-Gt-GeC"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="swtch" destination="ZGz-4U-Lbb" id="ile-El-ozM"/>
+                <outlet property="textLabel" destination="R2z-ZR-HG5" id="0Wn-Go-Wyx"/>
+                <outlet property="titleLabel" destination="R2z-ZR-HG5" id="Dx5-d8-eYd"/>
+            </connections>
+            <point key="canvasLocation" x="595" y="754"/>
+        </tableViewCell>
+    </objects>
+</document>

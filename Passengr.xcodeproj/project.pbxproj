@@ -28,6 +28,8 @@
 		F776E6C11C0D58A700A4D6FE /* Signaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C01C0D58A700A4D6FE /* Signaller.swift */; };
 		F776E6C31C0D58FB00A4D6FE /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C21C0D58FB00A4D6FE /* Parser.swift */; };
 		F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6CB1C0D59CA00A4D6FE /* HTML.swift */; };
+		F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */; };
+		F77B23CE1C0E3E81006EFBA4 /* PassEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -82,6 +84,8 @@
 		F776E6C21C0D58FB00A4D6FE /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parser.swift; path = Passengr/Parser.swift; sourceTree = "<group>"; };
 		F776E6CB1C0D59CA00A4D6FE /* HTML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTML.swift; path = Passengr/HTML.swift; sourceTree = "<group>"; };
 		F776E6CE1C0D5A6800A4D6FE /* Passengr-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Passengr-Bridging-Header.h"; sourceTree = "<group>"; };
+		F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassEditCell.swift; sourceTree = "<group>"; };
+		F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassEditCell.xib; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 			children = (
 				F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */,
 				F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */,
+				F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */,
+				F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -349,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */,
+				F77B23CE1C0E3E81006EFBA4 /* PassEditCell.xib in Resources */,
 				F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */,
 				F71B3FCD1C038AD20012CD3D /* Assets.xcassets in Resources */,
 				F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */,
@@ -376,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */,
 				F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */,
 				F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */,
 				F7754D661C0AB8E00080D572 /* EditViewController.swift in Sources */,
