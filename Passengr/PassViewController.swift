@@ -42,7 +42,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Passes"
+        self.title = NSLocalizedString("Passes", comment: "Passes")
 
         // Register cell classes
         let nib = UINib(nibName: "PassListCell", bundle: nil)
@@ -99,6 +99,12 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let identifier = SegueIdentifier.ShowDetailView.rawValue
         self.performSegueWithIdentifier(identifier, sender: nil)
     }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
+    }
 
     // MARK: - Notifications
     
@@ -108,12 +114,5 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     func handlePassesChange(notification: NSNotification) {
         self.collectionView?.reloadData()
-    }
-
-}
-
-extension PassViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
     }
 }
