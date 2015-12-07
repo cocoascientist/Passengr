@@ -1,5 +1,5 @@
 //
-//  PASSignaller.swift
+//  PassSignaller.swift
 //  Passengr
 //
 //  Created by Andrew Shepard on 11/14/15.
@@ -8,14 +8,13 @@
 
 import Foundation
 
-typealias PassInfo = [String: String]
-
 typealias PassFuture = Future<PassInfo, PassError>
 typealias PassesFuture = Future<[PassInfo], PassError>
 
-class Signaller {
+class PassSignaller {
     
     let controller = NetworkController()
+    private var error: PassError? = nil
     
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
@@ -25,16 +24,16 @@ class Signaller {
             let group = dispatch_group_create()
             var updates: [PassInfo] = []
             
-            infos.forEach { (info) -> () in
+            for info in infos {
                 dispatch_group_enter(group)
                 
                 self.futureForPassInfo(info).start({ (result) -> () in
                     switch result {
                     case .Success(let info):
                         updates.append(info)
-                    case .Failure:
-                        // TODO: handle error
-                        print("error")
+                    case .Failure(let error):
+                        self.error = error
+                        print("error loading pass info: \(error)")
                     }
                     
                     dispatch_group_leave(group)
@@ -43,7 +42,10 @@ class Signaller {
             
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_group_notify(group, queue) { () -> Void in
-                if updates.count == 0 {
+                if let error = self.error {
+                    completion(Result.Failure(error))
+                }
+                else if updates.count == 0 {
                     completion(Result.Failure(PassError.NoData))
                 }
                 else {
@@ -51,6 +53,8 @@ class Signaller {
                 }
             }
         }
+        
+        self.error = nil
         
         return future
     }
@@ -74,8 +78,8 @@ class Signaller {
                 case .Success(let data):
                     let info = self.passInfoFromData(data, info: info)
                     completion(Result.Success(info))
-                case .Failure:
-                    completion(Result.Failure(PassError.NoData))
+                case .Failure(let error):
+                    completion(Result.Failure(PassError(error: error)))
                 }
             }
         }
@@ -94,4 +98,16 @@ class Signaller {
 
 enum PassError: ErrorType {
     case NoData
+    case Offline
+}
+
+extension PassError {
+    init(error: TaskError) {
+        switch error {
+        case .Offline:
+            self = PassError.Offline
+        default:
+            self = PassError.NoData
+        }
+    }
 }
