@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 public typealias TaskResult = Result<NSData, TaskError>
 public typealias TaskFuture = Future<NSData, TaskError>
 public typealias TaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
 
-public class NetworkController {
+public class NetworkController: Reachable {
     
     private let configuration: NSURLSessionConfiguration
     
@@ -78,7 +79,13 @@ public class NetworkController {
             let session = NSURLSession(configuration: configuration, delegate: delegate, delegateQueue: NSOperationQueue.mainQueue())
             let task = session.dataTaskWithRequest(request, completionHandler: completion)
             
-            task.resume()
+            switch self.reachable {
+            case .Online:
+                task.resume()
+                session.finishTasksAndInvalidate()
+            case .Offline:
+                fulfill(result: .Failure(.Offline))
+            }
         }
         
         return future
@@ -86,6 +93,7 @@ public class NetworkController {
 }
 
 public enum TaskError: ErrorType {
+    case Offline
     case NoData
     case BadResponse
     case BadStatusCode(Int)

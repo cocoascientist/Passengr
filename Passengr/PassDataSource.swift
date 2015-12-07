@@ -11,8 +11,11 @@ import CoreData
 
 public let PassesDidChangeNotification = "PassesDidChangeNotification"
 
+typealias PassUpdatesFuture = Future<[Pass], PassError>
+
 class PassDataSource: NSObject {
     private let controller = PassDataController()
+    private let signaller = PassSignaller()
     
     var context: NSManagedObjectContext {
         return controller.managedObjectContext
@@ -51,6 +54,40 @@ class PassDataSource: NSObject {
         }
     }
     
+    func futureForPassUpdates() -> PassUpdatesFuture {
+        
+        let future: PassUpdatesFuture = Future() { completion in
+            let success: ([PassInfo]) -> Void = { info in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    let passes = self.passesFromPassInfoUpdates(info)
+                    self.passes = passes
+                    
+                    self.saveDataStore()
+                })
+            }
+            
+            let failure: (PassError) -> Void = { error in
+                completion(Result.Failure(error))
+            }
+            
+            let infos = self.passes.map { (pass) -> PassInfo in
+                return pass.passInfo
+            }
+            
+            self.signaller.futureForPassesInfo(infos).start { (result) -> () in
+                switch result {
+                case .Success(let infos):
+                    success(infos)
+                case .Failure(let error):
+                    failure(error)
+                }
+            }
+        }
+        
+        return future
+    }
+    
     // MARK: - Notifications
     
     func initializeModel(notification: NSNotification) {
@@ -59,16 +96,31 @@ class PassDataSource: NSObject {
     
     // MARK: - Private
     
-    private lazy var seedDictionary: [String: String] = {
-        return [
-            "Blewett": "http://www.wsdot.com/traffic/passes/blewett/",
-            "Manastash": "http://www.wsdot.com/traffic/passes/manastash/",
-            "Snoqualmie": "http://www.wsdot.com/traffic/passes/snoqualmie/",
-            "Status": "http://www.wsdot.com/traffic/passes/satus/",
-            "Stevens": "http://www.wsdot.com/traffic/passes/stevens/",
-            "White": "http://www.wsdot.com/traffic/passes/white/"
-        ]
-    }()
+    private func passesFromPassInfoUpdates(updates: [PassInfo]) -> [Pass] {
+        
+        let passes = updates.flatMap { (passInfo) -> Pass? in
+            guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
+            
+            let request = NSFetchRequest(entityName: Pass.entityName)
+            request.predicate = NSPredicate(format: "%K = %@", "name", name)
+            
+            do {
+                let results = try self.context.executeFetchRequest(request)
+                guard let pass = results.first as? Pass else { fatalError() }
+                
+                pass.updateUsingPassInfo(passInfo)
+                
+                return pass
+            }
+            catch {
+                print("error executing fetch request: \(error)")
+            }
+            
+            return nil
+        }
+        
+        return passes
+    }
     
     private func loadOrCreateInitialModel() {
         self.context.performBlock { () -> Void in
@@ -97,6 +149,15 @@ class PassDataSource: NSObject {
                 
                 self.passes = passes
                 
+                self.futureForPassUpdates().start { (result) -> () in
+                    switch result {
+                    case .Success:
+                        print("data source says passes updated")
+                    case .Failure(let error):
+                        print("data source says error updating passes: \(error)")
+                    }
+                }
+                
                 NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
             }
             catch {
@@ -123,5 +184,15 @@ class PassDataSource: NSObject {
         }
     }
     
+    private lazy var seedDictionary: [String: String] = {
+        return [
+            "Blewett": "http://www.wsdot.com/traffic/passes/blewett/",
+            "Manastash": "http://www.wsdot.com/traffic/passes/manastash/",
+            "Snoqualmie": "http://www.wsdot.com/traffic/passes/snoqualmie/",
+            "Status": "http://www.wsdot.com/traffic/passes/satus/",
+            "Stevens": "http://www.wsdot.com/traffic/passes/stevens/",
+            "White": "http://www.wsdot.com/traffic/passes/white/"
+        ]
+    }()
 }
  

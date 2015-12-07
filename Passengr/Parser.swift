@@ -23,16 +23,12 @@ class Parser {
         let doc = HTMLDoc(data: data)
         guard let root = doc.root else { return [:] }
         
-        for node in root.childrenOf() {
-            print("node: \(node.nodeValue)")
-        }
-
         var info: [String: String] = [:]
         Parser.queries.forEach { (key, xpath) -> () in
             guard let value = root.xpath(xpath).first?.nodeValue else { return }
             info[key] = value
         }
-
+        
         return info
     }
 }
