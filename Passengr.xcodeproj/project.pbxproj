@@ -32,6 +32,8 @@
 		F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */; };
 		F77B23CE1C0E3E81006EFBA4 /* PassEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */; };
 		F78487561C162B78004667BD /* PassInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78487551C162B78004667BD /* PassInfoType.swift */; };
+		F79007A51C164F63008C2092 /* PassDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79007A31C164F63008C2092 /* PassDetailCell.swift */; };
+		F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79007A41C164F63008C2092 /* PassDetailCell.xib */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -91,6 +93,8 @@
 		F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassEditCell.swift; sourceTree = "<group>"; };
 		F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassEditCell.xib; sourceTree = "<group>"; };
 		F78487551C162B78004667BD /* PassInfoType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassInfoType.swift; sourceTree = "<group>"; };
+		F79007A31C164F63008C2092 /* PassDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDetailCell.swift; sourceTree = "<group>"; };
+		F79007A41C164F63008C2092 /* PassDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassDetailCell.xib; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -149,9 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				F71B3FC51C038AD20012CD3D /* AppDelegate.swift */,
+				F776E6A91C0CEBF400A4D6FE /* Model */,
 				F7754D681C0B4D350080D572 /* View */,
 				F7754D691C0B4D5C0080D572 /* Controller */,
-				F776E6A91C0CEBF400A4D6FE /* Model */,
 				F776E6CD1C0D5A0B00A4D6FE /* XML Object Mapping */,
 				F776E6B51C0D56CB00A4D6FE /* Animations */,
 				F7754D6B1C0B4DB10080D572 /* Layouts */,
@@ -186,6 +190,8 @@
 		F7754D681C0B4D350080D572 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F79007A31C164F63008C2092 /* PassDetailCell.swift */,
+				F79007A41C164F63008C2092 /* PassDetailCell.xib */,
 				F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */,
 				F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */,
 				F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */,
@@ -366,6 +372,7 @@
 				F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */,
 				F77B23CE1C0E3E81006EFBA4 /* PassEditCell.xib in Resources */,
 				F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */,
+				F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */,
 				F71B3FCD1C038AD20012CD3D /* Assets.xcassets in Resources */,
 				F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */,
 			);
@@ -393,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */,
+				F79007A51C164F63008C2092 /* PassDetailCell.swift in Sources */,
 				F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */,
 				F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */,
 				F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */,
