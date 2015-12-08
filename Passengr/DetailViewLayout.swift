@@ -15,10 +15,10 @@ class DetailViewLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         
-        self.minimumInteritemSpacing = 10.0
-        self.minimumLineSpacing = (padding * 2.0)
+        self.minimumInteritemSpacing = 0.0
+        self.minimumLineSpacing = 30.0
         self.scrollDirection = .Horizontal
-        self.sectionInset = UIEdgeInsetsMake(0.0, padding, 0.0, padding)
+        self.sectionInset = UIEdgeInsetsMake(8.0, 15.0, 0.0, 15.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,8 +46,8 @@ class DetailViewLayout: UICollectionViewFlowLayout {
 
 extension DetailViewLayout {
     class func detailLayoutItemSizeForBounds(bounds: CGRect) -> CGSize {
-        let width = CGRectGetWidth(bounds) - (padding * 2.0)
-        let height = CGRectGetHeight(bounds) - 80.0
+        let width = CGRectGetWidth(bounds) - 30.0
+        let height = CGRectGetHeight(bounds) - 158.0
         
         return CGSizeMake(width, height)
     }

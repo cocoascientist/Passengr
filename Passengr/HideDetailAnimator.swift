@@ -9,7 +9,7 @@
 import UIKit
 
 class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    private let duration = 1.0
+    private let duration = 0.75
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return duration
@@ -42,7 +42,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let firstRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, destinationRect.size.height)
         let secondRect = destinationRect
         
-        let insets = UIEdgeInsets(top: 80.0, left: 0.0, bottom: 5.0, right: 0.0)
+        let insets = UIEdgeInsets(top: 73.0, left: 0.0, bottom: 1.0, right: 0.0)
         let snapshot = fromCollectionView.resizableSnapshotViewFromRect(snapshotRect, afterScreenUpdates: false, withCapInsets: insets)
         snapshot.frame = containerView.convertRect(originRect, fromView: fromCollectionView)
         

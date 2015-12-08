@@ -15,7 +15,7 @@ class ListViewLayout: UICollectionViewFlowLayout {
         self.minimumInteritemSpacing = 10.0
         self.minimumLineSpacing = 10.0
         self.scrollDirection = .Vertical
-        self.sectionInset = UIEdgeInsetsMake(8.0, 0.0, 8.0, 0.0)
+        self.sectionInset = UIEdgeInsetsMake(8.0, 0.0, 0.0, 0.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
