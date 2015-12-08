@@ -42,15 +42,24 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = NSLocalizedString("Passes", comment: "Passes")
+        self.title = NSLocalizedString("Cascade Passes", comment: "Cascade Passes")
+        self.collectionView?.backgroundColor = AppStyle.lightBlueColor
+        
+        let buttonTite = NSLocalizedString("Back", comment: "Back")
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 
         // Register cell classes
-        let nib = UINib(nibName: "PassListCell", bundle: nil)
+        let nib = UINib(nibName: PassListCell.identifier, bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesChange:"), name: PassesDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesError:"), name: PassesErrorNotification, object: nil)
+        
+        refreshControl.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.backgroundColor = UIColor.clearColor()
+        self.collectionView?.addSubview(refreshControl)
+        
+        self.collectionView?.alwaysBounceVertical = true
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -122,13 +131,13 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         cell.backgroundColor = UIColor.whiteColor()
         
         if pass.open {
-            cell.statusView.backgroundColor = UIColor.greenColor()
+            cell.statusView.backgroundColor = AppStyle.greenColor
         }
         else if pass.closed {
-            cell.statusView.backgroundColor = UIColor.redColor()
+            cell.statusView.backgroundColor = AppStyle.redColor
         }
         else {
-            cell.statusView.backgroundColor = UIColor.orangeColor()
+            cell.statusView.backgroundColor = AppStyle.orangeColor
         }
     }
 }

@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
-//        navController.delegate = self
+        navController.delegate = self
+        
+        let attributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        
+        UINavigationBar.appearance().barTintColor = AppStyle.forestGreenColor
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
         guard let viewController = navController.childViewControllers.first as? PassViewController else { return false }
         viewController.dataSource = dataSource

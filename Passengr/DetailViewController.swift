@@ -35,9 +35,11 @@ class DetailViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.collectionView?.backgroundColor = AppStyle.lightBlueColor        
 
         // Register cell classes
-        let nib = UINib(nibName: "PassDetailCell", bundle: nil)
+        let nib = UINib(nibName: PassDetailCell.identifier, bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -53,7 +55,6 @@ class DetailViewController: UICollectionViewController {
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
-
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.passes.count
@@ -98,13 +99,13 @@ class DetailViewController: UICollectionViewController {
         cell.lastUpdatedLabel.text = self.dateFormatter.stringFromDate(pass.lastModified)
         
         if pass.open {
-            cell.statusView.backgroundColor = UIColor.greenColor()
+            cell.statusView.backgroundColor = AppStyle.greenColor
         }
         else if pass.closed {
-            cell.statusView.backgroundColor = UIColor.redColor()
+            cell.statusView.backgroundColor = AppStyle.redColor
         }
         else {
-            cell.statusView.backgroundColor = UIColor.orangeColor()
+            cell.statusView.backgroundColor = AppStyle.orangeColor
         }
     }
     
