@@ -110,6 +110,11 @@ class PassDataSource: NSObject {
                 
                 pass.updateUsingPassInfo(passInfo)
                 
+                guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
+                guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
+                
+                pass.lastModified = lastModified
+                
                 return pass
             }
             catch {
@@ -183,6 +188,13 @@ class PassDataSource: NSObject {
             pass.url = url
         }
     }
+    
+    private lazy var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        formatter.dateFormat = "EEEE MMMM d, yyyy hh:mm a"
+        return formatter
+    }()
     
     private lazy var seedDictionary: [String: String] = {
         return [

@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "PassListCell"
 
 class PassViewController: UICollectionViewController, SegueHandlerType {
     
@@ -84,11 +84,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
         
-        if let cell = cell as? PassListCell {
-            let pass = passes[indexPath.row]
-            cell.titleLabel.text = pass.name
-            cell.backgroundColor = UIColor.whiteColor()
-        }
+        configureCell(cell, forIndexPath: indexPath)
     
         return cell
     }
@@ -114,5 +110,25 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     func handlePassesChange(notification: NSNotification) {
         self.collectionView?.reloadData()
+    }
+    
+    // MARK: - Private
+    
+    func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+        guard let cell = cell as? PassListCell else { return }
+        
+        let pass = passes[indexPath.row]
+        cell.titleLabel.text = pass.name
+        cell.backgroundColor = UIColor.whiteColor()
+        
+        if pass.open {
+            cell.statusView.backgroundColor = UIColor.greenColor()
+        }
+        else if pass.closed {
+            cell.statusView.backgroundColor = UIColor.redColor()
+        }
+        else {
+            cell.statusView.backgroundColor = UIColor.orangeColor()
+        }
     }
 }

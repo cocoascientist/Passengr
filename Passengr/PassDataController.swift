@@ -32,8 +32,9 @@ class PassDataController: NSObject {
             let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
             let docURL = urls[urls.endIndex - 1]
             let storeURL = docURL.URLByAppendingPathComponent("\(modelName).sqlite")
+            let options = [NSMigratePersistentStoresAutomaticallyOption: NSNumber(bool: true), NSInferMappingModelAutomaticallyOption: NSNumber(bool: true)]
             do {
-                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(DataControllerInitializedNotification, object: nil)
             }

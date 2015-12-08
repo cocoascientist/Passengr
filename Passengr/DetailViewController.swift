@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "PassDetailCell"
 
 class DetailViewController: UICollectionViewController {
     
@@ -37,7 +37,7 @@ class DetailViewController: UICollectionViewController {
         super.viewDidLoad()
 
         // Register cell classes
-        let nib = UINib(nibName: "PassListCell", bundle: nil)
+        let nib = UINib(nibName: "PassDetailCell", bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -62,11 +62,7 @@ class DetailViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
         
-        if let cell = cell as? PassListCell {
-            let pass = passes[indexPath.row]
-            cell.titleLabel.text = pass.name
-            cell.backgroundColor = UIColor.whiteColor()
-        }
+        configureCell(cell, forIndexPath: indexPath)
         
         return cell
     }
@@ -90,4 +86,31 @@ class DetailViewController: UICollectionViewController {
         let pass = passes[indexPath.row]
         self.title = pass.name
     }
+    
+    private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+        guard let cell = cell as? PassDetailCell else { return }
+        let pass = passes[indexPath.row]
+        cell.titleLabel.text = pass.name
+        
+        cell.conditionsLabel.text = pass.conditions
+        cell.eastboundLabel.text = pass.eastbound
+        cell.westboundLabel.text = pass.westbound
+        cell.lastUpdatedLabel.text = self.dateFormatter.stringFromDate(pass.lastModified)
+        
+        if pass.open {
+            cell.statusView.backgroundColor = UIColor.greenColor()
+        }
+        else if pass.closed {
+            cell.statusView.backgroundColor = UIColor.redColor()
+        }
+        else {
+            cell.statusView.backgroundColor = UIColor.orangeColor()
+        }
+    }
+    
+    private lazy var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
+        return formatter
+    }()
 }
