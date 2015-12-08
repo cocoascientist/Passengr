@@ -40,6 +40,15 @@ class PassDetailCell: UICollectionViewCell {
         self.lastUpdatedLabel.text = ""
     }
     
+    override func drawRect(rect: CGRect) {
+        UIColor.lightGrayColor().setStroke()
+        UIBezierPath(rect: rect).stroke()
+    }
+    
+    static var identifier: String {
+        return "PassDetailCell"
+    }
+    
     func setup() {
         self.titleLabel.numberOfLines = 0
         self.titleLabel.preferredMaxLayoutWidth = 280.0
@@ -57,6 +66,7 @@ class PassDetailCell: UICollectionViewCell {
         
         self.lastUpdatedLabel.textColor = UIColor.lightGrayColor()
         
-        self.containerView.backgroundColor = UIColor.whiteColor()
+        self.containerView.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.whiteColor()
     }
 }

@@ -23,4 +23,8 @@ class PassEditCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    static var identifier: String {
+        return "PassEditCell"
+    }
 }

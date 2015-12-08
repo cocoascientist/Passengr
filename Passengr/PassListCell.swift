@@ -22,6 +22,15 @@ class PassListCell: UICollectionViewCell {
         self.titleLabel.text = ""
     }
     
+    override func drawRect(rect: CGRect) {
+        UIColor.lightGrayColor().setStroke()
+        UIBezierPath(rect: rect).stroke()
+    }
+    
+    static var identifier: String {
+        return "PassListCell"
+    }
+    
     func setup() {
         self.backgroundColor = UIColor.whiteColor()
     }

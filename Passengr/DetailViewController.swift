@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "PassDetailCell"
+private let reuseIdentifier = PassDetailCell.identifier
 
 class DetailViewController: UICollectionViewController {
     

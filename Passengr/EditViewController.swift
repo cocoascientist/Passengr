@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "PassEditCell"
+private let reuseIdentifier = PassEditCell.identifier
 
 class EditViewController: UITableViewController {
     
@@ -30,7 +30,7 @@ class EditViewController: UITableViewController {
         self.title = NSLocalizedString("Edit Passes", comment: "Edit Passes")
         self.tableView.editing = true
         
-        let nib = UINib(nibName: "PassEditCell", bundle: nil)
+        let nib = UINib(nibName: PassEditCell.identifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: reuseIdentifier)
     }
 
@@ -67,8 +67,6 @@ class EditViewController: UITableViewController {
             pass.order = order
             order += 1
         }
-        
-        dataSource?.saveDataStore()
     }
     
     // MARK: - UITableViewDelegate
@@ -84,17 +82,10 @@ class EditViewController: UITableViewController {
     // MARK: - Actions
 
     @IBAction func handleDoneButton(sender: AnyObject) {
-        
-        defer {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        guard let dataSource = dataSource else {
-            return }
+        defer { self.dismissViewControllerAnimated(true, completion: nil) }
+        guard let dataSource = dataSource else { return }
         
         dataSource.saveDataStore()
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
     }
 
     @IBAction func handleSwitchChange(sender: AnyObject) {
