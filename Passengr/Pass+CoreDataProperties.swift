@@ -16,6 +16,13 @@ extension Pass {
 
     @NSManaged var name: String
     @NSManaged var url: String
+    
+    @NSManaged var conditions: String
+    @NSManaged var eastbound: String
+    @NSManaged var westbound: String
+    
     @NSManaged var order: NSNumber
     @NSManaged var enabled: NSNumber
+    
+    @NSManaged var lastModified: NSDate
 }

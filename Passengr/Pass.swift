@@ -11,8 +11,25 @@ import CoreData
 
 class Pass: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
+    var open: Bool {
+        let westboundString = self.westbound as NSString
+        let westboundOpen = westboundString.rangeOfString("no restrictions", options: .CaseInsensitiveSearch).location != NSNotFound
+        
+        let eastboundString = self.eastbound as NSString
+        let eastboundOpen = eastboundString.rangeOfString("no restrictions", options: .CaseInsensitiveSearch).location != NSNotFound
+        
+        return westboundOpen && eastboundOpen
+    }
+    
+    var closed: Bool {
+        let westboundString = self.westbound as NSString
+        let westboundClosed = westboundString.rangeOfString("pass closed", options: .CaseInsensitiveSearch).location != NSNotFound
+        
+        let eastboundString = self.eastbound as NSString
+        let eastboundClosed = eastboundString.rangeOfString("pass closed", options: .CaseInsensitiveSearch).location != NSNotFound
+        
+        return eastboundClosed || westboundClosed
+    }
 }
 
 extension Pass: ManagedObjectType {
@@ -30,11 +47,11 @@ extension Pass: PassInfoType {
     }
     
     func updateUsingPassInfo(info: [String: String]) {
-        self.name = info[PassInfoKeys.Title] ?? "Missing Title"
+        self.name = info[PassInfoKeys.Title] ?? ""
         self.url = info[PassInfoKeys.ReferenceURL] ?? ""
         
-        let conditions = info[PassInfoKeys.Conditions] ?? ""
-        
-        print("\(name): \(conditions)")
+        self.conditions = info[PassInfoKeys.Conditions] ?? ""
+        self.westbound = info[PassInfoKeys.Westbound] ?? ""
+        self.eastbound = info[PassInfoKeys.Eastbound] ?? ""
     }
 }
