@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FC51C038AD20012CD3D /* AppDelegate.swift */; };
 		F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FC91C038AD20012CD3D /* Main.storyboard */; };
-		F71B3FCD1C038AD20012CD3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCC1C038AD20012CD3D /* Assets.xcassets */; };
 		F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */; };
 		F71B3FDB1C038AD20012CD3D /* PassengrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FDA1C038AD20012CD3D /* PassengrTests.swift */; };
 		F71B3FE61C038AD20012CD3D /* PassengrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FE51C038AD20012CD3D /* PassengrUITests.swift */; };
@@ -34,6 +33,8 @@
 		F78487561C162B78004667BD /* PassInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78487551C162B78004667BD /* PassInfoType.swift */; };
 		F79007A51C164F63008C2092 /* PassDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79007A31C164F63008C2092 /* PassDetailCell.swift */; };
 		F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79007A41C164F63008C2092 /* PassDetailCell.xib */; };
+		F794A68F1C172F96008AD135 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F794A68E1C172F96008AD135 /* Styles.swift */; };
+		F794A6931C174785008AD135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F794A6921C174785008AD135 /* Assets.xcassets */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
@@ -64,7 +65,6 @@
 		F71B3FC21C038AD20012CD3D /* Passengr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passengr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71B3FC51C038AD20012CD3D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F71B3FCA1C038AD20012CD3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F71B3FCC1C038AD20012CD3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F71B3FCF1C038AD20012CD3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F71B3FD11C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F71B3FD61C038AD20012CD3D /* PassengrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PassengrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +95,8 @@
 		F78487551C162B78004667BD /* PassInfoType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassInfoType.swift; sourceTree = "<group>"; };
 		F79007A31C164F63008C2092 /* PassDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDetailCell.swift; sourceTree = "<group>"; };
 		F79007A41C164F63008C2092 /* PassDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassDetailCell.xib; sourceTree = "<group>"; };
+		F794A68E1C172F96008AD135 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		F794A6921C174785008AD135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -162,8 +164,8 @@
 				F7754D6A1C0B4D820080D572 /* Types & Protocols */,
 				F776E6CE1C0D5A6800A4D6FE /* Passengr-Bridging-Header.h */,
 				F71B3FC91C038AD20012CD3D /* Main.storyboard */,
-				F71B3FCC1C038AD20012CD3D /* Assets.xcassets */,
 				F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */,
+				F794A6921C174785008AD135 /* Assets.xcassets */,
 				F71B3FD11C038AD20012CD3D /* Info.plist */,
 			);
 			path = Passengr;
@@ -196,6 +198,7 @@
 				F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */,
 				F77B23CB1C0E3E81006EFBA4 /* PassEditCell.swift */,
 				F77B23CC1C0E3E81006EFBA4 /* PassEditCell.xib */,
+				F794A68E1C172F96008AD135 /* Styles.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -373,7 +376,7 @@
 				F77B23CE1C0E3E81006EFBA4 /* PassEditCell.xib in Resources */,
 				F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */,
 				F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */,
-				F71B3FCD1C038AD20012CD3D /* Assets.xcassets in Resources */,
+				F794A6931C174785008AD135 /* Assets.xcassets in Resources */,
 				F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F794A68F1C172F96008AD135 /* Styles.swift in Sources */,
 				F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */,
 				F79007A51C164F63008C2092 /* PassDetailCell.swift in Sources */,
 				F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */,
