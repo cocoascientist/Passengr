@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 public let PassesDidChangeNotification = "PassesDidChangeNotification"
+public let PassesErrorNotification = "PassesErrorNotification"
 
 typealias PassUpdatesFuture = Future<[Pass], PassError>
 
@@ -29,9 +30,17 @@ class PassDataSource: NSObject {
         return self.passes.sort { Int($0.order) < Int($1.order) }
     }
     
-    private(set) var passes: [Pass] = []
+    private(set) var lastUpdated: NSDate
+    private(set) var passes: [Pass] {
+        didSet {
+            self.lastUpdated = NSDate()
+        }
+    }
     
     override init() {
+        self.passes = []
+        self.lastUpdated = NSDate()
+        
         super.init()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("initializeModel:"), name: DataControllerInitializedNotification, object: nil)
@@ -45,26 +54,64 @@ class PassDataSource: NSObject {
     
     func saveDataStore() {
         do {
-            try context.save()
-            
-            
+            if context.hasChanges {
+                try context.save()
+                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+            }
         } catch {
             print("error saving context: \(error)")
             context.rollback()
         }
     }
     
-    func futureForPassUpdates() -> PassUpdatesFuture {
+    func reloadData() {
+        refreshFromRemoteData()
+    }
+    
+    // MARK: - Notifications
+    
+    func initializeModel(notification: NSNotification) {
+        loadOrCreateInitialModel()
+    }
+    
+    // MARK: - Private
+    
+    private func refreshFromRemoteData() {
+        typealias PassesResult = Result<[Pass], PassError>
+        
+        let refresh: ([Pass]) -> () = { [unowned self] passes in
+            dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
+                self.passes = passes
+                self.saveDataStore()
+            })
+        }
+        
+        let raiseError: (PassError) -> () = { error in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let name = PassesErrorNotification
+                let info = [NSLocalizedDescriptionKey: "\(error)"]
+                NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil, userInfo: info)
+            })
+        }
+        
+        let future = self.futureForPassUpdates()
+        future.start { (result) -> () in
+            switch result {
+            case .Success(let passes):
+                refresh(passes)
+            case .Failure(let error):
+                raiseError(error)
+            }
+        }
+    }
+    
+    private func futureForPassUpdates() -> PassUpdatesFuture {
         
         let future: PassUpdatesFuture = Future() { completion in
+            
             let success: ([PassInfo]) -> Void = { info in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    let passes = self.passesFromPassInfoUpdates(info)
-                    self.passes = passes
-                    
-                    self.saveDataStore()
-                })
+                let passes = self.passesFromPassInfoUpdates(info)
+                completion(Result.Success(passes))
             }
             
             let failure: (PassError) -> Void = { error in
@@ -75,7 +122,8 @@ class PassDataSource: NSObject {
                 return pass.passInfo
             }
             
-            self.signaller.futureForPassesInfo(infos).start { (result) -> () in
+            let future = self.signaller.futureForPassesInfo(infos)
+            future.start { (result) -> () in
                 switch result {
                 case .Success(let infos):
                     success(infos)
@@ -87,14 +135,6 @@ class PassDataSource: NSObject {
         
         return future
     }
-    
-    // MARK: - Notifications
-    
-    func initializeModel(notification: NSNotification) {
-        loadOrCreateInitialModel()
-    }
-    
-    // MARK: - Private
     
     private func passesFromPassInfoUpdates(updates: [PassInfo]) -> [Pass] {
         
@@ -135,35 +175,21 @@ class PassDataSource: NSObject {
                 var results = try self.context.executeFetchRequest(request)
                 if results.count == 0 {
                     self.createInitialModel()
+                    self.saveDataStore()
                     
                     results = try self.context.executeFetchRequest(request)
                     assert(results.count > 0, "results should be greater than zero")
-                }
-                
-                if self.context.hasChanges {
-                    self.saveDataStore()
                 }
                 
                 let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
                 let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
                 
                 guard let passes = array as? [Pass] else { return }
-                
-                // TODO: remove
-                assert(NSThread.isMainThread(), "expecting main thread")
-                
                 self.passes = passes
                 
-                self.futureForPassUpdates().start { (result) -> () in
-                    switch result {
-                    case .Success:
-                        print("data source says passes updated")
-                    case .Failure(let error):
-                        print("data source says error updating passes: \(error)")
-                    }
-                }
-                
                 NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+                
+                self.refreshFromRemoteData()
             }
             catch {
                 print("error executing fetch request: \(error)")

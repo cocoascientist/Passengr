@@ -19,8 +19,6 @@ class PassSignaller {
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
             
-            // TODO: map the future?
-            
             let group = dispatch_group_create()
             var updates: [PassInfo] = []
             
@@ -33,7 +31,6 @@ class PassSignaller {
                         updates.append(info)
                     case .Failure(let error):
                         self.error = error
-                        print("error loading pass info: \(error)")
                     }
                     
                     dispatch_group_leave(group)
@@ -108,6 +105,17 @@ extension PassError {
             self = PassError.Offline
         default:
             self = PassError.NoData
+        }
+    }
+}
+
+extension PassError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .Offline:
+            return NSLocalizedString("Connection is Offline", comment: "Connection is Offline")
+        case .NoData:
+            return NSLocalizedString("No Data Received", comment: "No Data Received")
         }
     }
 }

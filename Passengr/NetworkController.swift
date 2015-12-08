@@ -7,18 +7,34 @@
 //
 
 import Foundation
-import SystemConfiguration
 
 public typealias TaskResult = Result<NSData, TaskError>
 public typealias TaskFuture = Future<NSData, TaskError>
 public typealias TaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
 
+public enum TaskError: ErrorType {
+    case Offline
+    case NoData
+    case BadResponse
+    case BadStatusCode(Int)
+    case Other(NSError)
+}
+
 public class NetworkController: Reachable {
     
     private let configuration: NSURLSessionConfiguration
+    private let session: NSURLSession
     
     init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()) {
         self.configuration = configuration
+        
+        let delegate = SessionDelegate()
+        let queue = NSOperationQueue.mainQueue()
+        self.session = NSURLSession(configuration: configuration, delegate: delegate, delegateQueue: queue)
+    }
+    
+    deinit {
+        session.finishTasksAndInvalidate()
     }
     
     private class SessionDelegate: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate {
@@ -35,14 +51,14 @@ public class NetworkController: Reachable {
     /**
     Creates an NSURLSessionTask for the request
     
-    - parameter request: A reqeust object to return a task for
+    - parameter request: A request object to return a future for
     
-    - returns: An NSURLSessionTask associated with the request
+    - returns: A TaskFuture associated with the request
     */
     
     public func dataForRequest(request: NSURLRequest) -> TaskFuture {
         
-        let future: TaskFuture = Future() { completion in
+        let future: TaskFuture = Future() { [unowned self] completion in
             
             let fulfill: (result: TaskResult) -> Void = {(taskResult) in
                 switch taskResult {
@@ -74,15 +90,11 @@ public class NetworkController: Reachable {
                 }
             }
             
-            let delegate = SessionDelegate()
-            let configuration = self.configuration
-            let session = NSURLSession(configuration: configuration, delegate: delegate, delegateQueue: NSOperationQueue.mainQueue())
-            let task = session.dataTaskWithRequest(request, completionHandler: completion)
+            let task = self.session.dataTaskWithRequest(request, completionHandler: completion)
             
             switch self.reachable {
             case .Online:
                 task.resume()
-                session.finishTasksAndInvalidate()
             case .Offline:
                 fulfill(result: .Failure(.Offline))
             }
@@ -90,12 +102,4 @@ public class NetworkController: Reachable {
         
         return future
     }
-}
-
-public enum TaskError: ErrorType {
-    case Offline
-    case NoData
-    case BadResponse
-    case BadStatusCode(Int)
-    case Other(NSError)
 }

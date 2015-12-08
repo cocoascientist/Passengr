@@ -8,11 +8,13 @@
 
 import UIKit
 
-private let reuseIdentifier = "PassListCell"
+private let reuseIdentifier = PassListCell.identifier
 
 class PassViewController: UICollectionViewController, SegueHandlerType {
     
     var dataSource: PassDataSource?
+    
+    private let refreshControl = UIRefreshControl()
     
     enum SegueIdentifier: String {
         case ShowDetailView = "ShowDetailView"
@@ -113,17 +115,50 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 
     // MARK: - Notifications
     
-    func handleDataSourceDidInitialize(notification: NSNotification) {
-        self.collectionView?.reloadData()
-    }
-    
     func handlePassesChange(notification: NSNotification) {
         self.collectionView?.reloadData()
+        
+        setTitleOnRefreshControl()
+        refreshControl.endRefreshing()
     }
     
+    func handlePassesError(notification: NSNotification) {
+        
+        let prefix = NSLocalizedString("Error", comment: "Error")
+        
+        if let error = notification.userInfo?[NSLocalizedDescriptionKey] as? String {
+            let title = "\(prefix): \(error)"
+            refreshControl.attributedTitle = NSAttributedString(string: title)
+        }
+        else {
+            refreshControl.attributedTitle = NSAttributedString(string: prefix)
+        }
+        
+        refreshControl.endRefreshing()
+    }
+    
+    // MARK: - Actions
+    
+    func handleRefresh(sender: AnyObject) {
+        let title = NSLocalizedString("Updating...", comment: "Updating")
+        refreshControl.attributedTitle = NSAttributedString(string: title)
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+            self.dataSource?.reloadData()
+        }
+    }
+
     // MARK: - Private
     
-    func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func setTitleOnRefreshControl() {
+        guard let date = self.dataSource?.lastUpdated else { return }
+        let dateString = self.dateFormatter.stringFromDate(date)
+        
+        refreshControl.attributedTitle = NSAttributedString(string: dateString)
+    }
+    
+    private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PassListCell else { return }
         
         let pass = passes[indexPath.row]
@@ -140,4 +175,10 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
             cell.statusView.backgroundColor = AppStyle.orangeColor
         }
     }
+    
+    private lazy var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
+        return formatter
+    }()
 }
