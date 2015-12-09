@@ -85,7 +85,7 @@ class PassSignaller {
     }
     
     private func passInfoFromData(data: NSData, info: PassInfo) -> PassInfo {
-        var response = Parser.parsePassFromResponse(response: data)
+        var response = Parser.passInfoFromResponse(response: data)
         for (key, value) in info {
             response[key] = value
         }

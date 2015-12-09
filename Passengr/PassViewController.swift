@@ -163,17 +163,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
-        cell.backgroundColor = UIColor.whiteColor()
-        
-        if pass.open {
-            cell.statusView.backgroundColor = AppStyle.greenColor
-        }
-        else if pass.closed {
-            cell.statusView.backgroundColor = AppStyle.redColor
-        }
-        else {
-            cell.statusView.backgroundColor = AppStyle.orangeColor
-        }
+        cell.statusView.backgroundColor = pass.color
     }
     
     private lazy var dateFormatter: NSDateFormatter = {

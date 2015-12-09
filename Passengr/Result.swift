@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Andrew Shepard. All rights reserved.
 //
 
-import Foundation
-
 public enum Result<T, ErrorType> {
     case Success(T)
     case Failure(ErrorType)

@@ -97,16 +97,7 @@ class DetailViewController: UICollectionViewController {
         cell.eastboundLabel.text = pass.eastbound
         cell.westboundLabel.text = pass.westbound
         cell.lastUpdatedLabel.text = self.dateFormatter.stringFromDate(pass.lastModified)
-        
-        if pass.open {
-            cell.statusView.backgroundColor = AppStyle.greenColor
-        }
-        else if pass.closed {
-            cell.statusView.backgroundColor = AppStyle.redColor
-        }
-        else {
-            cell.statusView.backgroundColor = AppStyle.orangeColor
-        }
+        cell.statusView.backgroundColor = pass.color
     }
     
     private lazy var dateFormatter: NSDateFormatter = {

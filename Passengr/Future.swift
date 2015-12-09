@@ -8,8 +8,6 @@
 
 // https://realm.io/news/swift-summit-javier-soto-futures/
 
-import Foundation
-
 public struct Future<T, E: ErrorType> {
     public typealias ResultType = Result<T, E>
     public typealias Completion = ResultType -> ()

@@ -10,26 +10,7 @@ import Foundation
 import CoreData
 
 class Pass: NSManagedObject {
-
-    var open: Bool {
-        let westboundString = self.westbound as NSString
-        let westboundOpen = westboundString.rangeOfString("no restrictions", options: .CaseInsensitiveSearch).location != NSNotFound
-        
-        let eastboundString = self.eastbound as NSString
-        let eastboundOpen = eastboundString.rangeOfString("no restrictions", options: .CaseInsensitiveSearch).location != NSNotFound
-        
-        return westboundOpen && eastboundOpen
-    }
-    
-    var closed: Bool {
-        let westboundString = self.westbound as NSString
-        let westboundClosed = westboundString.rangeOfString("pass closed", options: .CaseInsensitiveSearch).location != NSNotFound
-        
-        let eastboundString = self.eastbound as NSString
-        let eastboundClosed = eastboundString.rangeOfString("pass closed", options: .CaseInsensitiveSearch).location != NSNotFound
-        
-        return eastboundClosed || westboundClosed
-    }
+    //
 }
 
 extension Pass: ManagedObjectType {
