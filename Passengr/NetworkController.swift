@@ -28,24 +28,8 @@ public class NetworkController: Reachable {
     init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()) {
         self.configuration = configuration
         
-        let delegate = SessionDelegate()
         let queue = NSOperationQueue.mainQueue()
-        self.session = NSURLSession(configuration: configuration, delegate: delegate, delegateQueue: queue)
-    }
-    
-    deinit {
-        session.finishTasksAndInvalidate()
-    }
-    
-    private class SessionDelegate: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate {
-        
-        @objc func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-            completionHandler(.UseCredential, NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
-        }
-        
-        @objc func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
-            completionHandler(request)
-        }
+        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: queue)
     }
     
     /**
@@ -58,21 +42,21 @@ public class NetworkController: Reachable {
     
     public func dataForRequest(request: NSURLRequest) -> TaskFuture {
         
-        let future: TaskFuture = Future() { [unowned self] completion in
+        let future: TaskFuture = Future() { [weak self] completion in
             
             let fulfill: (result: TaskResult) -> Void = {(taskResult) in
                 switch taskResult {
                 case .Success(let data):
-                    completion(Result.Success(data))
+                    completion(.Success(data))
                 case .Failure(let error):
-                    completion(Result.Failure(error))
+                    completion(.Failure(error))
                 }
             }
             
             let completion: TaskCompletion = { (data, response, err) in
                 guard let data = data else {
                     guard let err = err else {
-                        return fulfill(result: .Failure(TaskError.NoData))
+                        return fulfill(result: .Failure(.NoData))
                     }
                     
                     return fulfill(result: .Failure(.Other(err)))
@@ -84,15 +68,17 @@ public class NetworkController: Reachable {
                 
                 switch response.statusCode {
                 case 200...204:
-                    fulfill(result: success(data))
+                    fulfill(result: .Success(data))
                 default:
                     fulfill(result: .Failure(TaskError.BadStatusCode(response.statusCode)))
                 }
             }
             
-            let task = self.session.dataTaskWithRequest(request, completionHandler: completion)
+            guard let sSelf = self else { return fulfill(result: .Failure(.NoData)) }
             
-            switch self.reachable {
+            let task = sSelf.session.dataTaskWithRequest(request, completionHandler: completion)
+            
+            switch sSelf.reachable {
             case .Online:
                 task.resume()
             case .Offline:
