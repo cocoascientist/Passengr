@@ -1,5 +1,5 @@
 //
-//  HMTLParserTests.swift
+//  HTMLParserTests.swift
 //  Passengr
 //
 //  Created by Andrew Shepard on 12/8/15.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class HMTLParserTests: XCTestCase {
+class HTMLParserTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
