@@ -13,7 +13,6 @@ struct AppStyle {
     static let orangeColor = UIColor.hexColor("#e57e31")
     static let greenColor = UIColor.hexColor("#39cb75")
     static let forestGreenColor = UIColor.hexColor("#2e5037")
-    
     static let lightBlueColor = UIColor.hexColor("#f8f8ff")
 }
 

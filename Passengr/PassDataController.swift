@@ -12,10 +12,10 @@ public let DataControllerInitializedNotification = "DataControllerDidInitializeN
 
 private let modelName = "Passengr"
 
-class PassDataController: NSObject {
+class PassDataController {
     private(set) var managedObjectContext: NSManagedObjectContext
     
-    override init() {
+    init(storeType: String = NSSQLiteStoreType) {
         guard let modelURL = NSBundle.mainBundle().URLForResource(modelName, withExtension:"momd") else {
             fatalError("Error loading model from bundle")
         }
@@ -34,7 +34,7 @@ class PassDataController: NSObject {
             let storeURL = docURL.URLByAppendingPathComponent("\(modelName).sqlite")
             let options = [NSMigratePersistentStoresAutomaticallyOption: NSNumber(bool: true), NSInferMappingModelAutomaticallyOption: NSNumber(bool: true)]
             do {
-                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+                try coordinator.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: options)
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(DataControllerInitializedNotification, object: nil)
             }

@@ -79,10 +79,10 @@ class PassDataSource: NSObject {
     private func refreshFromRemoteData() {
         typealias PassesResult = Result<[Pass], PassError>
         
-        let refresh: ([Pass]) -> () = { [unowned self] passes in
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] () -> Void in
-                self.passes = passes
-                self.saveDataStore()
+        let refresh: ([Pass]) -> () = { [weak self] passes in
+            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                self?.passes = passes
+                self?.saveDataStore()
             })
         }
         

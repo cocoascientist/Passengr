@@ -14,9 +14,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     var dataSource: PassDataSource?
     
-    private let refreshControl = UIRefreshControl()
-    
-    enum SegueIdentifier: String {
+    internal enum SegueIdentifier: String {
         case ShowDetailView = "ShowDetailView"
         case ShowEditView = "ShowEditView"
     }
@@ -28,6 +26,23 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         
         return dataSource.visiblePasses
     }
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: UIControlEvents.ValueChanged)
+        control.backgroundColor = UIColor.clearColor()
+        
+        return control
+    }()
+    
+    private lazy var refreshController: RefreshController = {
+        guard let dataSource = self.dataSource else {
+            fatalError("data source is missing")
+        }
+        
+        let controller = RefreshController(refreshControl: self.refreshControl, dataSource: dataSource)
+        return controller
+    }()
     
     // MARK: - Lifecycle
     
@@ -45,8 +60,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         super.viewDidLoad()
 
         self.title = NSLocalizedString("Cascade Passes", comment: "Cascade Passes")
-        self.collectionView?.backgroundColor = AppStyle.lightBlueColor
-        
+
         let buttonTite = NSLocalizedString("Back", comment: "Back")
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 
@@ -54,14 +68,12 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let nib = UINib(nibName: PassListCell.identifier, bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesChange:"), name: PassesDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesError:"), name: PassesErrorNotification, object: nil)
-        
-        refreshControl.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: UIControlEvents.ValueChanged)
-        refreshControl.backgroundColor = UIColor.clearColor()
+        self.collectionView?.backgroundColor = AppStyle.lightBlueColor
+        self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.addSubview(refreshControl)
         
-        self.collectionView?.alwaysBounceVertical = true
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesChange:"), name: PassesDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesError:"), name: PassesErrorNotification, object: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -116,47 +128,21 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     // MARK: - Notifications
     
     func handlePassesChange(notification: NSNotification) {
+        self.refreshController.setControlState(.Updated)
         self.collectionView?.reloadData()
-        
-        setTitleOnRefreshControl()
-        refreshControl.endRefreshing()
     }
     
     func handlePassesError(notification: NSNotification) {
-        
-        let prefix = NSLocalizedString("Error", comment: "Error")
-        
-        if let error = notification.userInfo?[NSLocalizedDescriptionKey] as? String {
-            let title = "\(prefix): \(error)"
-            refreshControl.attributedTitle = NSAttributedString(string: title)
-        }
-        else {
-            refreshControl.attributedTitle = NSAttributedString(string: prefix)
-        }
-        
-        refreshControl.endRefreshing()
+        self.refreshController.setControlState(notification)
     }
     
     // MARK: - Actions
     
     func handleRefresh(sender: AnyObject) {
-        let title = NSLocalizedString("Updating...", comment: "Updating")
-        refreshControl.attributedTitle = NSAttributedString(string: title)
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
-            self.dataSource?.reloadData()
-        }
+        self.refreshController.setControlState(.Updating)
     }
 
     // MARK: - Private
-    
-    private func setTitleOnRefreshControl() {
-        guard let date = self.dataSource?.lastUpdated else { return }
-        let dateString = self.dateFormatter.stringFromDate(date)
-        
-        refreshControl.attributedTitle = NSAttributedString(string: dateString)
-    }
     
     private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PassListCell else { return }
@@ -165,10 +151,4 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         cell.titleLabel.text = pass.name
         cell.statusView.backgroundColor = pass.color
     }
-    
-    private lazy var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
-        return formatter
-    }()
 }
