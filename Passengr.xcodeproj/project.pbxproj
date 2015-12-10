@@ -13,6 +13,11 @@
 		F757CBF31C0F7BB300319D26 /* PassDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF21C0F7BB300319D26 /* PassDataController.swift */; };
 		F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */; };
 		F75A3B5A1C18A8F6004A7E39 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = F75A3B591C18A8F6004A7E39 /* test.html */; };
+		F75A3B5C1C18D6A9004A7E39 /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */; };
+		F75A3B5E1C18DBEC004A7E39 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */; };
+		F75A3B5F1C18DC28004A7E39 /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
+		F75A3B601C18DC41004A7E39 /* PassDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF21C0F7BB300319D26 /* PassDataController.swift */; };
+		F75A3B611C18DE5C004A7E39 /* PassSignaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C01C0D58A700A4D6FE /* PassSignaller.swift */; };
 		F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */; };
 		F7754D661C0AB8E00080D572 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7754D651C0AB8E00080D572 /* EditViewController.swift */; };
 		F776E6AC1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */; };
@@ -88,6 +93,8 @@
 		F757CBF21C0F7BB300319D26 /* PassDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataController.swift; sourceTree = "<group>"; };
 		F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectType.swift; sourceTree = "<group>"; };
 		F75A3B591C18A8F6004A7E39 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataControllerTests.swift; sourceTree = "<group>"; };
+		F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
 		F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		F7754D651C0AB8E00080D572 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passengr.xcdatamodel; sourceTree = "<group>"; };
@@ -174,9 +181,9 @@
 				F776E6A91C0CEBF400A4D6FE /* Model */,
 				F7754D681C0B4D350080D572 /* View */,
 				F7754D691C0B4D5C0080D572 /* Controller */,
-				F776E6CD1C0D5A0B00A4D6FE /* XML Object Mapping */,
 				F776E6B51C0D56CB00A4D6FE /* Animations */,
 				F7754D6B1C0B4DB10080D572 /* Layouts */,
+				F776E6CD1C0D5A0B00A4D6FE /* XML Object Mapping */,
 				F7754D6A1C0B4D820080D572 /* Types & Protocols */,
 				F776E6CE1C0D5A6800A4D6FE /* Passengr-Bridging-Header.h */,
 				F71B3FC91C038AD20012CD3D /* Main.storyboard */,
@@ -193,6 +200,8 @@
 				F7B36B7A1C18A1B100474D0E /* PassTests.swift */,
 				F7B36B6B1C18975200474D0E /* NetworkControllerTests.swift */,
 				F7AD52851C17C26F00310402 /* HTMLParserTests.swift */,
+				F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */,
+				F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */,
 				F7B36B721C18980C00474D0E /* CascadeAPI.swift */,
 				F75A3B581C18A703004A7E39 /* Extensions */,
 				F7B36B771C189CDC00474D0E /* URL Protocols */,
@@ -449,20 +458,25 @@
 				F7B36B831C18A3C600474D0E /* NSManagedObjectContext+Testable.swift in Sources */,
 				F7B36B7E1C18A1C400474D0E /* Pass+Helpers.swift in Sources */,
 				F7B36B711C18977000474D0E /* NetworkController.swift in Sources */,
+				F75A3B5F1C18DC28004A7E39 /* PassDataSource.swift in Sources */,
 				F7B36B7B1C18A1B100474D0E /* PassTests.swift in Sources */,
 				F7AD52861C17C26F00310402 /* HTMLParserTests.swift in Sources */,
+				F75A3B5C1C18D6A9004A7E39 /* DataControllerTests.swift in Sources */,
 				F7B36B751C1898FF00474D0E /* Result.swift in Sources */,
 				F7B36B6E1C18975200474D0E /* LocalURLProtocol.swift in Sources */,
 				F7B36B7D1C18A1C400474D0E /* Pass+CoreDataProperties.swift in Sources */,
+				F75A3B611C18DE5C004A7E39 /* PassSignaller.swift in Sources */,
 				F7B36B681C18973800474D0E /* BadStatusURLProtocol.swift in Sources */,
 				F7AD528A1C17C3A200310402 /* HTML.swift in Sources */,
 				F7B36B761C1898FF00474D0E /* Reachable.swift in Sources */,
 				F7B36B6D1C18975200474D0E /* FailingURLProtocol.swift in Sources */,
 				F7AD52891C17C36800310402 /* Parser.swift in Sources */,
 				F7B36B801C18A37000474D0E /* Styles.swift in Sources */,
+				F75A3B5E1C18DBEC004A7E39 /* DataSourceTests.swift in Sources */,
 				F7B36B6F1C18975200474D0E /* NetworkControllerTests.swift in Sources */,
 				F7B36B7C1C18A1C400474D0E /* Pass.swift in Sources */,
 				F7B36B811C18A37A00474D0E /* ManagedObjectType.swift in Sources */,
+				F75A3B601C18DC41004A7E39 /* PassDataController.swift in Sources */,
 				F7B36B701C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift in Sources */,
 				F7B36B7F1C18A28800474D0E /* PassInfoType.swift in Sources */,
 				F7B36B671C18973800474D0E /* BadResponseURLProtocol.swift in Sources */,

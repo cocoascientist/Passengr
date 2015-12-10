@@ -167,7 +167,7 @@ class PassDataSource: NSObject {
         return passes
     }
     
-    private func loadOrCreateInitialModel() {
+    internal func loadOrCreateInitialModel() {
         self.context.performBlock { () -> Void in
             do {
                 let request = NSFetchRequest(entityName: Pass.entityName)

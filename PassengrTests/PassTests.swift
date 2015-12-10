@@ -13,25 +13,17 @@ import CoreData
 
 class PassTests: XCTestCase {
     
-    let context = NSManagedObjectContext.testableContext()
-    
-    private var info: PassInfo {
-        return [
-            PassInfoKeys.Title: "Pass Name",
-            PassInfoKeys.Conditions: "Pass Conditions",
-            PassInfoKeys.ReferenceURL: "http://someurl.com",
-            PassInfoKeys.Westbound: "No Restrictions",
-            PassInfoKeys.Eastbound: "Pass Closed"
-        ]
-    }
+    var context: NSManagedObjectContext!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        self.context = NSManagedObjectContext.testableContext()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        self.context = nil
+        
         super.tearDown()
     }
     
@@ -83,5 +75,15 @@ class PassTests: XCTestCase {
         }
         
         return pass
+    }
+    
+    private var info: PassInfo {
+        return [
+            PassInfoKeys.Title: "Pass Name",
+            PassInfoKeys.Conditions: "Pass Conditions",
+            PassInfoKeys.ReferenceURL: "http://someurl.com",
+            PassInfoKeys.Westbound: "No Restrictions",
+            PassInfoKeys.Eastbound: "Pass Closed"
+        ]
     }
 }
