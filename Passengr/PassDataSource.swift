@@ -54,10 +54,8 @@ class PassDataSource: NSObject {
     
     func saveDataStore() {
         do {
-            if context.hasChanges {
-                try context.save()
-                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
-            }
+            try context.save()
+            NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
         } catch {
             print("error saving context: \(error)")
             context.rollback()

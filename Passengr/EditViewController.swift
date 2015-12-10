@@ -83,7 +83,9 @@ class EditViewController: UITableViewController {
 
     @IBAction func handleDoneButton(sender: AnyObject) {
         defer { self.dismissViewControllerAnimated(true, completion: nil) }
-        guard let dataSource = dataSource else { return }
+        guard let dataSource = dataSource else {
+            fatalError("data soure should not be nil")
+        }
         
         dataSource.saveDataStore()
     }
@@ -93,6 +95,7 @@ class EditViewController: UITableViewController {
         let pass = self.passes[swtch.tag]
         
         pass.enabled = swtch.on
+        dataSource?.saveDataStore()
     }
     
     // MARK: - Private
