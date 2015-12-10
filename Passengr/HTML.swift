@@ -85,8 +85,6 @@ class HTMLDoc {
         self._root = nil
     }
     
-    // TODO: generator?
-    
     private weak var _root: HTMLNode?
     var root: HTMLNode? {
         if let root = _root {
