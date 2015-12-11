@@ -12,7 +12,7 @@ public let DataControllerInitializedNotification = "DataControllerDidInitializeN
 
 private let modelName = "Passengr"
 
-class PassDataController {
+struct PassDataController {
     private(set) var managedObjectContext: NSManagedObjectContext
     
     init(storeType: String = NSSQLiteStoreType) {
