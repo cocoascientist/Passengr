@@ -12,7 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let dataSource = PassDataSource()
+    
+    private let dataSource = PassDataSource()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
