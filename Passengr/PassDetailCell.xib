@@ -49,13 +49,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="conditions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARJ-M1-qms">
-                                                <rect key="frame" x="8" y="162" width="75.5" height="19.5"/>
+                                                <rect key="frame" x="8" y="162" width="274" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="conditions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHY-df-EER">
-                                                <rect key="frame" x="8" y="214" width="75.5" height="19.5"/>
+                                                <rect key="frame" x="8" y="214" width="274" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="conditions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rH-W0-sUh">
-                                                <rect key="frame" x="8" y="110" width="75.5" height="19.5"/>
+                                                <rect key="frame" x="8" y="110" width="274" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -93,14 +93,14 @@
                                             <constraint firstItem="L0C-Xs-lgi" firstAttribute="top" secondItem="dCx-s2-7Ie" secondAttribute="top" constant="85" id="Npl-gR-zOs"/>
                                             <constraint firstItem="zNR-lj-HAw" firstAttribute="top" secondItem="8rH-W0-sUh" secondAttribute="bottom" constant="8" id="UZz-hC-RrC"/>
                                             <constraint firstItem="8rH-W0-sUh" firstAttribute="leading" secondItem="dCx-s2-7Ie" secondAttribute="leading" constant="8" id="Zcm-Nz-N9i"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hHY-df-EER" secondAttribute="trailing" constant="8" id="dTj-mF-jDC"/>
+                                            <constraint firstAttribute="trailing" secondItem="hHY-df-EER" secondAttribute="trailing" constant="8" id="dTj-mF-jDC"/>
                                             <constraint firstItem="Iiv-vA-Zva" firstAttribute="bottom" secondItem="hHY-df-EER" secondAttribute="bottom" constant="41" id="fK1-Yh-L4F"/>
                                             <constraint firstItem="ARJ-M1-qms" firstAttribute="leading" secondItem="dCx-s2-7Ie" secondAttribute="leading" constant="8" id="izX-0Q-rgm"/>
                                             <constraint firstItem="hHY-df-EER" firstAttribute="top" secondItem="vS5-SS-gBO" secondAttribute="bottom" constant="8" id="jP6-XZ-ZBY"/>
                                             <constraint firstItem="L0C-Xs-lgi" firstAttribute="top" secondItem="KBQ-J1-1Pw" secondAttribute="bottom" constant="37" id="p10-PW-rFQ"/>
                                             <constraint firstItem="ARJ-M1-qms" firstAttribute="top" secondItem="zNR-lj-HAw" secondAttribute="bottom" constant="8" id="rGZ-dv-Rwj"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8rH-W0-sUh" secondAttribute="trailing" priority="750" constant="8" id="sXE-yQ-wLo"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ARJ-M1-qms" secondAttribute="trailing" constant="8" id="u6v-7g-XpZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="8rH-W0-sUh" secondAttribute="trailing" constant="8" id="sXE-yQ-wLo"/>
+                                            <constraint firstAttribute="trailing" secondItem="ARJ-M1-qms" secondAttribute="trailing" constant="8" id="u6v-7g-XpZ"/>
                                             <constraint firstItem="KBQ-J1-1Pw" firstAttribute="leading" secondItem="dCx-s2-7Ie" secondAttribute="leading" constant="8" id="xWC-Ki-90q"/>
                                             <constraint firstItem="L0C-Xs-lgi" firstAttribute="leading" secondItem="dCx-s2-7Ie" secondAttribute="leading" constant="8" id="zzv-sR-0yi"/>
                                         </constraints>
