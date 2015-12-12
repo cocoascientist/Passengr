@@ -15,26 +15,27 @@ public let PassesErrorNotification = "PassesErrorNotification"
 typealias PassUpdatesFuture = Future<[Pass], PassError>
 
 class PassDataSource: NSObject {
-    private let controller = PassDataController()
-    private let signaller = PassSignaller()
     
-    var context: NSManagedObjectContext {
-        return controller.managedObjectContext
+    var orderedPasses: [Pass] {
+        return self.passes.sort { Int($0.order) < Int($1.order) }
     }
     
     var visiblePasses: [Pass] {
         return self.orderedPasses.filter { $0.enabled == true }
     }
     
-    var orderedPasses: [Pass] {
-        return self.passes.sort { Int($0.order) < Int($1.order) }
-    }
-    
     private(set) var lastUpdated: NSDate
-    private(set) var passes: [Pass] {
+    private var passes: [Pass] {
         didSet {
             self.lastUpdated = NSDate()
         }
+    }
+    
+    private let controller = PassDataController()
+    private let signaller = PassSignaller()
+    
+    private var context: NSManagedObjectContext {
+        return controller.managedObjectContext
     }
     
     override init() {
@@ -200,7 +201,7 @@ class PassDataSource: NSObject {
         let keys = seedDictionary.keys.sort { $0 < $1 }
         
         for key in keys {
-            guard let pass = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context) as? Pass else { return }
+            guard let pass = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context) as? Pass else { continue }
             
             pass.name = key
             pass.enabled = true
@@ -208,7 +209,7 @@ class PassDataSource: NSObject {
             
             order += 1
             
-            guard let url = seedDictionary[key] else { return }
+            guard let url = seedDictionary[key] else { continue }
             pass.url = url
         }
     }
