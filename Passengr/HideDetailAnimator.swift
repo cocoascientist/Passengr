@@ -9,6 +9,7 @@
 import UIKit
 
 class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    
     private let duration = 0.75
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
@@ -21,30 +22,35 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
-        
         guard let containerView = transitionContext.containerView() else { return }
+        
+        let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
         
         // Find origin rect
         guard let originIndexPath = fromCollectionView.indexPathsForVisibleItems().first else { return }
         let originAttributes = fromCollectionView.layoutAttributesForItemAtIndexPath(originIndexPath)
-        let originRect = CGRectInset(originAttributes!.frame, 0.0, 0.0)
-        let snapshotRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, 64.0)
+        let originRect = originRectFromAttributes(originAttributes)
+        let snapshotRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, itemSize.height)
         
         // Find destination rect
         let destinationAttributes = toCollectionView.layoutAttributesForItemAtIndexPath(originIndexPath)
-        var destinationRect = destinationAttributes!.frame
-        
-        // XXXAJS: Offset destination rect by navigation bar height
-        // why does a convertRect not take care of this?
-        // doing a convertRect to containerView space makes a weird rectangle
-        destinationRect = CGRectMake(destinationRect.origin.x, destinationRect.origin.y + 64.0, destinationRect.size.width, destinationRect.size.height)
+        let destinationRect = destinationRectFromAttributes(destinationAttributes)
         
         let firstRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, destinationRect.size.height)
         let secondRect = destinationRect
         
-        let insets = UIEdgeInsets(top: 73.0, left: 0.0, bottom: 1.0, right: 0.0)
+        let insets = UIEdgeInsets(top: itemSize.height - 2.0, left: 0.0, bottom: 1.0, right: 0.0)
         let snapshot = fromCollectionView.resizableSnapshotViewFromRect(snapshotRect, afterScreenUpdates: false, withCapInsets: insets)
-        snapshot.frame = containerView.convertRect(originRect, fromView: fromCollectionView)
+        let frame = containerView.convertRect(originRect, fromView: fromCollectionView)
+        
+        let lineView = UIView()
+        lineView.backgroundColor = UIColor.lightGrayColor()
+        
+        snapshot.addSubview(lineView)
+        snapshot.clipsToBounds = true
+        
+        snapshot.frame = frame
+        lineView.frame = lineViewFrameWithBounds(snapshot.bounds)
         
         containerView.addSubview(toViewController.view)
         containerView.addSubview(snapshot)
@@ -55,10 +61,12 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             
             UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.3, animations: { () -> Void in
                 snapshot.frame = containerView.convertRect(firstRect, fromView: fromCollectionView)
+                lineView.frame = self.lineViewFrameWithBounds(snapshot.bounds)
             })
             
             UIView.addKeyframeWithRelativeStartTime(0.3, relativeDuration: 0.3, animations: { () -> Void in
                 snapshot.frame = secondRect
+                lineView.frame = self.lineViewFrameWithBounds(snapshot.bounds)
             })
             
             UIView.addKeyframeWithRelativeStartTime(0.6, relativeDuration: 0.3, animations: { () -> Void in
@@ -87,5 +95,19 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             fatalError("missing index path")
         }
         return indexPath
+    }
+    
+    private func originRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
+        return CGRectInset(attributes?.frame ?? CGRectZero, 0.0, 0.0)
+    }
+    
+    private func destinationRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
+        guard let frame = attributes?.frame else { return CGRectZero }
+        let rect = CGRectMake(frame.origin.x, frame.origin.y + 64.0, frame.size.width, frame.size.height)
+        return rect
+    }
+    
+    private func lineViewFrameWithBounds(bounds: CGRect) -> CGRect {
+        return CGRectMake(CGRectGetMinX(bounds), CGRectGetMaxY(bounds) - 0.5, CGRectGetWidth(bounds), 1.0)
     }
 }
