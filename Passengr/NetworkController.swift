@@ -74,11 +74,11 @@ public class NetworkController: Reachable {
                 }
             }
             
-            guard let sSelf = self else { return fulfill(result: .Failure(.NoData)) }
+            guard let _ = self else { return fulfill(result: .Failure(.NoData)) }
             
-            let task = sSelf.session.dataTaskWithRequest(request, completionHandler: completion)
+            let task = self!.session.dataTaskWithRequest(request, completionHandler: completion)
             
-            switch sSelf.reachable {
+            switch self!.reachable {
             case .Online:
                 task.resume()
             case .Offline:
