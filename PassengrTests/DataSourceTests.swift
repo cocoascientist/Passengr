@@ -44,8 +44,8 @@ class DataSourceTests: XCTestCase {
     func testCanCreateDataSource() {
         let initializedModelExpectation = expectationWithDescription("model should be initialized")
         
-        let dataSource = TestableDataSource(expectation: initializedModelExpectation)
-        let dataController = PassDataController(storeType: NSInMemoryStoreType)
+        let _ = TestableDataSource(expectation: initializedModelExpectation)
+        let _ = PassDataController(storeType: NSInMemoryStoreType)
         
         waitForExpectationsWithTimeout(15.0, handler: nil)
     }
