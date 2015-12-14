@@ -7,23 +7,16 @@
 //
 
 import XCTest
-import CoreData
 
 @testable import Passengr
 
 class PassTests: XCTestCase {
     
-    var context: NSManagedObjectContext!
-    
     override func setUp() {
         super.setUp()
-        
-        self.context = NSManagedObjectContext.testableContext()
     }
     
     override func tearDown() {
-        self.context = nil
-        
         super.tearDown()
     }
     
@@ -68,13 +61,7 @@ class PassTests: XCTestCase {
     }
     
     private func testablePass() -> Passengr.Pass {
-        let object = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context)
-        guard let pass = object as? Passengr.Pass else {
-            XCTFail("Pass entity is wrong type")
-            fatalError()
-        }
-        
-        return pass
+        return Passengr.Pass(name: "Pass Name", url: "http://someurl.com", order: 1, enabled: true)
     }
     
     private var info: PassInfo {

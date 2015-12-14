@@ -13,6 +13,8 @@ public let PassesErrorNotification = "PassesErrorNotification"
 
 typealias PassUpdatesFuture = Future<[Pass]>
 
+private let modelName = "passengr.plist"
+
 class PassDataSource: NSObject {
     
     var orderedPasses: [Pass] {
@@ -37,24 +39,22 @@ class PassDataSource: NSObject {
         self.lastUpdated = NSDate()
         
         super.init()
+        
+        loadOrCreateInitialModel()
     }
     
     // MARK: - Public
     
     func saveDataStore() {
-        // TODO: implement
+        let url = NSURL.applicationDocumentsDirectory().URLByAppendingPathComponent(modelName)
+        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
+        data.writeToURL(url, atomically: true)
         
         NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
     }
     
     func reloadData() {
         refreshFromRemoteData()
-    }
-    
-    // MARK: - Notifications
-    
-    func initializeModel(notification: NSNotification) {
-        loadOrCreateInitialModel()
     }
     
     // MARK: - Private
@@ -124,78 +124,59 @@ class PassDataSource: NSObject {
         let passes = updates.flatMap { (passInfo) -> Pass? in
             guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
             
-//            let request = NSFetchRequest(entityName: Pass.entityName)
-//            request.predicate = NSPredicate(format: "%K = %@", "name", name)
-//            
-//            do {
-//                let results = try self.context.executeFetchRequest(request)
-//                guard let pass = results.first as? Pass else { fatalError() }
-//                
-//                pass.updateUsingPassInfo(passInfo)
-//                
-//                guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
-//                guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
-//                
-//                pass.lastModified = lastModified
-//                
-//                return pass
-//            }
-//            catch {
-//                print("error executing fetch request: \(error)")
-//            }
+            let filtered = self.passes.filter { $0.name == name }
+            guard let pass = filtered.first else { return nil }
             
-            return nil
+            pass.updateUsingPassInfo(passInfo)
+            
+            guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
+            guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
+            
+            pass.lastModified = lastModified
+            
+            return pass
         }
         
         return passes
     }
     
     internal func loadOrCreateInitialModel() {
-//        self.context.performBlock { () -> Void in
-//            do {
-//                let request = NSFetchRequest(entityName: Pass.entityName)
-//                
-//                var results = try self.context.executeFetchRequest(request)
-//                if results.count == 0 {
-//                    self.createInitialModel()
-//                    self.saveDataStore()
-//                    
-//                    results = try self.context.executeFetchRequest(request)
-//                    assert(results.count > 0, "results should be greater than zero")
-//                }
-//                
-//                let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
-//                let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
-//                
-//                guard let passes = array as? [Pass] else { return }
-//                self.passes = passes
-//                
-//                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
-//                
-//                self.refreshFromRemoteData()
-//            }
-//            catch {
-//                print("error executing fetch request: \(error)")
-//            }
-//        }
+        
+        let url = NSURL.applicationDocumentsDirectory().URLByAppendingPathComponent(modelName)
+        if NSFileManager.defaultManager().fileExistsAtPath(url.path!) == false {
+            createInitialModelAtURL(url)
+        }
+        
+        guard let data = NSData(contentsOfURL: url) else {
+            fatalError("model data not found")
+        }
+        
+        guard let passes = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Pass] else {
+            fatalError("could not load passes, wrong data type")
+        }
+        
+        self.passes = passes
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+        
+        self.refreshFromRemoteData()
     }
     
-    private func createInitialModel() {
+    private func createInitialModelAtURL(url: NSURL) -> Bool {
         var order = 0
-        let keys = seedDictionary.keys.sort { $0 < $1 }
+        let names = seedDictionary.keys.sort { $0 < $1 }
         
-//        for key in keys {
-//            guard let pass = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context) as? Pass else { continue }
-//            
-//            pass.name = key
-//            pass.enabled = true
-//            pass.order = order
-//            
-//            order += 1
-//            
-//            guard let url = seedDictionary[key] else { continue }
-//            pass.url = url
-//        }
+        var passes: [Pass] = []
+        for name in names {
+            guard let url = seedDictionary[name] else { continue }
+            let pass = Pass(name: name, url: url, order: order, enabled: true)
+            
+            passes.append(pass)
+            order += 1
+        }
+        
+        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
+        return data.writeToURL(url, atomically: true)
     }
     
     private lazy var dateFormatter: NSDateFormatter = {
@@ -216,4 +197,10 @@ class PassDataSource: NSObject {
         ]
     }()
 }
- 
+
+extension NSURL {
+    class func applicationDocumentsDirectory() -> NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls[urls.count-1]
+    }
+}

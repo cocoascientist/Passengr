@@ -12,8 +12,6 @@
 		F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */; };
 		F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */; };
 		F75A3B5A1C18A8F6004A7E39 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = F75A3B591C18A8F6004A7E39 /* test.html */; };
-		F75A3B5C1C18D6A9004A7E39 /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */; };
-		F75A3B5E1C18DBEC004A7E39 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */; };
 		F75A3B5F1C18DC28004A7E39 /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
 		F75A3B611C18DE5C004A7E39 /* PassSignaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C01C0D58A700A4D6FE /* PassSignaller.swift */; };
 		F7754D221C0A69EF0080D572 /* SegueHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */; };
@@ -58,7 +56,6 @@
 		F7B36B7F1C18A28800474D0E /* PassInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78487551C162B78004667BD /* PassInfoType.swift */; };
 		F7B36B801C18A37000474D0E /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F794A68E1C172F96008AD135 /* Styles.swift */; };
 		F7B36B811C18A37A00474D0E /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */; };
-		F7B36B831C18A3C600474D0E /* NSManagedObjectContext+Testable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B821C18A3C600474D0E /* NSManagedObjectContext+Testable.swift */; };
 		F7C417701C0625F0009C5DA0 /* PassListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */; };
 		F7C417711C0625F0009C5DA0 /* PassListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */; };
 		F7C417731C063E95009C5DA0 /* ListViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C417721C063E95009C5DA0 /* ListViewLayout.swift */; };
@@ -85,15 +82,11 @@
 		F71B3FD11C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F71B3FD61C038AD20012CD3D /* PassengrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PassengrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71B3FDC1C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F757CBF21C0F7BB300319D26 /* PassDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataController.swift; sourceTree = "<group>"; };
 		F757CBF41C0F7E4E00319D26 /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectType.swift; sourceTree = "<group>"; };
 		F75A3B591C18A8F6004A7E39 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
-		F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataControllerTests.swift; sourceTree = "<group>"; };
 		F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
 		F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
 		F7754D651C0AB8E00080D572 /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
-		F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Passengr.xcdatamodel; sourceTree = "<group>"; };
-		F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pass+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F776E6AE1C0CEC4000A4D6FE /* Pass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pass.swift; sourceTree = "<group>"; };
 		F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassDataSource.swift; sourceTree = "<group>"; };
 		F776E6B61C0D56DC00A4D6FE /* HideDetailAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HideDetailAnimator.swift; sourceTree = "<group>"; };
@@ -124,7 +117,6 @@
 		F7B36B6C1C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionConfiguration+Protocols.swift"; sourceTree = "<group>"; };
 		F7B36B721C18980C00474D0E /* CascadeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CascadeAPI.swift; sourceTree = "<group>"; };
 		F7B36B7A1C18A1B100474D0E /* PassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassTests.swift; sourceTree = "<group>"; };
-		F7B36B821C18A3C600474D0E /* NSManagedObjectContext+Testable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Testable.swift"; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
 		F7C417721C063E95009C5DA0 /* ListViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewLayout.swift; sourceTree = "<group>"; };
@@ -195,7 +187,6 @@
 				F7B36B7A1C18A1B100474D0E /* PassTests.swift */,
 				F7B36B6B1C18975200474D0E /* NetworkControllerTests.swift */,
 				F7AD52851C17C26F00310402 /* HTMLParserTests.swift */,
-				F75A3B5B1C18D6A9004A7E39 /* DataControllerTests.swift */,
 				F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */,
 				F7B36B721C18980C00474D0E /* CascadeAPI.swift */,
 				F75A3B581C18A703004A7E39 /* Extensions */,
@@ -209,7 +200,6 @@
 		F75A3B581C18A703004A7E39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F7B36B821C18A3C600474D0E /* NSManagedObjectContext+Testable.swift */,
 				F7B36B6C1C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift */,
 			);
 			name = Extensions;
@@ -267,12 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				F776E6AE1C0CEC4000A4D6FE /* Pass.swift */,
-				F776E6AD1C0CEC4000A4D6FE /* Pass+CoreDataProperties.swift */,
 				F7B36B631C1895A600474D0E /* Pass+Helpers.swift */,
 				F776E6C01C0D58A700A4D6FE /* PassSignaller.swift */,
 				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
-				F757CBF21C0F7BB300319D26 /* PassDataController.swift */,
-				F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -447,13 +434,11 @@
 			files = (
 				F7B36B731C18980C00474D0E /* CascadeAPI.swift in Sources */,
 				F7B36B741C1898FF00474D0E /* Future.swift in Sources */,
-				F7B36B831C18A3C600474D0E /* NSManagedObjectContext+Testable.swift in Sources */,
 				F7B36B7E1C18A1C400474D0E /* Pass+Helpers.swift in Sources */,
 				F7B36B711C18977000474D0E /* NetworkController.swift in Sources */,
 				F75A3B5F1C18DC28004A7E39 /* PassDataSource.swift in Sources */,
 				F7B36B7B1C18A1B100474D0E /* PassTests.swift in Sources */,
 				F7AD52861C17C26F00310402 /* HTMLParserTests.swift in Sources */,
-				F75A3B5C1C18D6A9004A7E39 /* DataControllerTests.swift in Sources */,
 				F7B36B751C1898FF00474D0E /* Result.swift in Sources */,
 				F7B36B6E1C18975200474D0E /* LocalURLProtocol.swift in Sources */,
 				F75A3B611C18DE5C004A7E39 /* PassSignaller.swift in Sources */,
@@ -463,7 +448,6 @@
 				F7B36B6D1C18975200474D0E /* FailingURLProtocol.swift in Sources */,
 				F7AD52891C17C36800310402 /* Parser.swift in Sources */,
 				F7B36B801C18A37000474D0E /* Styles.swift in Sources */,
-				F75A3B5E1C18DBEC004A7E39 /* DataSourceTests.swift in Sources */,
 				F7B36B6F1C18975200474D0E /* NetworkControllerTests.swift in Sources */,
 				F7B36B7C1C18A1C400474D0E /* Pass.swift in Sources */,
 				F7B36B811C18A37A00474D0E /* ManagedObjectType.swift in Sources */,
@@ -680,19 +664,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F776E6AA1C0CEC0F00A4D6FE /* Passengr.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */,
-			);
-			currentVersion = F776E6AB1C0CEC0F00A4D6FE /* Passengr.xcdatamodel */;
-			path = Passengr.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F71B3FBA1C038AD20012CD3D /* Project object */;
 }

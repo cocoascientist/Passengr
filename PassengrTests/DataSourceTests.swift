@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import CoreData
 
 class DataSourceTests: XCTestCase {
     
