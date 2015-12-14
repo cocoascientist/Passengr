@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Andrew Shepard. All rights reserved.
 //
 
-public enum Result<T, ErrorType> {
+public enum Result<T, E: ErrorType> {
     case Success(T)
-    case Failure(ErrorType)
+    case Failure(E)
 }
 
 extension Result: CustomDebugStringConvertible {

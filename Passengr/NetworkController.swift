@@ -20,7 +20,7 @@ public enum TaskError: ErrorType {
     case Other(NSError)
 }
 
-public class NetworkController: Reachable {
+public struct NetworkController: Reachable {
     
     private let configuration: NSURLSessionConfiguration
     private let session: NSURLSession
@@ -42,7 +42,7 @@ public class NetworkController: Reachable {
     
     public func dataForRequest(request: NSURLRequest) -> TaskFuture {
         
-        let future: TaskFuture = Future() { [weak self] completion in
+        let future: TaskFuture = Future() { completion in
             
             let fulfill: (result: TaskResult) -> Void = {(taskResult) in
                 switch taskResult {
@@ -74,11 +74,9 @@ public class NetworkController: Reachable {
                 }
             }
             
-            guard let _ = self else { return fulfill(result: .Failure(.NoData)) }
+            let task = self.session.dataTaskWithRequest(request, completionHandler: completion)
             
-            let task = self!.session.dataTaskWithRequest(request, completionHandler: completion)
-            
-            switch self!.reachable {
+            switch self.reachable {
             case .Online:
                 task.resume()
             case .Offline:
