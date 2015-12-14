@@ -41,12 +41,12 @@ class DataSourceTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCanCreateDataSource() {
-        let initializedModelExpectation = expectationWithDescription("model should be initialized")
-        
-        let _ = TestableDataSource(expectation: initializedModelExpectation)
-        let _ = PassDataController(storeType: NSInMemoryStoreType)
-        
-        waitForExpectationsWithTimeout(15.0, handler: nil)
-    }
+//    func testCanCreateDataSource() {
+//        let initializedModelExpectation = expectationWithDescription("model should be initialized")
+//        
+//        let _ = TestableDataSource(expectation: initializedModelExpectation)
+//        let _ = PassDataController(storeType: NSInMemoryStoreType)
+//        
+//        waitForExpectationsWithTimeout(15.0, handler: nil)
+//    }
 }
