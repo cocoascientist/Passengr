@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreData
 
 public let PassesDidChangeNotification = "PassesDidChangeNotification"
 public let PassesErrorNotification = "PassesErrorNotification"
@@ -31,36 +30,21 @@ class PassDataSource: NSObject {
         }
     }
     
-    private let controller = PassDataController()
     private let signaller = PassSignaller()
-    
-    private var context: NSManagedObjectContext {
-        return controller.managedObjectContext
-    }
     
     override init() {
         self.passes = []
         self.lastUpdated = NSDate()
         
         super.init()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("initializeModel:"), name: DataControllerInitializedNotification, object: nil)
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - Public
     
     func saveDataStore() {
-        do {
-            try context.save()
-            NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
-        } catch {
-            print("error saving context: \(error)")
-            context.rollback()
-        }
+        // TODO: implement
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
     }
     
     func reloadData() {
@@ -140,25 +124,25 @@ class PassDataSource: NSObject {
         let passes = updates.flatMap { (passInfo) -> Pass? in
             guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
             
-            let request = NSFetchRequest(entityName: Pass.entityName)
-            request.predicate = NSPredicate(format: "%K = %@", "name", name)
-            
-            do {
-                let results = try self.context.executeFetchRequest(request)
-                guard let pass = results.first as? Pass else { fatalError() }
-                
-                pass.updateUsingPassInfo(passInfo)
-                
-                guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
-                guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
-                
-                pass.lastModified = lastModified
-                
-                return pass
-            }
-            catch {
-                print("error executing fetch request: \(error)")
-            }
+//            let request = NSFetchRequest(entityName: Pass.entityName)
+//            request.predicate = NSPredicate(format: "%K = %@", "name", name)
+//            
+//            do {
+//                let results = try self.context.executeFetchRequest(request)
+//                guard let pass = results.first as? Pass else { fatalError() }
+//                
+//                pass.updateUsingPassInfo(passInfo)
+//                
+//                guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
+//                guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
+//                
+//                pass.lastModified = lastModified
+//                
+//                return pass
+//            }
+//            catch {
+//                print("error executing fetch request: \(error)")
+//            }
             
             return nil
         }
@@ -167,51 +151,51 @@ class PassDataSource: NSObject {
     }
     
     internal func loadOrCreateInitialModel() {
-        self.context.performBlock { () -> Void in
-            do {
-                let request = NSFetchRequest(entityName: Pass.entityName)
-                
-                var results = try self.context.executeFetchRequest(request)
-                if results.count == 0 {
-                    self.createInitialModel()
-                    self.saveDataStore()
-                    
-                    results = try self.context.executeFetchRequest(request)
-                    assert(results.count > 0, "results should be greater than zero")
-                }
-                
-                let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
-                let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
-                
-                guard let passes = array as? [Pass] else { return }
-                self.passes = passes
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
-                
-                self.refreshFromRemoteData()
-            }
-            catch {
-                print("error executing fetch request: \(error)")
-            }
-        }
+//        self.context.performBlock { () -> Void in
+//            do {
+//                let request = NSFetchRequest(entityName: Pass.entityName)
+//                
+//                var results = try self.context.executeFetchRequest(request)
+//                if results.count == 0 {
+//                    self.createInitialModel()
+//                    self.saveDataStore()
+//                    
+//                    results = try self.context.executeFetchRequest(request)
+//                    assert(results.count > 0, "results should be greater than zero")
+//                }
+//                
+//                let descriptors = [NSSortDescriptor(key: "order", ascending: true)]
+//                let array = NSArray(array: results).sortedArrayUsingDescriptors(descriptors)
+//                
+//                guard let passes = array as? [Pass] else { return }
+//                self.passes = passes
+//                
+//                NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+//                
+//                self.refreshFromRemoteData()
+//            }
+//            catch {
+//                print("error executing fetch request: \(error)")
+//            }
+//        }
     }
     
     private func createInitialModel() {
         var order = 0
         let keys = seedDictionary.keys.sort { $0 < $1 }
         
-        for key in keys {
-            guard let pass = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context) as? Pass else { continue }
-            
-            pass.name = key
-            pass.enabled = true
-            pass.order = order
-            
-            order += 1
-            
-            guard let url = seedDictionary[key] else { continue }
-            pass.url = url
-        }
+//        for key in keys {
+//            guard let pass = NSEntityDescription.insertNewObjectForEntityForName(Pass.entityName, inManagedObjectContext: context) as? Pass else { continue }
+//            
+//            pass.name = key
+//            pass.enabled = true
+//            pass.order = order
+//            
+//            order += 1
+//            
+//            guard let url = seedDictionary[key] else { continue }
+//            pass.url = url
+//        }
     }
     
     private lazy var dateFormatter: NSDateFormatter = {
