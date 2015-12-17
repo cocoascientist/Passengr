@@ -13,8 +13,6 @@ public let PassesErrorNotification = "PassesErrorNotification"
 
 typealias PassUpdatesFuture = Future<[Pass]>
 
-private let modelName = "passengr.plist"
-
 class PassDataSource: NSObject {
     
     var orderedPasses: [Pass] {
@@ -46,11 +44,9 @@ class PassDataSource: NSObject {
     // MARK: - Public
     
     func saveDataStore() {
-        let url = NSURL.applicationDocumentsDirectory().URLByAppendingPathComponent(modelName)
-        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
-        data.writeToURL(url, atomically: true)
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+        if didWritePasses(passes, toURL: modelURL) {
+            NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+        }
     }
     
     func reloadData() {
@@ -141,19 +137,19 @@ class PassDataSource: NSObject {
     }
     
     internal func loadOrCreateInitialModel() {
-        
-        let url = NSURL.applicationDocumentsDirectory().URLByAppendingPathComponent(modelName)
-        if NSFileManager.defaultManager().fileExistsAtPath(url.path!) == false {
-            createInitialModelAtURL(url)
+        if NSFileManager.defaultManager().fileExistsAtPath(modelURL.path!) == false {
+            createInitialModelAtURL(modelURL)
         }
         
-        guard let data = NSData(contentsOfURL: url) else {
+        guard let data = NSData(contentsOfURL: modelURL) else {
             fatalError("model data not found")
         }
         
         guard let passes = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Pass] else {
             fatalError("could not load passes, wrong data type")
         }
+        
+        assert(passes.count > 0, "passes should not be zero")
         
         self.passes = passes
         
@@ -162,7 +158,7 @@ class PassDataSource: NSObject {
         self.refreshFromRemoteData()
     }
     
-    private func createInitialModelAtURL(url: NSURL) -> Bool {
+    private func createInitialModelAtURL(url: NSURL) {
         var order = 0
         let names = seedDictionary.keys.sort { $0 < $1 }
         
@@ -175,8 +171,9 @@ class PassDataSource: NSObject {
             order += 1
         }
         
-        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
-        return data.writeToURL(url, atomically: true)
+        if didWritePasses(passes, toURL: modelURL) == false {
+            fatalError("cannot saved model to url: \(modelURL)")
+        }
     }
     
     private lazy var dateFormatter: NSDateFormatter = {
@@ -196,11 +193,14 @@ class PassDataSource: NSObject {
             "White": "http://www.wsdot.com/traffic/passes/white/"
         ]
     }()
-}
-
-extension NSURL {
-    class func applicationDocumentsDirectory() -> NSURL {
+    
+    private var modelURL: NSURL {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
+        return urls[urls.count - 1].URLByAppendingPathComponent("passengr.plist")
+    }
+    
+    private func didWritePasses(passes: [Pass], toURL url: NSURL) -> Bool {
+        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
+        return data.writeToURL(url, atomically: true)
     }
 }
