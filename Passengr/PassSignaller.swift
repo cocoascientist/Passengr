@@ -8,13 +8,13 @@
 
 import Foundation
 
-typealias PassFuture = Future<PassInfo, PassError>
-typealias PassesFuture = Future<[PassInfo], PassError>
+typealias PassFuture = Future<PassInfo>
+typealias PassesFuture = Future<[PassInfo]>
 
 class PassSignaller {
     
     let controller = NetworkController()
-    private var error: PassError? = nil
+    private var error: ErrorType? = nil
     
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
@@ -76,7 +76,7 @@ class PassSignaller {
                     let info = self.passInfoFromData(data, info: info)
                     completion(Result.Success(info))
                 case .Failure(let error):
-                    completion(Result.Failure(PassError(error: error)))
+                    completion(Result.Failure(error))
                 }
             }
         }

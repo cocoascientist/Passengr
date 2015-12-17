@@ -18,7 +18,7 @@ class Parser {
         ]
     }
     
-    class func passInfoFromResponse(response data: NSData) -> [String: String] {
+    class func passInfoFromResponse(response data: NSData) -> PassInfo {
         let doc = HTMLDoc(data: data)
         guard let root = doc.root else { return [:] }
         

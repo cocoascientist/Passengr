@@ -6,9 +6,24 @@
 //  Copyright (c) 2015 Andrew Shepard. All rights reserved.
 //
 
-public enum Result<T, E: ErrorType> {
+protocol ResultType {
+    typealias Value
+    
+    init(value: Value)
+    init(error: ErrorType)
+}
+
+public enum Result<T>: ResultType {
     case Success(T)
-    case Failure(E)
+    case Failure(ErrorType)
+    
+    init(value: T) {
+        self = .Success(value)
+    }
+    
+    init(error: ErrorType) {
+        self = .Failure(error)
+    }
 }
 
 extension Result: CustomDebugStringConvertible {
@@ -33,10 +48,10 @@ extension Result {
     }
 }
 
-public func success<T, E>(value: T) -> Result<T, E> {
+public func success<T>(value: T) -> Result<T> {
     return .Success(value)
 }
 
-public func failure<T, E>(error: E) -> Result<T, E> {
+public func failure<T>(error: ErrorType) -> Result<T> {
     return .Failure(error)
 }

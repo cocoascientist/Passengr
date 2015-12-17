@@ -8,8 +8,8 @@
 
 import Foundation
 
-public typealias TaskResult = Result<NSData, TaskError>
-public typealias TaskFuture = Future<NSData, TaskError>
+public typealias TaskResult = Result<NSData>
+public typealias TaskFuture = Future<NSData>
 public typealias TaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
 
 public enum TaskError: ErrorType {
@@ -56,14 +56,14 @@ public struct NetworkController: Reachable {
             let completion: TaskCompletion = { (data, response, err) in
                 guard let data = data else {
                     guard let err = err else {
-                        return fulfill(result: .Failure(.NoData))
+                        return fulfill(result: .Failure(TaskError.NoData))
                     }
                     
-                    return fulfill(result: .Failure(.Other(err)))
+                    return fulfill(result: .Failure(TaskError.Other(err)))
                 }
                 
                 guard let response = response as? NSHTTPURLResponse else {
-                    return fulfill(result: .Failure(.BadResponse))
+                    return fulfill(result: .Failure(TaskError.BadResponse))
                 }
                 
                 switch response.statusCode {
@@ -80,7 +80,7 @@ public struct NetworkController: Reachable {
             case .Online:
                 task.resume()
             case .Offline:
-                fulfill(result: .Failure(.Offline))
+                fulfill(result: .Failure(TaskError.Offline))
             }
         }
         

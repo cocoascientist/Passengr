@@ -12,7 +12,7 @@ import CoreData
 public let PassesDidChangeNotification = "PassesDidChangeNotification"
 public let PassesErrorNotification = "PassesErrorNotification"
 
-typealias PassUpdatesFuture = Future<[Pass], PassError>
+typealias PassUpdatesFuture = Future<[Pass]>
 
 class PassDataSource: NSObject {
     
@@ -76,7 +76,7 @@ class PassDataSource: NSObject {
     // MARK: - Private
     
     private func refreshFromRemoteData() {
-        typealias PassesResult = Result<[Pass], PassError>
+        typealias PassesResult = Result<[Pass]>
         
         let refresh: ([Pass]) -> () = { [weak self] passes in
             dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
@@ -85,7 +85,7 @@ class PassDataSource: NSObject {
             })
         }
         
-        let raiseError: (PassError) -> () = { error in
+        let raiseError: (ErrorType) -> () = { error in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let name = PassesErrorNotification
                 let info = [NSLocalizedDescriptionKey: "\(error)"]
@@ -113,7 +113,7 @@ class PassDataSource: NSObject {
                 completion(Result.Success(passes))
             }
             
-            let failure: (PassError) -> Void = { error in
+            let failure: (ErrorType) -> Void = { error in
                 completion(Result.Failure(error))
             }
             
