@@ -10,9 +10,19 @@ import UIKit
 
 private let reuseIdentifier = PassListCell.identifier
 
+let context = UnsafeMutablePointer<Void>()
+
 class PassViewController: UICollectionViewController, SegueHandlerType {
     
-    var dataSource: PassDataSource?
+    var dataSource: PassDataSource? {
+        didSet {
+            if let dataSource = dataSource {
+                dataSource.addObserver(self, forKeyPath: "passes", options: [.New], context: context)
+                dataSource.addObserver(self, forKeyPath: "updating", options: [.New], context: context)
+                dataSource.addObserver(self, forKeyPath: "error", options: [.New], context: context)
+            }
+        }
+    }
     
     internal enum SegueIdentifier: String {
         case ShowDetailView = "ShowDetailView"
@@ -53,7 +63,9 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        self.dataSource?.removeObserver(self, forKeyPath: "passes")
+        self.dataSource?.removeObserver(self, forKeyPath: "updating")
+        self.dataSource?.removeObserver(self, forKeyPath: "error")
     }
 
     override func viewDidLoad() {
@@ -71,9 +83,6 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.collectionView?.backgroundColor = AppStyle.lightBlueColor
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.addSubview(refreshControl)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesChange:"), name: PassesDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handlePassesError:"), name: PassesErrorNotification, object: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -91,6 +100,24 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
             guard let viewController = navController.childViewControllers.first as? EditViewController else { return }
             
             viewController.dataSource = dataSource
+        }
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        
+        if context == context {
+            if keyPath == "passes" {
+                handlePassesChange()
+            }
+            else if keyPath == "updating" {
+                handleUpdatingChange()
+            }
+            else if keyPath == "error" {
+                handleErrorChange()
+            }
+        }
+        else {
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
 
@@ -124,17 +151,6 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
     }
-
-    // MARK: - Notifications
-    
-    func handlePassesChange(notification: NSNotification) {
-        self.refreshController.setControlState(.Updated)
-        self.collectionView?.reloadData()
-    }
-    
-    func handlePassesError(notification: NSNotification) {
-        self.refreshController.setControlState(notification)
-    }
     
     // MARK: - Actions
     
@@ -143,6 +159,27 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     }
 
     // MARK: - Private
+    
+    private func handlePassesChange() {
+        self.collectionView?.reloadData()
+    }
+    
+    private func handleUpdatingChange() {
+        guard let dataSource = dataSource else { return }
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = dataSource.updating
+        
+        if !dataSource.updating {
+            self.refreshController.setControlState(.Updated)
+        }
+    }
+    
+    private func handleErrorChange() {
+        guard let dataSource = dataSource else { return }
+        guard let error = dataSource.error else { return }
+        
+        self.refreshController.setControlState(error)
+    }
     
     private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PassListCell else { return }

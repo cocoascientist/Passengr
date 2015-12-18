@@ -8,12 +8,18 @@
 
 import Foundation
 
-public let PassesDidChangeNotification = "PassesDidChangeNotification"
-public let PassesErrorNotification = "PassesErrorNotification"
-
 typealias PassUpdatesFuture = Future<[Pass]>
 
 class PassDataSource: NSObject {
+    
+    dynamic private(set) var passes: [Pass] {
+        didSet {
+            self.lastUpdated = NSDate()
+        }
+    }
+    
+    dynamic private(set) var updating: Bool = false
+    dynamic private(set) var error: NSError? = nil
     
     var orderedPasses: [Pass] {
         return self.passes.sort { Int($0.order) < Int($1.order) }
@@ -24,11 +30,6 @@ class PassDataSource: NSObject {
     }
     
     private(set) var lastUpdated: NSDate
-    private var passes: [Pass] {
-        didSet {
-            self.lastUpdated = NSDate()
-        }
-    }
     
     private let signaller = PassSignaller()
     
@@ -44,8 +45,8 @@ class PassDataSource: NSObject {
     // MARK: - Public
     
     func saveDataStore() {
-        if didWritePasses(passes, toURL: modelURL) {
-            NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
+        if didWritePasses(passes, toURL: modelURL) == false {
+            print("error saving passes to url: \(modelURL)")
         }
     }
     
@@ -60,18 +61,22 @@ class PassDataSource: NSObject {
         
         let refresh: ([Pass]) -> () = { [weak self] passes in
             dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                self?.updating = false
                 self?.passes = passes
                 self?.saveDataStore()
             })
         }
         
         let raiseError: (ErrorType) -> () = { error in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let name = PassesErrorNotification
+            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                self?.updating = false
                 let info = [NSLocalizedDescriptionKey: "\(error)"]
-                NSNotificationCenter.defaultCenter().postNotificationName(name, object: nil, userInfo: info)
+                let error = NSError(domain: "com.cocoascientist.Passengr", code: -101, userInfo: info)
+                self?.error = error
             })
         }
+        
+        self.updating = true
         
         let future = self.futureForPassUpdates()
         future.start { (result) -> () in
@@ -152,8 +157,6 @@ class PassDataSource: NSObject {
         assert(passes.count > 0, "passes should not be zero")
         
         self.passes = passes
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(PassesDidChangeNotification, object: nil)
         
         self.refreshFromRemoteData()
     }

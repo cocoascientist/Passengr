@@ -34,12 +34,12 @@ class RefreshController {
         transitionToState(state)
     }
     
-    func setControlState(notification: NSNotification) {
+    func setControlState(error: NSError) {
         guard let refreshControl = refreshControl else {
             fatalError("refreshControl should not be nil")
         }
         
-        let title = titleForNotification(notification)
+        let title = titleForError(error)
         refreshControl.attributedTitle = NSAttributedString(string: title)
         
         transitionToState(.Error)
@@ -76,10 +76,10 @@ class RefreshController {
         }
     }
     
-    private func titleForNotification(notification: NSNotification) -> String {
+    private func titleForError(error: NSError) -> String {
         var title = titleForState(.Error)
-        if let error = notification.userInfo?[NSLocalizedDescriptionKey] as? String {
-            title = "\(title): \(error)"
+        if let message = error.userInfo[NSLocalizedDescriptionKey] as? String {
+            title = "\(title): \(message)"
         }
         
         return title

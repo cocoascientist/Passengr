@@ -8,12 +8,12 @@
 
 import Foundation
 
-typealias PassFuture = Future<PassInfo>
 typealias PassesFuture = Future<[PassInfo]>
+private typealias PassFuture = Future<PassInfo>
 
 class PassSignaller {
     
-    let controller = NetworkController()
+    private let controller = NetworkController()
     private var error: ErrorType? = nil
     
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
@@ -56,7 +56,7 @@ class PassSignaller {
         return future
     }
     
-    func futureForPassInfo(info: PassInfo) -> PassFuture {
+    private func futureForPassInfo(info: PassInfo) -> PassFuture {
         let future: PassFuture = Future() { completion in
             
             guard let urlString = info[PassInfoKeys.ReferenceURL] else {
