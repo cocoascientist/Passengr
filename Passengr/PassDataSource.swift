@@ -163,11 +163,11 @@ class PassDataSource: NSObject {
     
     private func createInitialModelAtURL(url: NSURL) {
         var order = 0
-        let names = seedDictionary.keys.sort { $0 < $1 }
-        
         var passes: [Pass] = []
-        for name in names {
-            guard let url = seedDictionary[name] else { continue }
+        
+        for info in seedData {
+            let url = info.path
+            let name = info.name
             let pass = Pass(name: name, url: url, order: order, enabled: true)
             
             passes.append(pass)
@@ -186,15 +186,8 @@ class PassDataSource: NSObject {
         return formatter
     }()
     
-    private lazy var seedDictionary: [String: String] = {
-        return [
-            "Blewett": "http://www.wsdot.com/traffic/passes/blewett/",
-            "Manastash": "http://www.wsdot.com/traffic/passes/manastash/",
-            "Snoqualmie": "http://www.wsdot.com/traffic/passes/snoqualmie/",
-            "Status": "http://www.wsdot.com/traffic/passes/satus/",
-            "Stevens": "http://www.wsdot.com/traffic/passes/stevens/",
-            "White": "http://www.wsdot.com/traffic/passes/white/"
-        ]
+    private lazy var seedData: [CascadePass] = {
+        return CascadePass.allPasses().sort { $0.name < $1.name }
     }()
     
     private var modelURL: NSURL {

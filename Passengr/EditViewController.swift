@@ -87,7 +87,9 @@ class EditViewController: UITableViewController {
             fatalError("data soure should not be nil")
         }
         
+        dataSource.willChangeValueForKey("passes")
         dataSource.saveDataStore()
+        dataSource.didChangeValueForKey("passes")
     }
 
     @IBAction func handleSwitchChange(sender: AnyObject) {
@@ -95,6 +97,7 @@ class EditViewController: UITableViewController {
         let pass = self.passes[swtch.tag]
         
         pass.enabled = swtch.on
+        
         dataSource?.saveDataStore()
     }
     

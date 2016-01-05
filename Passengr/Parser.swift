@@ -20,7 +20,9 @@ class Parser {
     
     class func passInfoFromResponse(response data: NSData) -> PassInfo {
         let doc = HTMLDoc(data: data)
-        guard let root = doc.root else { return [:] }
+        guard let root = doc.root else {
+            return [:]
+        }
         
         var info: [String: String] = [:]
         for (key, xpath) in queries {

@@ -12,7 +12,11 @@ import CoreLocation
 
 class NetworkControllerTests: XCTestCase {
     
-    private let request = CascadeAPI.Snoqualmie.request
+    private lazy var request: NSURLRequest = {
+        guard let url = NSURL(string: CascadePass.Snoqualmie.path) else { fatalError() }
+        let request = NSURLRequest(URL: url)
+        return request
+    }()
 
     override func setUp() {
         super.setUp()

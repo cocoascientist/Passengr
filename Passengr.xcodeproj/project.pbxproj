@@ -37,6 +37,8 @@
 		F7AD52861C17C26F00310402 /* HTMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD52851C17C26F00310402 /* HTMLParserTests.swift */; };
 		F7AD52891C17C36800310402 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C21C0D58FB00A4D6FE /* Parser.swift */; };
 		F7AD528A1C17C3A200310402 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6CB1C0D59CA00A4D6FE /* HTML.swift */; };
+		F7AFAE521C24E86800D543C6 /* CascadePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AFAE511C24E86800D543C6 /* CascadePass.swift */; };
+		F7AFAE531C24E86800D543C6 /* CascadePass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AFAE511C24E86800D543C6 /* CascadePass.swift */; };
 		F7B36B621C188A9E00474D0E /* RefreshController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B611C188A9E00474D0E /* RefreshController.swift */; };
 		F7B36B641C1895A600474D0E /* Pass+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B631C1895A600474D0E /* Pass+Helpers.swift */; };
 		F7B36B671C18973800474D0E /* BadResponseURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B651C18973800474D0E /* BadResponseURLProtocol.swift */; };
@@ -46,7 +48,6 @@
 		F7B36B6F1C18975200474D0E /* NetworkControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B6B1C18975200474D0E /* NetworkControllerTests.swift */; };
 		F7B36B701C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B6C1C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift */; };
 		F7B36B711C18977000474D0E /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BE1C0D588D00A4D6FE /* NetworkController.swift */; };
-		F7B36B731C18980C00474D0E /* CascadeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B36B721C18980C00474D0E /* CascadeAPI.swift */; };
 		F7B36B741C1898FF00474D0E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BA1C0D587C00A4D6FE /* Future.swift */; };
 		F7B36B751C1898FF00474D0E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6BB1C0D587C00A4D6FE /* Result.swift */; };
 		F7B36B761C1898FF00474D0E /* Reachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C85DB31C16049200123C39 /* Reachable.swift */; };
@@ -107,6 +108,7 @@
 		F794A6921C174785008AD135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewLayout.swift; sourceTree = "<group>"; };
 		F7AD52851C17C26F00310402 /* HTMLParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParserTests.swift; sourceTree = "<group>"; };
+		F7AFAE511C24E86800D543C6 /* CascadePass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CascadePass.swift; sourceTree = "<group>"; };
 		F7B36B611C188A9E00474D0E /* RefreshController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshController.swift; sourceTree = "<group>"; };
 		F7B36B631C1895A600474D0E /* Pass+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pass+Helpers.swift"; sourceTree = "<group>"; };
 		F7B36B651C18973800474D0E /* BadResponseURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadResponseURLProtocol.swift; sourceTree = "<group>"; };
@@ -115,7 +117,6 @@
 		F7B36B6A1C18975200474D0E /* LocalURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalURLProtocol.swift; sourceTree = "<group>"; };
 		F7B36B6B1C18975200474D0E /* NetworkControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkControllerTests.swift; sourceTree = "<group>"; };
 		F7B36B6C1C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionConfiguration+Protocols.swift"; sourceTree = "<group>"; };
-		F7B36B721C18980C00474D0E /* CascadeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CascadeAPI.swift; sourceTree = "<group>"; };
 		F7B36B7A1C18A1B100474D0E /* PassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassTests.swift; sourceTree = "<group>"; };
 		F7C4176E1C0625F0009C5DA0 /* PassListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassListCell.swift; sourceTree = "<group>"; };
 		F7C4176F1C0625F0009C5DA0 /* PassListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PassListCell.xib; sourceTree = "<group>"; };
@@ -188,7 +189,6 @@
 				F7B36B6B1C18975200474D0E /* NetworkControllerTests.swift */,
 				F7AD52851C17C26F00310402 /* HTMLParserTests.swift */,
 				F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */,
-				F7B36B721C18980C00474D0E /* CascadeAPI.swift */,
 				F75A3B581C18A703004A7E39 /* Extensions */,
 				F7B36B771C189CDC00474D0E /* URL Protocols */,
 				F71B3FDC1C038AD20012CD3D /* Info.plist */,
@@ -260,6 +260,7 @@
 				F7B36B631C1895A600474D0E /* Pass+Helpers.swift */,
 				F776E6C01C0D58A700A4D6FE /* PassSignaller.swift */,
 				F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */,
+				F7AFAE511C24E86800D543C6 /* CascadePass.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -401,6 +402,7 @@
 			files = (
 				F794A68F1C172F96008AD135 /* Styles.swift in Sources */,
 				F757CBF51C0F7E4E00319D26 /* ManagedObjectType.swift in Sources */,
+				F7AFAE521C24E86800D543C6 /* CascadePass.swift in Sources */,
 				F79007A51C164F63008C2092 /* PassDetailCell.swift in Sources */,
 				F77B23CD1C0E3E81006EFBA4 /* PassEditCell.swift in Sources */,
 				F776E6CC1C0D59CA00A4D6FE /* HTML.swift in Sources */,
@@ -432,7 +434,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7B36B731C18980C00474D0E /* CascadeAPI.swift in Sources */,
 				F7B36B741C1898FF00474D0E /* Future.swift in Sources */,
 				F7B36B7E1C18A1C400474D0E /* Pass+Helpers.swift in Sources */,
 				F7B36B711C18977000474D0E /* NetworkController.swift in Sources */,
@@ -450,6 +451,7 @@
 				F7B36B801C18A37000474D0E /* Styles.swift in Sources */,
 				F7B36B6F1C18975200474D0E /* NetworkControllerTests.swift in Sources */,
 				F7B36B7C1C18A1C400474D0E /* Pass.swift in Sources */,
+				F7AFAE531C24E86800D543C6 /* CascadePass.swift in Sources */,
 				F7B36B811C18A37A00474D0E /* ManagedObjectType.swift in Sources */,
 				F7B36B701C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift in Sources */,
 				F7B36B7F1C18A28800474D0E /* PassInfoType.swift in Sources */,
