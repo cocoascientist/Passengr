@@ -71,25 +71,20 @@ class PassSignaller {
             let future = self.controller.dataForRequest(request)
             
             future.start { (result) -> () in
-                switch result {
-                case .Success(let data):
-                    let info = self.passInfoFromData(data, info: info)
-                    completion(Result.Success(info))
-                case .Failure(let error):
-                    completion(Result.Failure(error))
-                }
+                
+                let passResult = result.map({ (data) -> PassInfo in
+                    var passInfo = Parser.passInfoFromResponse(response: data)
+                    for (key, value) in info {
+                        passInfo[key] = value
+                    }
+                    return passInfo
+                })
+                
+                completion(passResult)
             }
         }
         
         return future
-    }
-    
-    private func passInfoFromData(data: NSData, info: PassInfo) -> PassInfo {
-        var response = Parser.passInfoFromResponse(response: data)
-        for (key, value) in info {
-            response[key] = value
-        }
-        return response
     }
 }
 

@@ -11,6 +11,8 @@ protocol ResultType {
     
     init(value: Value)
     init(error: ErrorType)
+    
+    func map<U>(f: (Value) -> U) -> Result<U>
 }
 
 public enum Result<T>: ResultType {
@@ -26,6 +28,17 @@ public enum Result<T>: ResultType {
     }
 }
 
+extension Result {
+    func map<U>(f: T -> U) -> Result<U> {
+        switch self {
+        case let .Success(value):
+            return Result<U>.Success(f(value))
+        case let .Failure(error):
+            return Result<U>.Failure(error)
+        }
+    }
+}
+
 extension Result: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
@@ -35,23 +48,4 @@ extension Result: CustomDebugStringConvertible {
             return "error: \(String(error))"
         }
     }
-}
-
-extension Result {
-    func result() -> T? {
-        switch self {
-        case .Success(let value):
-            return value
-        case .Failure:
-            return nil
-        }
-    }
-}
-
-public func success<T>(value: T) -> Result<T> {
-    return .Success(value)
-}
-
-public func failure<T>(error: ErrorType) -> Result<T> {
-    return .Failure(error)
 }
