@@ -9,8 +9,8 @@
 protocol ResultType {
     typealias Value
     
-    init(value: Value)
-    init(error: ErrorType)
+    init(success value: Value)
+    init(failure error: ErrorType)
     
     func map<U>(f: (Value) -> U) -> Result<U>
 }
@@ -19,11 +19,11 @@ public enum Result<T>: ResultType {
     case Success(T)
     case Failure(ErrorType)
     
-    init(value: T) {
+    init(success value: T) {
         self = .Success(value)
     }
     
-    init(error: ErrorType) {
+    init(failure error: ErrorType) {
         self = .Failure(error)
     }
 }
