@@ -18,11 +18,6 @@ class DataSourceTests: XCTestCase {
             super.init()
         }
         
-        override func initializeModel(notification: NSNotification) {
-            self.initializedModelExpectation.fulfill()
-            super.initializeModel(notification)
-        }
-        
         override func loadOrCreateInitialModel() {
             super.loadOrCreateInitialModel()
         }
