@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = PassEditCell.identifier
+private let reuseIdentifier = String(PassEditCell)
 
 class EditViewController: UITableViewController {
     
@@ -30,7 +30,7 @@ class EditViewController: UITableViewController {
         self.title = NSLocalizedString("Edit Passes", comment: "Edit Passes")
         self.tableView.editing = true
         
-        let nib = UINib(nibName: PassEditCell.identifier, bundle: nil)
+        let nib = UINib(nibName: String(PassEditCell), bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: reuseIdentifier)
     }
 

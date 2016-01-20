@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = PassListCell.identifier
+private let reuseIdentifier = String(PassListCell)
 
 let context = UnsafeMutablePointer<Void>()
 
@@ -77,7 +77,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 
         // Register cell classes
-        let nib = UINib(nibName: PassListCell.identifier, bundle: nil)
+        let nib = UINib(nibName: String(PassListCell), bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.collectionView?.backgroundColor = AppStyle.lightBlueColor

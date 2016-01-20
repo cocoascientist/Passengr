@@ -45,10 +45,6 @@ class PassDetailCell: UICollectionViewCell {
         UIBezierPath(rect: rect).stroke()
     }
     
-    static var identifier: String {
-        return "PassDetailCell"
-    }
-    
     func setup() {
         self.titleLabel.numberOfLines = 0
         self.titleLabel.preferredMaxLayoutWidth = 280.0

@@ -27,10 +27,6 @@ class PassListCell: UICollectionViewCell {
         UIBezierPath(rect: rect).stroke()
     }
     
-    static var identifier: String {
-        return "PassListCell"
-    }
-    
     func setup() {
         self.backgroundColor = UIColor.whiteColor()
     }
