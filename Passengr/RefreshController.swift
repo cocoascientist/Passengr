@@ -14,13 +14,21 @@ enum RefreshState {
     case Error
 }
 
-class RefreshController {
+class RefreshController: NSObject {
     weak var refreshControl: UIRefreshControl?
     weak var dataSource: PassDataSource?
     
     init(refreshControl: UIRefreshControl, dataSource: PassDataSource) {
         self.refreshControl = refreshControl
         self.dataSource = dataSource
+        
+        super.init()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleRefresh:"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func setControlState(state: RefreshState) {
@@ -43,6 +51,10 @@ class RefreshController {
         refreshControl.attributedTitle = NSAttributedString(string: title)
         
         transitionToState(.Error)
+    }
+    
+    func handleRefresh(notification: NSNotification) {
+        self.dataSource?.reloadData()
     }
     
     // MARK: - Private
