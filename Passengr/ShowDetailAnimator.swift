@@ -27,7 +27,7 @@ class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let attributes = fromCollectionView.layoutAttributesForItemAtIndexPath(indexPath)
         let itemSize = DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
         
-        let originRect = attributes!.frame
+        guard let originRect = attributes?.frame else { return }
         let destinationRect = CGRectMake(15.0, 115.0, itemSize.width, itemSize.height)
         
         let firstRect = CGRectMake(destinationRect.origin.x, destinationRect.origin.y, destinationRect.size.width, originRect.size.height)
