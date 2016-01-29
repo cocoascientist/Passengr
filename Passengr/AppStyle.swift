@@ -1,5 +1,5 @@
 //
-//  Styles.swift
+//  AppStyle.swift
 //  Passengr
 //
 //  Created by Andrew Shepard on 12/8/15.
@@ -9,11 +9,17 @@
 import UIKit
 
 struct AppStyle {
-    static let redColor = UIColor.hexColor("#e64e42")
-    static let orangeColor = UIColor.hexColor("#e57e31")
-    static let greenColor = UIColor.hexColor("#39cb75")
-    static let forestGreenColor = UIColor.hexColor("#2e5037")
-    static let lightBlueColor = UIColor.hexColor("#f8f8ff")
+    struct Color {
+        static let Red = UIColor.hexColor("#e64e42")
+        static let Orange = UIColor.hexColor("#e57e31")
+        static let Green = UIColor.hexColor("#39cb75")
+        static let ForestGreen = UIColor.hexColor("#2e5037")
+        static let LightBlue = UIColor.hexColor("#f8f8ff")
+    }
+    
+    struct Font {
+        static let Copperplate = UIFont(name: "Copperplate", size: 14.0)
+    }
 }
 
 extension UIColor {

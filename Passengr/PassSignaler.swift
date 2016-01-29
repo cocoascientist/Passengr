@@ -1,5 +1,5 @@
 //
-//  PassSignaller.swift
+//  PassSignaler.swift
 //  Passengr
 //
 //  Created by Andrew Shepard on 11/14/15.
@@ -11,7 +11,7 @@ import Foundation
 typealias PassesFuture = Future<[PassInfo]>
 private typealias PassFuture = Future<PassInfo>
 
-class PassSignaller {
+class PassSignaler {
     
     private let controller = NetworkController()
     private var error: ErrorType? = nil
