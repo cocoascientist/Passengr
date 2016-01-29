@@ -36,9 +36,8 @@ class DetailViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView?.backgroundColor = AppStyle.lightBlueColor
+        self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
 
-        // Register cell classes
         let nib = UINib(nibName: String(PassDetailCell), bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }

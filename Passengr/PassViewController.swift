@@ -80,7 +80,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let nib = UINib(nibName: String(PassListCell), bundle: nil)
         self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
         
-        self.collectionView?.backgroundColor = AppStyle.lightBlueColor
+        self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.addSubview(refreshControl)
     }

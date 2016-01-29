@@ -52,9 +52,9 @@ class PassDetailCell: UICollectionViewCell {
         self.conditionsLabel.preferredMaxLayoutWidth = 280.0
         self.westboundLabel.preferredMaxLayoutWidth = 280.0
         
-        self.conditionsTitleLabel.font = UIFont(name: "Copperplate", size: 14.0)
-        self.eastboundTitleLabel.font = UIFont(name: "Copperplate", size: 14.0)
-        self.westboundTitleLabel.font = UIFont(name: "Copperplate", size: 14.0)
+        self.conditionsTitleLabel.font = AppStyle.Font.Copperplate
+        self.eastboundTitleLabel.font = AppStyle.Font.Copperplate
+        self.westboundTitleLabel.font = AppStyle.Font.Copperplate
         
         self.westboundTitleLabel.textColor = UIColor.darkGrayColor()
         self.eastboundTitleLabel.textColor = UIColor.darkGrayColor()
