@@ -88,9 +88,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     private func destinationRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
         guard let frame = attributes?.frame else { return CGRectZero }
-        let rect = CGRectMake(frame.origin.x, frame.origin.y + 64.0, frame.size.width, frame.size.height)
-        print(rect)
-        return rect
+        return CGRectMake(frame.origin.x, frame.origin.y + 64.0, frame.size.width, frame.size.height)
     }
     
     private func lineViewFrameWithBounds(bounds: CGRect) -> CGRect {
