@@ -94,6 +94,7 @@ class DetailViewController: UICollectionViewController {
     
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         guard let indexPath = self.collectionView?.indexPathsForVisibleItems().first else { return }
+        self.indexPath = indexPath
         self.setTitleTextFromIndexPath(indexPath)
     }
     
