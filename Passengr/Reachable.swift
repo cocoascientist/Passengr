@@ -43,13 +43,7 @@ extension ReachabilityType {
     public init(reachabilityFlags flags: SCNetworkReachabilityFlags) {
         let connectionRequired = flags.contains(.ConnectionRequired)
         let isReachable = flags.contains(.Reachable)
-        
-        if !connectionRequired && isReachable {
-            self = .Online
-        }
-        else {
-            self = .Offline
-        }
+        self = (!connectionRequired && isReachable) ? .Online : .Offline
     }
 }
 

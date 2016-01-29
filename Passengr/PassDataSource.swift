@@ -31,7 +31,7 @@ class PassDataSource: NSObject, NSCoding {
     
     private(set) var lastUpdated: NSDate
     
-    private let signaller = PassSignaller()
+    private let signaler = PassSignaler()
     
     override init() {
         self.passes = []
@@ -125,7 +125,7 @@ class PassDataSource: NSObject, NSCoding {
                 return pass.passInfo
             }
             
-            let future = self.signaller.futureForPassesInfo(infos)
+            let future = self.signaler.futureForPassesInfo(infos)
             future.start { (result) -> () in
                 switch result {
                 case .Success(let infos):

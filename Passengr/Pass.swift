@@ -72,9 +72,6 @@ extension Pass: PassInfoType {
     }
     
     func updateUsingPassInfo(info: [String: String]) {
-//        self.name = info[PassInfoKeys.Title] ?? ""
-//        self.url = info[PassInfoKeys.ReferenceURL] ?? ""
-        
         self.conditions = info[PassInfoKeys.Conditions] ?? ""
         self.westbound = info[PassInfoKeys.Westbound] ?? ""
         self.eastbound = info[PassInfoKeys.Eastbound] ?? ""
