@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>StringsTable</key>
+        <string>Acknowledgements</string>
+        <key>PreferenceSpecifiers</key>
+        <array>
+            <dict>
+                <key>Title</key>
+                <string>
+Mountain Pass information is provided by WSDOT
+
+App icon created by Gilbert Bages from the Noun Project
+                    
+HTML parsing based on the libxml2 wrapper by SonoPlot and Janie Clayton
+
+https://github.com/SonoPlot/Swift-libxml
+
+Future type based on the implemention provided by Javier Soto in "Back to the Futures"
+
+https://github.com/JaviSoto/Talks#swift-summit-2015-back-to-the-futures
+                </string>
+                <key>Type</key>
+                <string>PSGroupSpecifier</string>
+            </dict>
+        </array>
+    </dict>
+</plist>

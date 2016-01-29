@@ -10,6 +10,7 @@
 		F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FC51C038AD20012CD3D /* AppDelegate.swift */; };
 		F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FC91C038AD20012CD3D /* Main.storyboard */; };
 		F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */; };
+		F72610851C5C1AA600955665 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F72610841C5C1AA600955665 /* Settings.bundle */; };
 		F75A3B5A1C18A8F6004A7E39 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = F75A3B591C18A8F6004A7E39 /* test.html */; };
 		F75A3B5F1C18DC28004A7E39 /* PassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6B11C0CEDDC00A4D6FE /* PassDataSource.swift */; };
 		F75A3B611C18DE5C004A7E39 /* PassSignaler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C01C0D58A700A4D6FE /* PassSignaler.swift */; };
@@ -82,6 +83,7 @@
 		F71B3FD11C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F71B3FD61C038AD20012CD3D /* PassengrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PassengrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F71B3FDC1C038AD20012CD3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F72610841C5C1AA600955665 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F75A3B591C18A8F6004A7E39 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
 		F7754D211C0A69EF0080D572 /* SegueHandlerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueHandlerType.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */,
 				F794A6921C174785008AD135 /* Assets.xcassets */,
 				F71B3FD11C038AD20012CD3D /* Info.plist */,
+				F72610841C5C1AA600955665 /* Settings.bundle */,
 			);
 			path = Passengr;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */,
 				F794A6931C174785008AD135 /* Assets.xcassets in Resources */,
 				F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */,
+				F72610851C5C1AA600955665 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
