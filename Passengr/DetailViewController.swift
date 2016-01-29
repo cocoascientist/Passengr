@@ -49,6 +49,23 @@ class DetailViewController: UICollectionViewController {
         self.collectionView?.scrollToItemAtIndexPath(self.indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
         self.setTitleTextFromIndexPath(self.indexPath)
     }
+    
+    override func encodeRestorableStateWithCoder(coder: NSCoder) {
+        coder.encodeObject(self.dataSource, forKey: "dataSource")
+        coder.encodeObject(self.indexPath, forKey: "indexPath")
+        
+        super.encodeRestorableStateWithCoder(coder)
+    }
+    
+    override func decodeRestorableStateWithCoder(coder: NSCoder) {
+        guard let dataSource = coder.decodeObjectForKey("dataSource") as? PassDataSource else { return }
+        guard let indexPath = coder.decodeObjectForKey("indexPath") as? NSIndexPath else { return }
+        
+        self.dataSource = dataSource
+        self.indexPath = indexPath
+        
+        super.decodeRestorableStateWithCoder(coder)
+    }
 
     // MARK: - UICollectionViewDataSource
 

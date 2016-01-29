@@ -14,6 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private let dataSource = PassDataSource()
+    
+    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
+        guard let viewController = navController.childViewControllers.first as? PassViewController else { return false }
+        viewController.dataSource = dataSource
+        
+        return true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
@@ -22,13 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
-        UINavigationBar.appearance().barTintColor = AppStyle.forestGreenColor
+        UINavigationBar.appearance().barTintColor = AppStyle.Color.ForestGreen
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
-        guard let viewController = navController.childViewControllers.first as? PassViewController else { return false }
-        viewController.dataSource = dataSource
-        
         return true
+    }
+    
+    func application(application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return false
+    }
+    
+    func application(application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

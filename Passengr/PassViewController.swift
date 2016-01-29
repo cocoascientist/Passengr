@@ -120,6 +120,22 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
+    
+    // MARK: - Restoration
+    
+    override func encodeRestorableStateWithCoder(coder: NSCoder) {
+        coder.encodeObject(self.dataSource, forKey: "dataSource")
+        
+        super.encodeRestorableStateWithCoder(coder)
+    }
+    
+    override func decodeRestorableStateWithCoder(coder: NSCoder) {
+        guard let dataSource = coder.decodeObjectForKey("dataSource") as? PassDataSource else { return }
+        
+        self.dataSource = dataSource
+        
+        super.decodeRestorableStateWithCoder(coder)
+    }
 
     // MARK: - UICollectionViewDataSource
 

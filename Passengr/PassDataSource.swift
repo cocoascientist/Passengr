@@ -10,7 +10,7 @@ import Foundation
 
 typealias PassUpdatesFuture = Future<[Pass]>
 
-class PassDataSource: NSObject {
+class PassDataSource: NSObject, NSCoding {
     
     dynamic private(set) var passes: [Pass] {
         didSet {
@@ -52,6 +52,25 @@ class PassDataSource: NSObject {
     
     func reloadData() {
         refreshFromRemoteData()
+    }
+    
+    // MARK: - NSCoding
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.lastUpdated, forKey: "lastUpdated")
+        aCoder.encodeObject(self.passes, forKey: "passes")
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard
+            let passes = aDecoder.decodeObjectForKey("passes") as? [Pass],
+            let lastUpdated = aDecoder.decodeObjectForKey("lastUpdated") as? NSDate
+        else { return nil }
+        
+        self.init()
+        
+        self.passes = passes
+        self.lastUpdated = lastUpdated
     }
     
     // MARK: - Private
