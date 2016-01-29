@@ -16,12 +16,12 @@ class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! UICollectionViewController
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! UICollectionViewController
+        guard let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as? UICollectionViewController else { return }
+        guard let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
         
         guard let fromCollectionView = fromViewController.collectionView else { return }
         guard let containerView = transitionContext.containerView() else { return }
-        containerView.backgroundColor = AppStyle.lightBlueColor
+        containerView.backgroundColor = AppStyle.Color.LightBlue
         
         guard let indexPath = fromCollectionView.indexPathsForSelectedItems()?.first else { return }
         let attributes = fromCollectionView.layoutAttributesForItemAtIndexPath(indexPath)

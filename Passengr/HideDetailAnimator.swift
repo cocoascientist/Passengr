@@ -17,12 +17,13 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! UICollectionViewController
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! UICollectionViewController
+        guard let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as? UICollectionViewController else { return }
+        guard let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
         
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
         guard let containerView = transitionContext.containerView() else { return }
+        containerView.backgroundColor = AppStyle.Color.LightBlue
         
         let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
         
@@ -56,6 +57,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(snapshot)
         
         fromViewController.view.alpha = 0.0
+        toViewController.view.alpha = 0.0
         
         UIView.animateKeyframesWithDuration(duration, delay: 0.0, options: [], animations: { () -> Void in
             
@@ -80,23 +82,6 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
     
-    func destinationRectFromContext(context:UIViewControllerContextTransitioning) -> CGRect {
-        let toViewController = context.viewControllerForKey(UITransitionContextToViewControllerKey) as! UICollectionViewController
-        let collectionView = toViewController.collectionView
-        let indexPath = originIndexPathFromContext(context)
-        let attributes = collectionView?.layoutAttributesForItemAtIndexPath(indexPath)
-        return attributes!.frame
-    }
-    
-    func originIndexPathFromContext(context:UIViewControllerContextTransitioning) -> NSIndexPath {
-        let fromViewController = context.viewControllerForKey(UITransitionContextFromViewControllerKey) as! UICollectionViewController
-        let collectionView = fromViewController.collectionView
-        guard let indexPath = collectionView?.indexPathsForVisibleItems().first else {
-            fatalError("missing index path")
-        }
-        return indexPath
-    }
-    
     private func originRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
         return CGRectInset(attributes?.frame ?? CGRectZero, 0.0, 0.0)
     }
@@ -104,6 +89,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private func destinationRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
         guard let frame = attributes?.frame else { return CGRectZero }
         let rect = CGRectMake(frame.origin.x, frame.origin.y + 64.0, frame.size.width, frame.size.height)
+        print(rect)
         return rect
     }
     
