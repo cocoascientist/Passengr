@@ -186,7 +186,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = dataSource.updating
         
         if !dataSource.updating {
-            self.refreshController.setControlState(.Updated)
+            self.refreshController.setControlState(.Idle)
         }
     }
     

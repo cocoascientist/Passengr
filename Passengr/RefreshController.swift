@@ -9,8 +9,8 @@
 import UIKit
 
 enum RefreshState {
+    case Idle
     case Updating
-    case Updated
     case Error
 }
 
@@ -81,7 +81,7 @@ class RefreshController: NSObject {
             return NSLocalizedString("Error", comment: "Error")
         case .Updating:
             return NSLocalizedString("Updating...", comment: "Updating")
-        case .Updated:
+        case .Idle:
             let dateString = self.dateFormatter.stringFromDate(dataSource.lastUpdated)
             let prefix = NSLocalizedString("Updated on", comment: "Updated on")
             return "\(prefix) \(dateString)"
