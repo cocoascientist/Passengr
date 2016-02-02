@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F70A28331C613E7D008CA530 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */; };
 		F71B3FC61C038AD20012CD3D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71B3FC51C038AD20012CD3D /* AppDelegate.swift */; };
 		F71B3FCB1C038AD20012CD3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FC91C038AD20012CD3D /* Main.storyboard */; };
 		F71B3FD01C038AD20012CD3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71B3FCE1C038AD20012CD3D /* LaunchScreen.storyboard */; };
@@ -33,7 +34,6 @@
 		F79007A61C164F63008C2092 /* PassDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79007A41C164F63008C2092 /* PassDetailCell.xib */; };
 		F794A68F1C172F96008AD135 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F794A68E1C172F96008AD135 /* AppStyle.swift */; };
 		F794A6931C174785008AD135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F794A6921C174785008AD135 /* Assets.xcassets */; };
-		F79AEAA41C40716C002AFE80 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75A3B5D1C18DBEC004A7E39 /* DataSourceTests.swift */; };
 		F7A53F7F1C0A19BA007716F4 /* DetailViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A53F7E1C0A19BA007716F4 /* DetailViewLayout.swift */; };
 		F7AD52861C17C26F00310402 /* HTMLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD52851C17C26F00310402 /* HTMLParserTests.swift */; };
 		F7AD52891C17C36800310402 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F776E6C21C0D58FB00A4D6FE /* Parser.swift */; };
@@ -454,7 +454,7 @@
 				F7AFAE531C24E86800D543C6 /* CascadePass.swift in Sources */,
 				F7B36B701C18975200474D0E /* NSURLSessionConfiguration+Protocols.swift in Sources */,
 				F7B36B7F1C18A28800474D0E /* PassInfoType.swift in Sources */,
-				F79AEAA41C40716C002AFE80 /* DataSourceTests.swift in Sources */,
+				F70A28331C613E7D008CA530 /* DataSourceTests.swift in Sources */,
 				F7B36B671C18973800474D0E /* BadResponseURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

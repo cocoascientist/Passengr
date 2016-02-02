@@ -18,8 +18,8 @@ class DataSourceTests: XCTestCase {
             super.init()
         }
         
-        override func loadOrCreateInitialModel() {
-            super.loadOrCreateInitialModel()
+        required convenience init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
         }
     }
     
@@ -34,13 +34,4 @@ class DataSourceTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-//    func testCanCreateDataSource() {
-//        let initializedModelExpectation = expectationWithDescription("model should be initialized")
-//        
-//        let _ = TestableDataSource(expectation: initializedModelExpectation)
-//        let _ = PassDataController(storeType: NSInMemoryStoreType)
-//        
-//        waitForExpectationsWithTimeout(15.0, handler: nil)
-//    }
 }
