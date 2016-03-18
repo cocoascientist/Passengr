@@ -24,7 +24,7 @@ class RefreshController: NSObject {
         
         super.init()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleRefresh:"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     deinit {

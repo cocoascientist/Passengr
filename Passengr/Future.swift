@@ -9,7 +9,7 @@
 // https://realm.io/news/swift-summit-javier-soto-futures/
 
 public protocol FutureType {
-    typealias Value
+    associatedtype Value
     
     init(value: Value)
 }

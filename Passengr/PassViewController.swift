@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = String(PassListCell)
 
-let context = UnsafeMutablePointer<Void>()
+let context = UnsafeMutablePointer<Void>(nil)
 
 class PassViewController: UICollectionViewController, SegueHandlerType {
     
@@ -39,7 +39,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
-        control.addTarget(self, action: Selector("handleRefresh:"), forControlEvents: UIControlEvents.ValueChanged)
+        control.addTarget(self, action: #selector(RefreshController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         control.backgroundColor = UIColor.clearColor()
         
         return control
