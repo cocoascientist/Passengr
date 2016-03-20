@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ParseError: ErrorType {
+enum ParseError: ErrorProtocol {
     case NoRootDoc
 }
 

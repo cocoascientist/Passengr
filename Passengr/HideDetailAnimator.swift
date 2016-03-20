@@ -17,35 +17,36 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as? UICollectionViewController else { return }
-        guard let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
+        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) as? UICollectionViewController else { return }
+        guard let toViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
         
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
         guard let containerView = transitionContext.containerView() else { return }
         containerView.backgroundColor = AppStyle.Color.LightBlue
         
-        let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
+        let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
         
         // Find origin rect
         guard let originIndexPath = fromCollectionView.indexPathsForVisibleItems().first else { return }
-        let originAttributes = fromCollectionView.layoutAttributesForItemAtIndexPath(originIndexPath)
+        let originAttributes = fromCollectionView.layoutAttributesForItem(at: originIndexPath)
         let originRect = originRectFromAttributes(originAttributes)
         let snapshotRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, itemSize.height)
         
         // Find destination rect
-        let destinationAttributes = toCollectionView.layoutAttributesForItemAtIndexPath(originIndexPath)
+        let destinationAttributes = toCollectionView.layoutAttributesForItem(at: originIndexPath)
         let destinationRect = destinationRectFromAttributes(destinationAttributes)
         
         let firstRect = CGRectMake(originRect.origin.x, originRect.origin.y, originRect.size.width, destinationRect.size.height)
         let secondRect = destinationRect
         
         let insets = UIEdgeInsets(top: itemSize.height - 2.0, left: 0.0, bottom: 1.0, right: 0.0)
-        let snapshot = fromCollectionView.resizableSnapshotViewFromRect(snapshotRect, afterScreenUpdates: false, withCapInsets: insets)
-        let frame = containerView.convertRect(originRect, fromView: fromCollectionView)
+        
+        let snapshot = fromCollectionView.resizableSnapshotView(from: snapshotRect, afterScreenUpdates: false, withCapInsets: insets)
+        let frame = containerView.convert(snapshotRect, from: fromCollectionView)
         
         let lineView = UIView()
-        lineView.backgroundColor = UIColor.lightGrayColor()
+        lineView.backgroundColor = UIColor.lightGray()
         
         snapshot.addSubview(lineView)
         snapshot.clipsToBounds = true
@@ -59,27 +60,30 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         fromViewController.view.alpha = 0.0
         toViewController.view.alpha = 0.0
         
-        UIView.animateKeyframesWithDuration(duration, delay: 0.0, options: [], animations: { () -> Void in
+        let animations: () -> Void = {
             
-            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.3, animations: { () -> Void in
-                snapshot.frame = containerView.convertRect(firstRect, fromView: fromCollectionView)
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3, animations: { 
+                snapshot.frame = containerView.convert(firstRect, from: fromCollectionView)
                 lineView.frame = self.lineViewFrameWithBounds(snapshot.bounds)
             })
             
-            UIView.addKeyframeWithRelativeStartTime(0.3, relativeDuration: 0.3, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.3, animations: { 
                 snapshot.frame = secondRect
                 lineView.frame = self.lineViewFrameWithBounds(snapshot.bounds)
             })
             
-            UIView.addKeyframeWithRelativeStartTime(0.6, relativeDuration: 0.3, animations: { () -> Void in
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3, animations: { 
                 toViewController.view.alpha = 1.0
             })
-            
-        }) { (finished) -> Void in
+        }
+        
+        let completion: (finished: Bool) -> Void = { finished in
             snapshot.removeFromSuperview()
             fromViewController.view.removeFromSuperview()
             transitionContext.completeTransition(finished)
         }
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
     private func originRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {

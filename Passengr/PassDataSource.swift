@@ -22,7 +22,9 @@ class PassDataSource: NSObject, NSCoding {
     dynamic private(set) var error: NSError? = nil
     
     var orderedPasses: [Pass] {
-        return self.passes.sort { Int($0.order) < Int($1.order) }
+        return self.passes.sorted(isOrderedBefore: { (first, second) -> Bool in
+            return Int(first.order) < Int(second.order)
+        })
     }
     
     var visiblePasses: [Pass] {
@@ -56,21 +58,25 @@ class PassDataSource: NSObject, NSCoding {
     
     // MARK: - NSCoding
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.lastUpdated, forKey: "lastUpdated")
-        aCoder.encodeObject(self.passes, forKey: "passes")
+    @objc(encodeWithCoder:)
+    func encode(with coder: NSCoder) {
+        coder.encode(self.lastUpdated, forKey: "lastUpdated")
+        coder.encode(self.passes, forKey: "passes")
+
     }
     
+    @objc(initWithCoder:)
     required convenience init?(coder aDecoder: NSCoder) {
         guard
-            let passes = aDecoder.decodeObjectForKey("passes") as? [Pass],
-            let lastUpdated = aDecoder.decodeObjectForKey("lastUpdated") as? NSDate
-        else { return nil }
+            let passes = aDecoder.decodeObject(forKey: "passes") as? [Pass],
+            let lastUpdated = aDecoder.decodeObject(forKey: "lastUpdated") as? NSDate
+            else { return nil }
         
         self.init()
         
         self.passes = passes
         self.lastUpdated = lastUpdated
+
     }
     
     // MARK: - Private
@@ -86,7 +92,7 @@ class PassDataSource: NSObject, NSCoding {
             })
         }
         
-        let raiseError: (ErrorType) -> () = { error in
+        let raiseError: (ErrorProtocol) -> () = { error in
             dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
                 self?.updating = false
                 let info = [NSLocalizedDescriptionKey: "\(error)"]
@@ -117,7 +123,7 @@ class PassDataSource: NSObject, NSCoding {
                 completion(Result.Success(passes))
             }
             
-            let failure: (ErrorType) -> Void = { error in
+            let failure: (ErrorProtocol) -> Void = { error in
                 completion(Result.Failure(error))
             }
             
@@ -150,7 +156,7 @@ class PassDataSource: NSObject, NSCoding {
             pass.updateUsingPassInfo(passInfo)
             
             guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
-            guard let lastModified = self.dateFormatter.dateFromString(string) else { return pass }
+            guard let lastModified = self.dateFormatter.date(from: string) else { return pass }
             
             pass.lastModified = lastModified
             
@@ -161,15 +167,15 @@ class PassDataSource: NSObject, NSCoding {
     }
     
     internal func loadOrCreateInitialModel() {
-        if NSFileManager.defaultManager().fileExistsAtPath(modelURL.path!) == false {
+        if NSFileManager.defaultManager().fileExists(atPath: modelURL.path!) == false {
             createInitialModelAtURL(modelURL)
         }
         
-        guard let data = NSData(contentsOfURL: modelURL) else {
+        guard let data = NSData(contentsOf: modelURL) else {
             fatalError("model data not found")
         }
         
-        guard let passes = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Pass] else {
+        guard let passes = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Pass] else {
             fatalError("could not load passes, wrong data type")
         }
         
@@ -206,16 +212,24 @@ class PassDataSource: NSObject, NSCoding {
     }()
     
     private lazy var seedData: [CascadePass] = {
-        return CascadePass.allPasses().sort { $0.name < $1.name }
+        return CascadePass.allPasses().sorted(isOrderedBefore: { (first, second) -> Bool in
+            return first.name < second.name
+        })
     }()
     
     private var modelURL: NSURL {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count - 1].URLByAppendingPathComponent("passengr.plist")
+        let urls = NSFileManager.defaultManager().urls(for: .documentDirectory, inDomains: .userDomainMask)
+        return urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     
     private func didWritePasses(passes: [Pass], toURL url: NSURL) -> Bool {
-        let data = NSKeyedArchiver.archivedDataWithRootObject(passes)
-        return data.writeToURL(url, atomically: true)
+        do {
+            let data = NSKeyedArchiver.archivedData(withRootObject: passes)
+            try data.write(to: url, options: .atomicWrite)
+            return true
+        }
+        catch {
+            return false
+        }
     }
 }

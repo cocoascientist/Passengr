@@ -14,7 +14,7 @@ private typealias PassFuture = Future<PassInfo>
 class PassSignaler {
     
     private let controller = NetworkController()
-    private var error: ErrorType? = nil
+    private var error: ErrorProtocol? = nil
     
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
@@ -67,7 +67,7 @@ class PassSignaler {
                 return completion(Result.Failure(PassError.NoData))
             }
             
-            let request = NSURLRequest(URL: url)
+            let request = NSURLRequest(url: url)
             let future = self.controller.dataForRequest(request)
             
             future.start { (result) -> () in
@@ -88,7 +88,7 @@ class PassSignaler {
     }
 }
 
-enum PassError: ErrorType {
+enum PassError: ErrorProtocol {
     case NoData
     case Offline
 }

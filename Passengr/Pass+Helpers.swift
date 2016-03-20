@@ -10,14 +10,15 @@ import UIKit
 
 extension Pass {
     var open: Bool {
-        let westboundOpen = westbound.lowercaseString.rangeOfString("no restrictions") != nil
-        let eastboundOpen = eastbound.lowercaseString.rangeOfString("no restrictions") != nil
+        
+        let westboundOpen = westbound.lowercased().range(of: "no restrictions") != nil
+        let eastboundOpen = eastbound.lowercased().range(of: "no restrictions") != nil
         return westboundOpen && eastboundOpen
     }
     
     var closed: Bool {
-        let westboundClosed = westbound.lowercaseString.rangeOfString("pass closed") != nil
-        let eastboundClosed = eastbound.lowercaseString.rangeOfString("pass closed") != nil
+        let westboundClosed = westbound.lowercased().range(of: "pass closed") != nil
+        let eastboundClosed = eastbound.lowercased().range(of: "pass closed") != nil
         return eastboundClosed || westboundClosed
     }
     

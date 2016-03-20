@@ -82,7 +82,7 @@ class RefreshController: NSObject {
         case .Updating:
             return NSLocalizedString("Updating...", comment: "Updating")
         case .Idle:
-            let dateString = self.dateFormatter.stringFromDate(dataSource.lastUpdated)
+            let dateString = self.dateFormatter.string(from: dataSource.lastUpdated)
             let prefix = NSLocalizedString("Updated on", comment: "Updated on")
             return "\(prefix) \(dateString)"
         }
@@ -99,8 +99,8 @@ class RefreshController: NSObject {
     
     private lazy var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
-        formatter.timeStyle = .ShortStyle
+        formatter.dateStyle = .mediumStyle
+        formatter.timeStyle = .shortStyle
         return formatter
     }()
 }

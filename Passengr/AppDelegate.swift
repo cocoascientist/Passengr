@@ -27,11 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
         navController.delegate = self
         
-        let attributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let attributes = [NSForegroundColorAttributeName: UIColor.white()]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
         UINavigationBar.appearance().barTintColor = AppStyle.Color.ForestGreen
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().tintColor = UIColor.white()
         
         return true
     }
@@ -70,8 +70,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UINavigationControllerDelegate {
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
+    
+    func navigationController(navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let _ = toVC as? DetailViewController, let _ = fromVC as? PassViewController {
             return ShowDetailAnimator()
         }

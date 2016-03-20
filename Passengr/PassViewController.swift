@@ -17,9 +17,9 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     var dataSource: PassDataSource? {
         didSet {
             if let dataSource = dataSource {
-                dataSource.addObserver(self, forKeyPath: "passes", options: [.New], context: context)
-                dataSource.addObserver(self, forKeyPath: "updating", options: [.New], context: context)
-                dataSource.addObserver(self, forKeyPath: "error", options: [.New], context: context)
+                dataSource.addObserver(self, forKeyPath: "passes", options: [.new], context: context)
+                dataSource.addObserver(self, forKeyPath: "updating", options: [.new], context: context)
+                dataSource.addObserver(self, forKeyPath: "error", options: [.new], context: context)
             }
         }
     }
@@ -39,8 +39,9 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(RefreshController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        control.backgroundColor = UIColor.clearColor()
+        
+        control.addTarget(self, action: #selector(RefreshController.handleRefresh(_:)), for: .valueChanged)
+        control.backgroundColor = UIColor.clear()
         
         return control
     }()
@@ -74,18 +75,18 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.title = NSLocalizedString("Cascade Passes", comment: "Cascade Passes")
 
         let buttonTite = NSLocalizedString("Back", comment: "Back")
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: .plain, target: nil, action: nil)
 
         // Register cell classes
         let nib = UINib(nibName: String(PassListCell), bundle: nil)
-        self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView?.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.addSubview(refreshControl)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         guard let identifier = SegueIdentifier(rawValue: segue.identifier!) else { return }
         
         switch identifier {
@@ -103,8 +104,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        
+    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if context == context {
             if keyPath == "passes" {
                 handlePassesChange()
@@ -117,29 +117,29 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
             }
         }
         else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
     
     // MARK: - Restoration
     
-    override func encodeRestorableStateWithCoder(coder: NSCoder) {
-        coder.encodeObject(self.dataSource, forKey: "dataSource")
+    override func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(self.dataSource, forKey: "dataSource")
         
-        super.encodeRestorableStateWithCoder(coder)
+        super.encodeRestorableState(with: coder)
     }
     
-    override func decodeRestorableStateWithCoder(coder: NSCoder) {
-        guard let dataSource = coder.decodeObjectForKey("dataSource") as? PassDataSource else { return }
+    override func decodeRestorableState(with coder: NSCoder) {
+        guard let dataSource = coder.decodeObject(forKey: "dataSource") as? PassDataSource else { return }
         
         self.dataSource = dataSource
         
-        super.decodeRestorableStateWithCoder(coder)
+        super.decodeRestorableState(with: coder)
     }
 
     // MARK: - UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
@@ -147,25 +147,25 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         return passes.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    override func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         configureCell(cell, forIndexPath: indexPath)
-    
+        
         return cell
     }
 
     // MARK: - UICollectionViewDelegate
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
         let identifier = SegueIdentifier.ShowDetailView.rawValue
-        self.performSegueWithIdentifier(identifier, sender: nil)
+        self.performSegue(withIdentifier: identifier, sender: indexPath)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
+        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
     }
     
     // MARK: - Actions
@@ -183,7 +183,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     private func handleUpdatingChange() {
         guard let dataSource = dataSource else { return }
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = dataSource.updating
+        UIApplication.shared().isNetworkActivityIndicatorVisible = dataSource.updating
         
         if !dataSource.updating {
             self.refreshController.setControlState(.Idle)

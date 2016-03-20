@@ -29,21 +29,22 @@ class Pass: NSObject, NSCoding {
         super.init()
     }
     
+    @objc(initWithCoder:)
     required convenience init?(coder aDecoder: NSCoder) {
         guard
-            let name = aDecoder.decodeObjectForKey("name") as? String,
-            let url = aDecoder.decodeObjectForKey("url") as? String
+            let name = aDecoder.decodeObject(forKey: "name") as? String,
+            let url = aDecoder.decodeObject(forKey: "url") as? String
             else { return nil }
         
-        let enabled = aDecoder.decodeBoolForKey("enabled")
-        let order = aDecoder.decodeIntegerForKey("order")
+        let enabled = aDecoder.decodeBool(forKey: "enabled")
+        let order = aDecoder.decodeInteger(forKey: "order")
         
         self.init(name: name, url: url, order: order, enabled: enabled)
         
-        let conditions = aDecoder.decodeObjectForKey("conditions") as? String ?? ""
-        let westbound = aDecoder.decodeObjectForKey("westbound") as? String ?? ""
-        let eastbound = aDecoder.decodeObjectForKey("eastbound") as? String ?? ""
-        let lastModified = aDecoder.decodeObjectForKey("lastModified") as? NSDate ?? NSDate()
+        let conditions = aDecoder.decodeObject(forKey: "conditions") as? String ?? ""
+        let westbound = aDecoder.decodeObject(forKey: "westbound") as? String ?? ""
+        let eastbound = aDecoder.decodeObject(forKey: "eastbound") as? String ?? ""
+        let lastModified = aDecoder.decodeObject(forKey: "lastModified") as? NSDate ?? NSDate()
         
         self.eastbound = eastbound
         self.westbound = westbound
@@ -51,15 +52,16 @@ class Pass: NSObject, NSCoding {
         self.lastModified = lastModified
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(name, forKey: "name")
-        aCoder.encodeObject(url, forKey: "url")
-        aCoder.encodeBool(enabled, forKey: "enabled")
-        aCoder.encodeInteger(order, forKey: "order")
-        aCoder.encodeObject(conditions, forKey: "conditions")
-        aCoder.encodeObject(westbound, forKey: "westbound")
-        aCoder.encodeObject(eastbound, forKey: "eastbound")
-        aCoder.encodeObject(lastModified, forKey: "lastModified")
+    @objc(encodeWithCoder:)
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: "name")
+        coder.encode(url, forKey: "url")
+        coder.encode(enabled, forKey: "enabled")
+        coder.encode(order, forKey: "order")
+        coder.encode(conditions, forKey: "conditions")
+        coder.encode(westbound, forKey: "westbound")
+        coder.encode(eastbound, forKey: "eastbound")
+        coder.encode(lastModified, forKey: "lastModified")
     }
 }
 

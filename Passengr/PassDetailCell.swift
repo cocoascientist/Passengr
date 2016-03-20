@@ -40,8 +40,8 @@ class PassDetailCell: UICollectionViewCell {
         self.lastUpdatedLabel.text = ""
     }
     
-    override func drawRect(rect: CGRect) {
-        UIColor.lightGrayColor().setStroke()
+    override func draw(rect: CGRect) {
+        UIColor.lightGray().setStroke()
         UIBezierPath(rect: rect).stroke()
     }
     
@@ -56,13 +56,13 @@ class PassDetailCell: UICollectionViewCell {
         self.eastboundTitleLabel.font = AppStyle.Font.Copperplate
         self.westboundTitleLabel.font = AppStyle.Font.Copperplate
         
-        self.westboundTitleLabel.textColor = UIColor.darkGrayColor()
-        self.eastboundTitleLabel.textColor = UIColor.darkGrayColor()
-        self.conditionsTitleLabel.textColor = UIColor.darkGrayColor()
+        self.westboundTitleLabel.textColor = UIColor.darkGray()
+        self.eastboundTitleLabel.textColor = UIColor.darkGray()
+        self.conditionsTitleLabel.textColor = UIColor.darkGray()
         
-        self.lastUpdatedLabel.textColor = UIColor.lightGrayColor()
+        self.lastUpdatedLabel.textColor = UIColor.lightGray()
         
-        self.containerView.backgroundColor = UIColor.clearColor()
-        self.backgroundColor = UIColor.whiteColor()
+        self.containerView.backgroundColor = UIColor.clear()
+        self.backgroundColor = UIColor.white()
     }
 }

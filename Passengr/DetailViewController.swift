@@ -30,7 +30,7 @@ class DetailViewController: UICollectionViewController {
         super.awakeFromNib()
         
         self.collectionView?.collectionViewLayout = DetailViewLayout()
-        self.collectionView?.pagingEnabled = true
+        self.collectionView?.isPagingEnabled = true
     }
 
     override func viewDidLoad() {
@@ -39,36 +39,37 @@ class DetailViewController: UICollectionViewController {
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
 
         let nib = UINib(nibName: String(PassDetailCell), bundle: nil)
-        self.collectionView!.registerNib(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.collectionView?.scrollToItemAtIndexPath(self.indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        
+        self.collectionView?.scrollToItem(at: self.indexPath, at: .centeredHorizontally, animated: true)
         self.setTitleTextFromIndexPath(self.indexPath)
     }
     
-    override func encodeRestorableStateWithCoder(coder: NSCoder) {
-        coder.encodeObject(self.dataSource, forKey: "dataSource")
-        coder.encodeObject(self.indexPath, forKey: "indexPath")
+    override func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(self.dataSource, forKey: "dataSource")
+        coder.encode(self.indexPath, forKey: "indexPath")
         
-        super.encodeRestorableStateWithCoder(coder)
+        super.encodeRestorableState(with: coder)
     }
     
-    override func decodeRestorableStateWithCoder(coder: NSCoder) {
-        guard let dataSource = coder.decodeObjectForKey("dataSource") as? PassDataSource else { return }
-        guard let indexPath = coder.decodeObjectForKey("indexPath") as? NSIndexPath else { return }
+    override func decodeRestorableState(with coder: NSCoder) {
+        guard let dataSource = coder.decodeObject(forKey: "dataSource") as? PassDataSource else { return }
+        guard let indexPath = coder.decodeObject(forKey: "indexPath") as? NSIndexPath else { return }
         
         self.dataSource = dataSource
         self.indexPath = indexPath
         
-        super.decodeRestorableStateWithCoder(coder)
+        super.decodeRestorableState(with: coder)
     }
 
     // MARK: - UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
@@ -76,8 +77,8 @@ class DetailViewController: UICollectionViewController {
         return self.passes.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    override func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         configureCell(cell, forIndexPath: indexPath)
         
@@ -87,7 +88,7 @@ class DetailViewController: UICollectionViewController {
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.mainScreen().bounds)
+        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
     }
     
     // MARK: - UIScrollView
@@ -113,7 +114,7 @@ class DetailViewController: UICollectionViewController {
         cell.conditionsLabel.text = pass.conditions
         cell.eastboundLabel.text = pass.eastbound
         cell.westboundLabel.text = pass.westbound
-        cell.lastUpdatedLabel.text = self.dateFormatter.stringFromDate(pass.lastModified)
+        cell.lastUpdatedLabel.text = self.dateFormatter.string(from: pass.lastModified)
         cell.statusView.backgroundColor = pass.color
     }
     

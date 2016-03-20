@@ -12,7 +12,7 @@ public typealias TaskResult = Result<NSData>
 public typealias TaskFuture = Future<NSData>
 public typealias TaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
 
-public enum TaskError: ErrorType {
+public enum TaskError: ErrorProtocol {
     case Offline
     case NoData
     case BadResponse
@@ -28,7 +28,7 @@ public struct NetworkController: Reachable {
     init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()) {
         self.configuration = configuration
         
-        let queue = NSOperationQueue.mainQueue()
+        let queue = NSOperationQueue.main()
         self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: queue)
     }
     
@@ -74,7 +74,7 @@ public struct NetworkController: Reachable {
                 }
             }
             
-            let task = self.session.dataTaskWithRequest(request, completionHandler: completion)
+            let task = self.session.dataTask(with: request, completionHandler: completion)
             
             switch self.reachable {
             case .Online:
