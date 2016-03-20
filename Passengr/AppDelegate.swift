@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UINavigationControllerDelegate {
     
+    @objc(navigationController:animationControllerForOperation:fromViewController:toViewController:)
     func navigationController(navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let _ = toVC as? DetailViewController, let _ = fromVC as? PassViewController {
             return ShowDetailAnimator()
