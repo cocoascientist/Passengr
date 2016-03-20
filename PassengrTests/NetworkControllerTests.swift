@@ -14,7 +14,7 @@ class NetworkControllerTests: XCTestCase {
     
     private lazy var request: NSURLRequest = {
         guard let url = NSURL(string: CascadePass.Snoqualmie.path) else { fatalError() }
-        let request = NSURLRequest(URL: url)
+        let request = NSURLRequest(url: url)
         return request
     }()
 
@@ -29,10 +29,10 @@ class NetworkControllerTests: XCTestCase {
     }
 
     func testCanRequestPassSuccessfully() {
-        let expectation = expectationWithDescription("Request should be successful")
+        let expected = expectation(withDescription: "Request should be successful")
         
         let success: Success = {
-            expectation.fulfill()
+            expected.fulfill()
         }
         
         let failure: Failure = {
@@ -44,61 +44,61 @@ class NetworkControllerTests: XCTestCase {
         
         networkController.executeNetworkRequest(request, success: success, failure: failure)
         
-        waitForExpectationsWithTimeout(15.0, handler: nil)
+        waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadStatusCode() {
-        let expectation = expectationWithDescription("Request should not be successful")
+        let expected = expectation(withDescription: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
         }
         
         let failure: Failure = {
-            expectation.fulfill()
+            expected.fulfill()
         }
         
         let configuration = NSURLSessionConfiguration.configurationWithProtocol(BadStatusURLProtocol)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request, success: success, failure: failure)
-        waitForExpectationsWithTimeout(15.0, handler: nil)
+        waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadResponse() {
-        let expectation = expectationWithDescription("Request should not be successful")
+        let expected = expectation(withDescription: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
         }
         
         let failure: Failure = {
-            expectation.fulfill()
+            expected.fulfill()
         }
         
         let configuration = NSURLSessionConfiguration.configurationWithProtocol(BadResponseURLProtocol)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request, success: success, failure: failure)
-        waitForExpectationsWithTimeout(15.0, handler: nil)
+        waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadURL() {
-        let expectation = expectationWithDescription("Request should not be successful")
+        let expected = expectation(withDescription: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
         }
         
         let failure: Failure = {
-            expectation.fulfill()
+            expected.fulfill()
         }
         
         let configuration = NSURLSessionConfiguration.configurationWithProtocol(FailingURLProtocol)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request, success: success, failure: failure)
-        waitForExpectationsWithTimeout(15.0, handler: nil)
+        waitForExpectations(withTimeout: 15.0, handler: nil)
     }
 }
 

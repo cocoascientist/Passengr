@@ -9,27 +9,28 @@
 import Foundation
 
 class LocalURLProtocol: NSURLProtocol {
-    override class func canInitWithRequest(request: NSURLRequest) -> Bool {
+    override class func canInit(with request: NSURLRequest) -> Bool {
         return true
     }
     
-    override class func canonicalRequestForRequest(request: NSURLRequest) -> NSURLRequest {
+    override class func canonicalRequest(for request: NSURLRequest) -> NSURLRequest {
         return request
     }
     
     override func startLoading() {
         guard let client = self.client else { fatalError("Client is missing") }
-        guard let url = request.URL else { fatalError("URL is missing") }
+        guard let url = request.url else { fatalError("URL is missing") }
         
         let data = self.dataForRequest(request) ?? NSData()
         let headers = ["Content-Type": "text/html"]
-        guard let response = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: "HTTP/1.1", headerFields: headers) else {
+        
+        guard let response = NSHTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: headers) else {
             fatalError("Response could not be created")
         }
         
-        client.URLProtocol(self, didReceiveResponse: response, cacheStoragePolicy: .NotAllowed)
-        client.URLProtocol(self, didLoadData: data)
-        client.URLProtocolDidFinishLoading(self)
+        client.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client.urlProtocol(self, didLoad: data)
+        client.urlProtocolDidFinishLoading(self)
     }
     
     override func stopLoading() {
@@ -37,8 +38,8 @@ class LocalURLProtocol: NSURLProtocol {
     }
     
     private func dataForRequest(request: NSURLRequest) -> NSData? {
-        let bundle = NSBundle(forClass: self.dynamicType)
-        guard let file = bundle.pathForResource("test", ofType: "html") else {
+        let bundle = NSBundle(for: self.dynamicType)
+        guard let file = bundle.path(forResource: "test", ofType: "html") else {
             return nil
         }
         
