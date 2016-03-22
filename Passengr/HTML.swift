@@ -59,7 +59,7 @@ extension HTMLNode {
     func childrenOf() -> AnyGenerator<HTMLNode> {
         var node = nodePtr.memory.children
         
-        return anyGenerator() {
+        return AnyGenerator() {
             if node == nil { return nil }
             defer { node = node.memory.next }
             return HTMLNode(node: node)

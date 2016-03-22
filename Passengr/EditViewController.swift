@@ -111,7 +111,8 @@ class EditViewController: UITableViewController {
         cell.swtch.tag = indexPath.row
         cell.swtch.on = pass.enabled.boolValue
 
-        cell.swtch.removeTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .TouchUpInside)
-        cell.swtch.addTarget(self, action: Selector("handleSwitchChange:"), forControlEvents: .TouchUpInside)
+        let action = #selector(EditViewController.handleSwitchChange(_:))
+        cell.swtch.removeTarget(self, action: action, forControlEvents: .TouchUpInside)
+        cell.swtch.addTarget(self, action: action, forControlEvents: .TouchUpInside)
     }
 }
