@@ -24,10 +24,10 @@ class ListViewLayout: UICollectionViewFlowLayout {
 }
 
 extension ListViewLayout {
-    class func listLayoutItemSizeForBounds(bounds: CGRect) -> CGSize {
-        let width = CGRectGetWidth(bounds) - 30.0
+    class func listLayoutItemSizeForBounds(_ bounds: CGRect) -> CGSize {
+        let width = bounds.width - 30.0
         let height = CGFloat(75.0)
         
-        return CGSizeMake(width, height)
+        return CGSize(width: width, height: height)
     }
 }

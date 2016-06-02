@@ -42,12 +42,11 @@ class DetailViewController: UICollectionViewController {
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         self.collectionView?.scrollToItem(at: self.indexPath, at: .centeredHorizontally, animated: true)
-        self.setTitleTextFromIndexPath(self.indexPath)
+        self.setTitleTextFromIndexPath(indexPath: self.indexPath)
     }
     
     override func encodeRestorableState(with coder: NSCoder) {
@@ -73,14 +72,14 @@ class DetailViewController: UICollectionViewController {
         return 1
     }
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.passes.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-        configureCell(cell, forIndexPath: indexPath)
+        configureCell(cell: cell, forIndexPath: indexPath)
         
         return cell
     }
@@ -93,10 +92,10 @@ class DetailViewController: UICollectionViewController {
     
     // MARK: - UIScrollView
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let indexPath = self.collectionView?.indexPathsForVisibleItems().first else { return }
         self.indexPath = indexPath
-        self.setTitleTextFromIndexPath(indexPath)
+        self.setTitleTextFromIndexPath(indexPath: indexPath)
     }
     
     // MARK: - Private

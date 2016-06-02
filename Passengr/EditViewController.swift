@@ -36,23 +36,23 @@ class EditViewController: UITableViewController {
 
     // MARK: - UITableViewDataSource
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.passes.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? PassEditCell else { fatalError() }
         
-        configureCell(cell, forIndexPath: indexPath)
+        configureCell(cell: cell, forIndexPath: indexPath)
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, canMoveRowAt indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: NSIndexPath) -> Bool {
         return true
     }
     
-    override func tableView(tableView: UITableView, moveRowAt sourceIndexPath: NSIndexPath, to destinationIndexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: NSIndexPath, to destinationIndexPath: NSIndexPath) {
         var passes = self.passes
         
         let pass = passes.remove(at: sourceIndexPath.row)
@@ -63,16 +63,15 @@ class EditViewController: UITableViewController {
             pass.order = order
             order += 1
         }
-
     }
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, editingStyleForRowAt indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         return .none
     }
     
-    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: NSIndexPath) -> Bool {
         return false
     }
     
@@ -89,7 +88,7 @@ class EditViewController: UITableViewController {
         dataSource.didChangeValue(forKey: "passes")
     }
 
-    @IBAction func handleSwitchChange(sender: AnyObject) {
+    @IBAction func handleSwitchChange(_ sender: AnyObject) {
         guard let swtch = sender as? UISwitch else { return }
         let pass = self.passes[swtch.tag]
         

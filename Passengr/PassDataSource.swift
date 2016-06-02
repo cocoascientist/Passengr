@@ -47,7 +47,7 @@ class PassDataSource: NSObject, NSCoding {
     // MARK: - Public
     
     func saveDataStore() {
-        if didWritePasses(passes, toURL: modelURL) == false {
+        if didWritePasses(passes: passes, toURL: modelURL) == false {
             print("error saving passes to url: \(modelURL)")
         }
     }
@@ -119,7 +119,7 @@ class PassDataSource: NSObject, NSCoding {
         let future: PassUpdatesFuture = Future() { completion in
             
             let success: ([PassInfo]) -> Void = { info in
-                let passes = self.passesFromPassInfoUpdates(info)
+                let passes = self.passesFromPassInfoUpdates(updates: info)
                 completion(Result.Success(passes))
             }
             
@@ -131,7 +131,7 @@ class PassDataSource: NSObject, NSCoding {
                 return pass.passInfo
             }
             
-            let future = self.signaler.futureForPassesInfo(infos)
+            let future = self.signaler.futureForPassesInfo(infos: infos)
             future.start { (result) -> () in
                 switch result {
                 case .Success(let infos):
@@ -153,7 +153,7 @@ class PassDataSource: NSObject, NSCoding {
             let filtered = self.passes.filter { $0.name == name }
             guard let pass = filtered.first else { return nil }
             
-            pass.updateUsingPassInfo(passInfo)
+            pass.updateUsingPassInfo(info: passInfo)
             
             guard let string = passInfo[PassInfoKeys.LastUpdated] else { return pass }
             guard let lastModified = self.dateFormatter.date(from: string) else { return pass }
@@ -167,8 +167,8 @@ class PassDataSource: NSObject, NSCoding {
     }
     
     internal func loadOrCreateInitialModel() {
-        if NSFileManager.defaultManager().fileExists(atPath: modelURL.path!) == false {
-            createInitialModelAtURL(modelURL)
+        if NSFileManager.default().fileExists(atPath: modelURL.path!) == false {
+            createInitialModelAtURL(url: modelURL)
         }
         
         guard let data = NSData(contentsOf: modelURL) else {
@@ -199,7 +199,7 @@ class PassDataSource: NSObject, NSCoding {
             order += 1
         }
         
-        if didWritePasses(passes, toURL: modelURL) == false {
+        if didWritePasses(passes: passes, toURL: modelURL) == false {
             fatalError("cannot saved model to url: \(modelURL)")
         }
     }
@@ -218,7 +218,7 @@ class PassDataSource: NSObject, NSCoding {
     }()
     
     private var modelURL: NSURL {
-        let urls = NSFileManager.defaultManager().urls(for: .documentDirectory, inDomains: .userDomainMask)
+        let urls = NSFileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     

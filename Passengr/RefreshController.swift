@@ -24,11 +24,11 @@ class RefreshController: NSObject {
         
         super.init()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.default().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSNotificationCenter.default().removeObserver(self)
     }
     
     func setControlState(state: RefreshState) {
@@ -36,10 +36,10 @@ class RefreshController: NSObject {
             fatalError("refreshControl should not be nil")
         }
         
-        let title = titleForState(state)
+        let title = titleForState(state: state)
         refreshControl.attributedTitle = NSAttributedString(string: title)
         
-        transitionToState(state)
+        transitionToState(state: state)
     }
     
     func setControlState(error: NSError) {
@@ -47,13 +47,13 @@ class RefreshController: NSObject {
             fatalError("refreshControl should not be nil")
         }
         
-        let title = titleForError(error)
+        let title = titleForError(error: error)
         refreshControl.attributedTitle = NSAttributedString(string: title)
         
-        transitionToState(.Error)
+        transitionToState(state: .Error)
     }
     
-    func handleRefresh(notification: NSNotification) {
+    func handleRefresh(_ notification: NSNotification) {
         self.dataSource?.reloadData()
     }
     
@@ -89,7 +89,7 @@ class RefreshController: NSObject {
     }
     
     private func titleForError(error: NSError) -> String {
-        var title = titleForState(.Error)
+        var title = titleForState(state: .Error)
         if let message = error.userInfo[NSLocalizedDescriptionKey] as? String {
             title = "\(title): \(message)"
         }

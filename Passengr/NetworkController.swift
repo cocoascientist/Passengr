@@ -25,7 +25,7 @@ public struct NetworkController: Reachable {
     private let configuration: NSURLSessionConfiguration
     private let session: NSURLSession
     
-    init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()) {
+    init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.default()) {
         self.configuration = configuration
         
         let queue = NSOperationQueue.main()
@@ -40,7 +40,7 @@ public struct NetworkController: Reachable {
     - returns: A TaskFuture associated with the request
     */
     
-    public func dataForRequest(request: NSURLRequest) -> TaskFuture {
+    public func dataForRequest(_ request: NSURLRequest) -> TaskFuture {
         
         let future: TaskFuture = Future() { completion in
             

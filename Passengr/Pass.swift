@@ -54,6 +54,7 @@ class Pass: NSObject, NSCoding {
     
     @objc(encodeWithCoder:)
     func encode(with coder: NSCoder) {
+        
         coder.encode(name, forKey: "name")
         coder.encode(url, forKey: "url")
         coder.encode(enabled, forKey: "enabled")

@@ -104,7 +104,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
         if context == context {
             if keyPath == "passes" {
                 handlePassesChange()
@@ -143,21 +143,21 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         return 1
     }
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return passes.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-        configureCell(cell, forIndexPath: indexPath)
+        configureCell(cell: cell, forIndexPath: indexPath)
         
         return cell
     }
 
     // MARK: - UICollectionViewDelegate
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
         let identifier = SegueIdentifier.ShowDetailView.rawValue
         self.performSegue(withIdentifier: identifier, sender: indexPath)
     }
@@ -171,7 +171,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     // MARK: - Actions
     
     func handleRefresh(sender: AnyObject) {
-        self.refreshController.setControlState(.Updating)
+        self.refreshController.setControlState(state: .Updating)
     }
 
     // MARK: - Private
@@ -186,7 +186,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         UIApplication.shared().isNetworkActivityIndicatorVisible = dataSource.updating
         
         if !dataSource.updating {
-            self.refreshController.setControlState(.Idle)
+            self.refreshController.setControlState(state: .Idle)
         }
     }
     
@@ -194,7 +194,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         guard let dataSource = dataSource else { return }
         guard let error = dataSource.error else { return }
         
-        self.refreshController.setControlState(error)
+        self.refreshController.setControlState(error: error)
     }
     
     private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {

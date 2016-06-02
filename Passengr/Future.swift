@@ -16,8 +16,8 @@ public protocol FutureType {
 
 public struct Future<T>: FutureType {
     public typealias ResultType = Result<T>
-    public typealias Completion = ResultType -> ()
-    public typealias AsyncOperation = Completion -> ()
+    public typealias Completion = (ResultType) -> ()
+    public typealias AsyncOperation = (Completion) -> ()
     
     private let operation: AsyncOperation
     
@@ -30,7 +30,7 @@ public struct Future<T>: FutureType {
         self.operation = operation
     }
     
-    public func start(completion: Completion) {
+    public func start(_ completion: Completion) {
         self.operation() { result in
             completion(result)
         }

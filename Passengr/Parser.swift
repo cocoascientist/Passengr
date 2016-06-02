@@ -29,7 +29,7 @@ func passInfoFromData(data: NSData) -> Result<PassInfo> {
     
     var info: [String: String] = [:]
     for (key, xpath) in queries {
-        guard let value = root.xpath(xpath).first?.nodeValue else { continue }
+        guard let value = root.xpath(xpath: xpath).first?.nodeValue else { continue }
         info[key] = value
     }
     
@@ -54,7 +54,7 @@ class Parser {
         
         var info: [String: String] = [:]
         for (key, xpath) in queries {
-            guard let value = root.xpath(xpath).first?.nodeValue else { continue }
+            guard let value = root.xpath(xpath: xpath).first?.nodeValue else { continue }
             info[key] = value
         }
         

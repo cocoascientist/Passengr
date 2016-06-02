@@ -21,7 +21,7 @@ enum CascadePass {
     }
     
     var path: String {
-        return "\(baseURL)/\(self.name.lowercaseString)/"
+        return "\(baseURL)/\(self.name.lowercased()))/"
     }
     
     var name: String {

@@ -20,7 +20,7 @@ class HTMLNode {
     lazy var nodeValue: String = {
         let document = self.nodePtr.pointee.doc
         let children = self.nodePtr.pointee.children
-        let textValue = xmlNodeListGetString(document, children, 1)
+        guard let textValue = xmlNodeListGetString(document, children, 1) else { return "" }
         defer { free(textValue) }
         
         guard let value = String(validatingUTF8: UnsafePointer<CChar>(textValue)) else { return "" }
@@ -29,16 +29,13 @@ class HTMLNode {
     
     func xpath(xpath: String) -> [HTMLNode] {
         let document = nodePtr.pointee.doc
-        let context = xmlXPathNewContext(document)
+        guard let context = xmlXPathNewContext(document) else { return [] }
         defer { xmlXPathFreeContext(context) }
         
-        if context == nil { return [] }
         context.pointee.node = nodePtr
         
-        let result = xmlXPathEvalExpression(xpath, context)
+        guard let result = xmlXPathEvalExpression(xpath, context) else { return [] }
         defer { xmlXPathFreeObject(result) }
-        
-        if result == nil { return [] }
         
         let nodeSet = result.pointee.nodesetval
         if nodeSet == nil || nodeSet.pointee.nodeNr == 0 || nodeSet.pointee.nodeTab == nil {
@@ -48,7 +45,7 @@ class HTMLNode {
         let size = Int(nodeSet.pointee.nodeNr)
         let nodes: [HTMLNode] = [Int](0..<size).map {
             let node = nodeSet.pointee.nodeTab[$0]
-            return HTMLNode(node: node)
+            return HTMLNode(node: node!)
         }
         
         return nodes
@@ -79,15 +76,10 @@ class HTMLDoc {
             return root
         }
         else {
-            let root = xmlDocGetRootElement(documentPtr)
-            if root != nil {
-                let node = HTMLNode(node: root)
-                self._root = node
-                return node
-            }
-            else {
-                return nil
-            }
+            guard let root = xmlDocGetRootElement(documentPtr) else { return nil }
+            let node = HTMLNode(node: root)
+            self._root = node
+            return node
         }
     }
 }

@@ -12,7 +12,7 @@ protocol ResultType {
     init(success value: Value)
     init(failure error: ErrorProtocol)
     
-    func map<U>(f: (Value) -> U) -> Result<U>
+    func map<U>(_ f: (Value) -> U) -> Result<U>
 }
 
 public enum Result<T>: ResultType {
@@ -29,7 +29,7 @@ public enum Result<T>: ResultType {
 }
 
 extension Result {
-    func map<U>(f: T -> U) -> Result<U> {
+    func map<U>(_ f: (T) -> U) -> Result<U> {
         switch self {
         case let .Success(value):
             return Result<U>.Success(f(value))

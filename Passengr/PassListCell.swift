@@ -22,7 +22,7 @@ class PassListCell: UICollectionViewCell {
         self.titleLabel.text = ""
     }
     
-    override func draw(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         UIColor.lightGray().setStroke()
         UIBezierPath(rect: rect).stroke()
     }

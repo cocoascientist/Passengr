@@ -11,11 +11,11 @@ import UIKit
 class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private let duration = 0.75
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    @objc(transitionDuration:) func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) as? UICollectionViewController else { return }
         guard let toViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
         
@@ -28,10 +28,10 @@ class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let itemSize = DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
         
         guard let originRect = attributes?.frame else { return }
-        let destinationRect = CGRectMake(15.0, 115.0, itemSize.width, itemSize.height)
+        let destinationRect = CGRect(x: 15.0, y: 115.0, width: itemSize.width, height: itemSize.height)
         
-        let firstRect = CGRectMake(destinationRect.origin.x, destinationRect.origin.y, destinationRect.size.width, originRect.size.height)
-        let secondRect = CGRectMake(destinationRect.origin.x, destinationRect.origin.y, destinationRect.size.width, destinationRect.size.height)
+        let firstRect = CGRect(x: destinationRect.origin.x, y: destinationRect.origin.y, width: destinationRect.size.width, height: originRect.size.height)
+        let secondRect = CGRect(x: destinationRect.origin.x, y: destinationRect.origin.y, width: destinationRect.size.width, height: destinationRect.size.height)
         let insets = UIEdgeInsets(top: 73.0, left: 0.0, bottom: 1.0, right: 0.0)
         
         let snapshot = fromCollectionView.resizableSnapshotView(from: originRect, afterScreenUpdates: false, withCapInsets: insets)
