@@ -21,7 +21,7 @@ class HTMLParserTests: XCTestCase {
     }
     
     func testCanParseHTML() {
-        let file = NSBundle(for: self.dynamicType).path(forResource: "test", ofType: "html")
+        let file = NSBundle(for: self.dynamicType).pathForResource("test", ofType: "html")
         let data = NSData(contentsOfFile: file!)
         
         let info = Parser.passInfoFromResponse(response: data!)

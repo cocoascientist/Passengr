@@ -39,10 +39,10 @@ class NetworkControllerTests: XCTestCase {
             XCTFail("Request should not fail")
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(LocalURLProtocol)
+        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: LocalURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request, success: success, failure: failure)
+        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
         
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
@@ -58,10 +58,10 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(BadStatusURLProtocol)
+        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: BadStatusURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request, success: success, failure: failure)
+        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
@@ -76,10 +76,10 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(BadResponseURLProtocol)
+        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: BadResponseURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request, success: success, failure: failure)
+        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
@@ -94,16 +94,16 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(FailingURLProtocol)
+        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: FailingURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request, success: success, failure: failure)
+        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
 }
 
-typealias Success = Void -> ()
-typealias Failure = Void -> ()
+typealias Success = (Void) -> ()
+typealias Failure = (Void) -> ()
 
 extension NetworkController {
     func executeNetworkRequest(request: NSURLRequest, success: Success, failure: Failure) {

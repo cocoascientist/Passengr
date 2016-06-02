@@ -37,9 +37,9 @@ class LocalURLProtocol: NSURLProtocol {
         // all data return at once, nothing to do
     }
     
-    private func dataForRequest(request: NSURLRequest) -> NSData? {
+    private func dataForRequest(_ request: NSURLRequest) -> NSData? {
         let bundle = NSBundle(for: self.dynamicType)
-        guard let file = bundle.path(forResource: "test", ofType: "html") else {
+        guard let file = bundle.pathForResource("test", ofType: "html") else {
             return nil
         }
         

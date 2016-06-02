@@ -23,7 +23,7 @@ class PassTests: XCTestCase {
     func testCanUpdatePass() {
         let pass = testablePass()
         
-        pass.updateUsingPassInfo(info)
+        pass.updateUsingPassInfo(info: info)
         
         XCTAssert(pass.name == "Pass Name", "pass name is wrong")
         XCTAssert(pass.conditions == "Pass Conditions", "pass conditions are wrong")
