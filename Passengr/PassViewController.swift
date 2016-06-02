@@ -162,12 +162,6 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.performSegue(withIdentifier: identifier, sender: indexPath)
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
-    }
-    
     // MARK: - Actions
     
     func handleRefresh(sender: AnyObject) {
@@ -203,5 +197,12 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
         cell.statusView.backgroundColor = pass.color
+    }
+}
+
+extension PassViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: NSIndexPath) -> CGSize {
+        
+        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
     }
 }

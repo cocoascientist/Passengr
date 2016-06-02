@@ -84,12 +84,6 @@ class DetailViewController: UICollectionViewController {
         return cell
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
-    }
-    
     // MARK: - UIScrollView
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -122,4 +116,10 @@ class DetailViewController: UICollectionViewController {
         formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
         return formatter
     }()
+}
+
+extension DetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: NSIndexPath) -> CGSize {
+        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
+    }
 }
