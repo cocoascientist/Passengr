@@ -37,8 +37,8 @@ class HTMLNode {
         guard let result = xmlXPathEvalExpression(xpath, context) else { return [] }
         defer { xmlXPathFreeObject(result) }
         
-        let nodeSet = result.pointee.nodesetval
-        if nodeSet == nil || nodeSet.pointee.nodeNr == 0 || nodeSet.pointee.nodeTab == nil {
+        guard let nodeSet = result.pointee.nodesetval else { return [] }
+        if nodeSet.pointee.nodeNr == 0 || nodeSet.pointee.nodeTab == nil {
             return []
         }
         
