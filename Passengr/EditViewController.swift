@@ -77,7 +77,7 @@ class EditViewController: UITableViewController {
     
     // MARK: - Actions
 
-    @IBAction func handleDoneButton(sender: AnyObject) {
+    @IBAction func handleDoneButton(_ sender: AnyObject) {
         defer { self.dismiss(animated: true, completion: nil) }
         guard let dataSource = dataSource else {
             fatalError("data soure should not be nil")
