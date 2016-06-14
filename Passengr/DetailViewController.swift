@@ -14,7 +14,7 @@ class DetailViewController: UICollectionViewController {
     
     var dataSource: PassDataSource?
     
-    var indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    var indexPath = IndexPath(row: 0, section: 0)
     
     private var passes: [Pass] {
         guard let dataSource = dataSource else {
@@ -58,7 +58,7 @@ class DetailViewController: UICollectionViewController {
     
     override func decodeRestorableState(with coder: NSCoder) {
         guard let dataSource = coder.decodeObject(forKey: "dataSource") as? PassDataSource else { return }
-        guard let indexPath = coder.decodeObject(forKey: "indexPath") as? NSIndexPath else { return }
+        guard let indexPath = coder.decodeObject(forKey: "indexPath") as? IndexPath else { return }
         
         self.dataSource = dataSource
         self.indexPath = indexPath
@@ -76,7 +76,7 @@ class DetailViewController: UICollectionViewController {
         return self.passes.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         configureCell(cell: cell, forIndexPath: indexPath)
@@ -107,19 +107,19 @@ class DetailViewController: UICollectionViewController {
         cell.conditionsLabel.text = pass.conditions
         cell.eastboundLabel.text = pass.eastbound
         cell.westboundLabel.text = pass.westbound
-        cell.lastUpdatedLabel.text = self.dateFormatter.string(from: pass.lastModified)
+        cell.lastUpdatedLabel.text = self.dateFormatter.string(from: pass.lastModified as Date)
         cell.statusView.backgroundColor = pass.color
     }
     
-    private lazy var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
         return formatter
     }()
 }
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
     }
 }

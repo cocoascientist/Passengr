@@ -19,11 +19,11 @@ class PassSignaler {
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
             
-            let group = dispatch_group_create()!
+            let group = DispatchGroup()
             var updates: [PassInfo] = []
             
             for info in infos {
-                dispatch_group_enter(group)
+                group.enter()
                 
                 self.futureForPassInfo(info).start({ (result) -> () in
                     switch result {
@@ -33,12 +33,13 @@ class PassSignaler {
                         self.error = error
                     }
                     
-                    dispatch_group_leave(group)
+                    group.leave()
                 })
             }
             
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)!
-            dispatch_group_notify(group, queue) { () -> Void in
+            let queue = DispatchQueue.global()
+            
+            group.notify(queue: queue, execute: { 
                 if let error = self.error {
                     completion(Result.Failure(error))
                 }
@@ -48,7 +49,7 @@ class PassSignaler {
                 else {
                     completion(Result.Success(updates))
                 }
-            }
+            })
         }
         
         self.error = nil
@@ -63,11 +64,11 @@ class PassSignaler {
                 return completion(Result.Failure(PassError.NoData))
             }
             
-            guard let url = NSURL(string: urlString) else {
+            guard let url = URL(string: urlString) else {
                 return completion(Result.Failure(PassError.NoData))
             }
             
-            let request = NSURLRequest(url: url)
+            let request = URLRequest(url: url)
             let future = self.controller.dataForRequest(request)
             
             future.start { (result) -> () in

@@ -14,7 +14,7 @@ class NetworkControllerTests: XCTestCase {
     
     private lazy var request: NSURLRequest = {
         guard let url = NSURL(string: CascadePass.Snoqualmie.path) else { fatalError() }
-        let request = NSURLRequest(url: url)
+        let request = NSURLRequest(url: url as URL)
         return request
     }()
 
@@ -39,7 +39,7 @@ class NetworkControllerTests: XCTestCase {
             XCTFail("Request should not fail")
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: LocalURLProtocol.self)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: LocalURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request: request, success: success, failure: failure)
@@ -58,7 +58,7 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: BadStatusURLProtocol.self)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadStatusURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request: request, success: success, failure: failure)
@@ -76,7 +76,7 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: BadResponseURLProtocol.self)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadResponseURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request: request, success: success, failure: failure)
@@ -94,7 +94,7 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = NSURLSessionConfiguration.configurationWithProtocol(protocolClass: FailingURLProtocol.self)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: FailingURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
         networkController.executeNetworkRequest(request: request, success: success, failure: failure)
@@ -107,7 +107,7 @@ typealias Failure = (Void) -> ()
 
 extension NetworkController {
     func executeNetworkRequest(request: NSURLRequest, success: Success, failure: Failure) {
-        self.dataForRequest(request).start { (result) -> () in
+        self.dataForRequest(request as URLRequest).start { (result) -> () in
             switch result {
             case .Success:
                 success()

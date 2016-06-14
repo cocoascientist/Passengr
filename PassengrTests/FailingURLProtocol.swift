@@ -8,12 +8,12 @@
 
 import Foundation
 
-class FailingURLProtocol: NSURLProtocol {
-    override class func canInit(with request: NSURLRequest) -> Bool {
+class FailingURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool {
         return true
     }
     
-    override class func canonicalRequest(for request: NSURLRequest) -> NSURLRequest {
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         return request
     }
     
@@ -22,7 +22,7 @@ class FailingURLProtocol: NSURLProtocol {
         guard let url = request.url else { fatalError("URL is missing") }
         
         let error = NSError(domain: "org.andyshep.Luna", code: 404, userInfo: nil)
-        guard let response = NSHTTPURLResponse(url: url, statusCode: 404, httpVersion: "HTTP/1.1", headerFields: nil) else {
+        guard let response = HTTPURLResponse(url: url, statusCode: 404, httpVersion: "HTTP/1.1", headerFields: nil) else {
             fatalError("Response could not be created")
         }
         

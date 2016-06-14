@@ -56,7 +56,7 @@ class HTMLDoc {
     final let documentPtr: htmlDocPtr
     
     init(data: NSData) {
-        let cfEncoding = CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding)
+        let cfEncoding = CFStringConvertNSStringEncodingToEncoding(String.Encoding.utf8.rawValue)
         let cfEncodingAsString = CFStringConvertEncodingToIANACharSetName(cfEncoding)
         let cEncoding = CFStringGetCStringPtr(cfEncodingAsString, 0)
         

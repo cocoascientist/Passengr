@@ -19,7 +19,7 @@ class Pass: NSObject, NSCoding {
     var order: Int
     var enabled: Bool
     
-    var lastModified: NSDate = NSDate()
+    var lastModified: Date = Date()
     
     init(name: String, url: String, order: Int, enabled: Bool) {
         self.name = name
@@ -29,7 +29,6 @@ class Pass: NSObject, NSCoding {
         super.init()
     }
     
-    @objc(initWithCoder:)
     required convenience init?(coder aDecoder: NSCoder) {
         guard
             let name = aDecoder.decodeObject(forKey: "name") as? String,
@@ -44,7 +43,7 @@ class Pass: NSObject, NSCoding {
         let conditions = aDecoder.decodeObject(forKey: "conditions") as? String ?? ""
         let westbound = aDecoder.decodeObject(forKey: "westbound") as? String ?? ""
         let eastbound = aDecoder.decodeObject(forKey: "eastbound") as? String ?? ""
-        let lastModified = aDecoder.decodeObject(forKey: "lastModified") as? NSDate ?? NSDate()
+        let lastModified = aDecoder.decodeObject(forKey: "lastModified") as? Date ?? Date()
         
         self.eastbound = eastbound
         self.westbound = westbound
@@ -52,9 +51,7 @@ class Pass: NSObject, NSCoding {
         self.lastModified = lastModified
     }
     
-    @objc(encodeWithCoder:)
     func encode(with coder: NSCoder) {
-        
         coder.encode(name, forKey: "name")
         coder.encode(url, forKey: "url")
         coder.encode(enabled, forKey: "enabled")

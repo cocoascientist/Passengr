@@ -104,7 +104,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
         if context == context {
             if keyPath == "passes" {
                 handlePassesChange()
@@ -147,7 +147,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         return passes.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         configureCell(cell: cell, forIndexPath: indexPath)
@@ -157,7 +157,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 
     // MARK: - UICollectionViewDelegate
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let identifier = SegueIdentifier.ShowDetailView.rawValue
         self.performSegue(withIdentifier: identifier, sender: indexPath)
     }
@@ -201,7 +201,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 }
 
 extension PassViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
     }

@@ -11,7 +11,7 @@ import UIKit
 class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private let duration = 0.75
     
-    @objc(transitionDuration:) func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    @objc(transitionDuration:) func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
@@ -20,7 +20,7 @@ class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         guard let toViewController = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey) as? UICollectionViewController else { return }
         
         guard let fromCollectionView = fromViewController.collectionView else { return }
-        guard let containerView = transitionContext.containerView() else { return }
+        let containerView = transitionContext.containerView()
         containerView.backgroundColor = AppStyle.Color.LightBlue
         
         guard let indexPath = fromCollectionView.indexPathsForSelectedItems()?.first else { return }
@@ -34,7 +34,7 @@ class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let secondRect = CGRect(x: destinationRect.origin.x, y: destinationRect.origin.y, width: destinationRect.size.width, height: destinationRect.size.height)
         let insets = UIEdgeInsets(top: 73.0, left: 0.0, bottom: 1.0, right: 0.0)
         
-        let snapshot = fromCollectionView.resizableSnapshotView(from: originRect, afterScreenUpdates: false, withCapInsets: insets)
+        guard let snapshot = fromCollectionView.resizableSnapshotView(from: originRect, afterScreenUpdates: false, withCapInsets: insets) else { return }
         snapshot.frame = containerView.convert(originRect, from: fromCollectionView)
         containerView.addSubview(snapshot)
         

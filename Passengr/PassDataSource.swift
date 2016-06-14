@@ -14,7 +14,7 @@ class PassDataSource: NSObject, NSCoding {
     
     dynamic private(set) var passes: [Pass] {
         didSet {
-            self.lastUpdated = NSDate()
+            self.lastUpdated = Date()
         }
     }
     
@@ -31,13 +31,13 @@ class PassDataSource: NSObject, NSCoding {
         return self.orderedPasses.filter { $0.enabled == true }
     }
     
-    private(set) var lastUpdated: NSDate
+    private(set) var lastUpdated: Date
     
     private let signaler = PassSignaler()
     
     override init() {
         self.passes = []
-        self.lastUpdated = NSDate()
+        self.lastUpdated = Date()
         
         super.init()
         
@@ -69,7 +69,7 @@ class PassDataSource: NSObject, NSCoding {
     required convenience init?(coder aDecoder: NSCoder) {
         guard
             let passes = aDecoder.decodeObject(forKey: "passes") as? [Pass],
-            let lastUpdated = aDecoder.decodeObject(forKey: "lastUpdated") as? NSDate
+            let lastUpdated = aDecoder.decodeObject(forKey: "lastUpdated") as? Date
             else { return nil }
         
         self.init()
@@ -85,7 +85,8 @@ class PassDataSource: NSObject, NSCoding {
         typealias PassesResult = Result<[Pass]>
         
         let refresh: ([Pass]) -> () = { [weak self] passes in
-            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            
+            DispatchQueue.main.async(execute: { [weak self] () -> Void in
                 self?.updating = false
                 self?.passes = passes
                 self?.saveDataStore()
@@ -93,7 +94,7 @@ class PassDataSource: NSObject, NSCoding {
         }
         
         let raiseError: (ErrorProtocol) -> () = { error in
-            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            DispatchQueue.main.async(execute: { [weak self] () -> Void in
                 self?.updating = false
                 let info = [NSLocalizedDescriptionKey: "\(error)"]
                 let error = NSError(domain: "com.cocoascientist.Passengr", code: -101, userInfo: info)
@@ -167,13 +168,11 @@ class PassDataSource: NSObject, NSCoding {
     }
     
     internal func loadOrCreateInitialModel() {
-        if NSFileManager.default().fileExists(atPath: modelURL.path!) == false {
+        if FileManager.default().fileExists(atPath: modelURL.path!) == false {
             createInitialModelAtURL(url: modelURL)
         }
         
-        guard let data = NSData(contentsOf: modelURL) else {
-            fatalError("model data not found")
-        }
+        let data = try! Data(contentsOf: modelURL)
         
         guard let passes = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Pass] else {
             fatalError("could not load passes, wrong data type")
@@ -204,9 +203,9 @@ class PassDataSource: NSObject, NSCoding {
         }
     }
     
-    private lazy var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
-        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
         formatter.dateFormat = "EEEE MMMM d, yyyy hh:mm a"
         return formatter
     }()
@@ -217,12 +216,12 @@ class PassDataSource: NSObject, NSCoding {
         })
     }()
     
-    private var modelURL: NSURL {
-        let urls = NSFileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
-        return urls[urls.count - 1].appendingPathComponent("passengr.plist")
+    private var modelURL: URL {
+        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        return try! urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     
-    private func didWritePasses(passes: [Pass], toURL url: NSURL) -> Bool {
+    private func didWritePasses(passes: [Pass], toURL url: URL) -> Bool {
         do {
             let data = NSKeyedArchiver.archivedData(withRootObject: passes)
             try data.write(to: url, options: .atomicWrite)

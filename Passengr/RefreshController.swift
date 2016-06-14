@@ -24,11 +24,11 @@ class RefreshController: NSObject {
         
         super.init()
         
-        NSNotificationCenter.default().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.default().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
     }
     
     func setControlState(state: RefreshState) {
@@ -37,7 +37,7 @@ class RefreshController: NSObject {
         }
         
         let title = titleForState(state: state)
-        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.attributedTitle = AttributedString(string: title)
         
         transitionToState(state: state)
     }
@@ -48,7 +48,7 @@ class RefreshController: NSObject {
         }
         
         let title = titleForError(error: error)
-        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.attributedTitle = AttributedString(string: title)
         
         transitionToState(state: .Error)
     }
@@ -61,10 +61,12 @@ class RefreshController: NSObject {
     
     private func transitionToState(state: RefreshState) {
         if state == .Updating {
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) { [weak self] in
+            // FIXME
+            let delayTime = DispatchTime.now()
+            DispatchQueue.main.after(when: delayTime, execute: { [weak self] in
                 self?.dataSource?.reloadData()
-            }
+            })
+            
         }
         else {
             self.refreshControl?.endRefreshing()
@@ -97,8 +99,8 @@ class RefreshController: NSObject {
         return title
     }
     
-    private lazy var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateStyle = .mediumStyle
         formatter.timeStyle = .shortStyle
         return formatter

@@ -10,7 +10,7 @@ import Foundation
 
 public typealias TaskResult = Result<NSData>
 public typealias TaskFuture = Future<NSData>
-public typealias TaskCompletion = (NSData?, NSURLResponse?, NSError?) -> Void
+public typealias TaskCompletion = (Data?, URLResponse?, NSError?) -> Void
 
 public enum TaskError: ErrorProtocol {
     case Offline
@@ -22,14 +22,14 @@ public enum TaskError: ErrorProtocol {
 
 public struct NetworkController: Reachable {
     
-    private let configuration: NSURLSessionConfiguration
-    private let session: NSURLSession
+    private let configuration: URLSessionConfiguration
+    private let session: URLSession
     
-    init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.default()) {
+    init(configuration: URLSessionConfiguration = URLSessionConfiguration.default()) {
         self.configuration = configuration
         
-        let queue = NSOperationQueue.main()
-        self.session = NSURLSession(configuration: configuration, delegate: nil, delegateQueue: queue)
+        let queue = OperationQueue.main()
+        self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: queue)
     }
     
     /**
@@ -40,7 +40,7 @@ public struct NetworkController: Reachable {
     - returns: A TaskFuture associated with the request
     */
     
-    public func dataForRequest(_ request: NSURLRequest) -> TaskFuture {
+    public func dataForRequest(_ request: URLRequest) -> TaskFuture {
         
         let future: TaskFuture = Future() { completion in
             
@@ -62,7 +62,7 @@ public struct NetworkController: Reachable {
                     return fulfill(result: .Failure(TaskError.Other(err)))
                 }
                 
-                guard let response = response as? NSHTTPURLResponse else {
+                guard let response = response as? HTTPURLResponse else {
                     return fulfill(result: .Failure(TaskError.BadResponse))
                 }
                 

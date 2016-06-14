@@ -8,12 +8,12 @@
 
 import Foundation
 
-class LocalURLProtocol: NSURLProtocol {
-    override class func canInit(with request: NSURLRequest) -> Bool {
+class LocalURLProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool {
         return true
     }
     
-    override class func canonicalRequest(for request: NSURLRequest) -> NSURLRequest {
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         return request
     }
     
@@ -24,12 +24,12 @@ class LocalURLProtocol: NSURLProtocol {
         let data = self.dataForRequest(request) ?? NSData()
         let headers = ["Content-Type": "text/html"]
         
-        guard let response = NSHTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: headers) else {
+        guard let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: headers) else {
             fatalError("Response could not be created")
         }
         
         client.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        client.urlProtocol(self, didLoad: data)
+        client.urlProtocol(self, didLoad: data as Data)
         client.urlProtocolDidFinishLoading(self)
     }
     
@@ -38,7 +38,7 @@ class LocalURLProtocol: NSURLProtocol {
     }
     
     private func dataForRequest(_ request: NSURLRequest) -> NSData? {
-        let bundle = NSBundle(for: self.dynamicType)
+        let bundle = Bundle(for: self.dynamicType)
         guard let file = bundle.pathForResource("test", ofType: "html") else {
             return nil
         }

@@ -12,7 +12,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     private let duration = 0.75
     
-    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(_ transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
     }
     
@@ -22,7 +22,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
-        guard let containerView = transitionContext.containerView() else { return }
+        let containerView = transitionContext.containerView()
         containerView.backgroundColor = AppStyle.Color.LightBlue
         
         let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
@@ -42,7 +42,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         let insets = UIEdgeInsets(top: itemSize.height - 2.0, left: 0.0, bottom: 1.0, right: 0.0)
         
-        let snapshot = fromCollectionView.resizableSnapshotView(from: snapshotRect, afterScreenUpdates: false, withCapInsets: insets)
+        guard let snapshot = fromCollectionView.resizableSnapshotView(from: snapshotRect, afterScreenUpdates: false, withCapInsets: insets) else { return }
         let frame = containerView.convert(snapshotRect, from: fromCollectionView)
         
         let lineView = UIView()
