@@ -38,7 +38,7 @@ class PassTests: XCTestCase {
         pass.westbound = "Pass Closed"
         pass.eastbound = "No Restrictions"
         
-        XCTAssert(pass.closed, "pass should be closed")
+        XCTAssert(pass.isClosed, "pass should be closed")
     }
     
     func testPassIsOpen() {
@@ -47,7 +47,7 @@ class PassTests: XCTestCase {
         pass.westbound = "No Restrictions"
         pass.eastbound = "No Restrictions"
         
-        XCTAssert(pass.open, "pass should be open")
+        XCTAssert(pass.isOpen, "pass should be open")
     }
     
     func testPassHasRestrictions() {
@@ -56,8 +56,8 @@ class PassTests: XCTestCase {
         pass.westbound = "Some hazards"
         pass.eastbound = "No Restrictions"
         
-        XCTAssert(pass.open == false, "pass should not be open")
-        XCTAssert(pass.closed == false, "pass should not be closed")
+        XCTAssert(pass.isOpen == false, "pass should not be open")
+        XCTAssert(pass.isClosed == false, "pass should not be closed")
     }
     
     private func testablePass() -> Passengr.Pass {

@@ -9,7 +9,7 @@
 import Foundation
 
 enum ParseError: ErrorProtocol {
-    case NoRootDoc
+    case noRootDoc
 }
 
 func passInfoFromData(data: NSData) -> Result<PassInfo> {
@@ -24,7 +24,7 @@ func passInfoFromData(data: NSData) -> Result<PassInfo> {
     
     let doc = HTMLDoc(data: data)
     guard let root = doc.root else {
-        return Result.Failure(ParseError.NoRootDoc)
+        return Result.failure(ParseError.noRootDoc)
     }
     
     var info: [String: String] = [:]
@@ -33,7 +33,7 @@ func passInfoFromData(data: NSData) -> Result<PassInfo> {
         info[key] = value
     }
     
-    return Result.Success(info)
+    return Result.success(info)
 }
 
 class Parser {

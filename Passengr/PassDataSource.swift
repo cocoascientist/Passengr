@@ -107,9 +107,9 @@ class PassDataSource: NSObject, NSCoding {
         let future = self.futureForPassUpdates()
         future.start { (result) -> () in
             switch result {
-            case .Success(let passes):
+            case .success(let passes):
                 refresh(passes)
-            case .Failure(let error):
+            case .failure(let error):
                 raiseError(error)
             }
         }
@@ -121,11 +121,11 @@ class PassDataSource: NSObject, NSCoding {
             
             let success: ([PassInfo]) -> Void = { info in
                 let passes = self.passesFromPassInfoUpdates(updates: info)
-                completion(Result.Success(passes))
+                completion(Result.success(passes))
             }
             
             let failure: (ErrorProtocol) -> Void = { error in
-                completion(Result.Failure(error))
+                completion(Result.failure(error))
             }
             
             let infos = self.passes.map { (pass) -> PassInfo in
@@ -135,9 +135,9 @@ class PassDataSource: NSObject, NSCoding {
             let future = self.signaler.futureForPassesInfo(infos: infos)
             future.start { (result) -> () in
                 switch result {
-                case .Success(let infos):
+                case .success(let infos):
                     success(infos)
-                case .Failure(let error):
+                case .failure(let error):
                     failure(error)
                 }
             }

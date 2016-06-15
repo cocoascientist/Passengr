@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let reuseIdentifier = String(PassListCell)
-
 let context = UnsafeMutablePointer<Void>(nil)
 
 class PassViewController: UICollectionViewController, SegueHandlerType {
@@ -79,7 +77,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 
         // Register cell classes
         let nib = UINib(nibName: String(PassListCell), bundle: nil)
-        self.collectionView?.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView?.register(nib, forCellWithReuseIdentifier: PassListCell.reuseIdentifier)
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
         self.collectionView?.alwaysBounceVertical = true
@@ -148,9 +146,9 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PassListCell.reuseIdentifier, for: indexPath)
         
-        configureCell(cell: cell, forIndexPath: indexPath)
+        configure(cell: cell, forIndexPath: indexPath)
         
         return cell
     }
@@ -191,7 +189,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.refreshController.setControlState(error: error)
     }
     
-    private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PassListCell else { return }
         
         let pass = passes[indexPath.row]
@@ -203,6 +201,6 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 extension PassViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
+        return ListViewLayout.listLayoutItemSize(for: UIScreen.main().bounds)
     }
 }

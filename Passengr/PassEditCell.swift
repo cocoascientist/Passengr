@@ -13,6 +13,8 @@ class PassEditCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var swtch: UISwitch!
     
+    static let reuseIdentifier = "\(PassEditCell.self)"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

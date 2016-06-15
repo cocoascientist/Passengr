@@ -9,24 +9,23 @@
 import UIKit
 
 extension Pass {
-    var open: Bool {
-        
+    var isOpen: Bool {
         let westboundOpen = westbound.lowercased().range(of: "no restrictions") != nil
         let eastboundOpen = eastbound.lowercased().range(of: "no restrictions") != nil
         return westboundOpen && eastboundOpen
     }
     
-    var closed: Bool {
+    var isClosed: Bool {
         let westboundClosed = westbound.lowercased().range(of: "pass closed") != nil
         let eastboundClosed = eastbound.lowercased().range(of: "pass closed") != nil
         return eastboundClosed || westboundClosed
     }
     
     var color: UIColor {
-        if self.open {
+        if self.isOpen {
             return AppStyle.Color.Green
         }
-        else if self.closed {
+        else if self.isClosed {
             return AppStyle.Color.Red
         }
         else {

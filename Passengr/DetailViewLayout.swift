@@ -45,7 +45,7 @@ class DetailViewLayout: UICollectionViewFlowLayout {
 }
 
 extension DetailViewLayout {
-    class func detailLayoutItemSizeForBounds(_ bounds: CGRect) -> CGSize {
+    class func detailLayoutItemSize(forBounds bounds: CGRect) -> CGSize {
         let width = bounds.width - 30.0
         let height = bounds.height - 158.0
         

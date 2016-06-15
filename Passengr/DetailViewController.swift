@@ -79,7 +79,7 @@ class DetailViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-        configureCell(cell: cell, forIndexPath: indexPath)
+        configure(cell: cell, forIndexPath: indexPath)
         
         return cell
     }
@@ -99,7 +99,7 @@ class DetailViewController: UICollectionViewController {
         self.title = pass.name
     }
     
-    private func configureCell(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PassDetailCell else { return }
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
@@ -120,6 +120,6 @@ class DetailViewController: UICollectionViewController {
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return DetailViewLayout.detailLayoutItemSizeForBounds(UIScreen.main().bounds)
+        return DetailViewLayout.detailLayoutItemSize(forBounds: UIScreen.main().bounds)
     }
 }

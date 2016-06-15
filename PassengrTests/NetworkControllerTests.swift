@@ -12,9 +12,9 @@ import CoreLocation
 
 class NetworkControllerTests: XCTestCase {
     
-    private lazy var request: NSURLRequest = {
-        guard let url = NSURL(string: CascadePass.Snoqualmie.path) else { fatalError() }
-        let request = NSURLRequest(url: url as URL)
+    private lazy var request: URLRequest = {
+        guard let url = URL(string: CascadePass.Snoqualmie.path) else { fatalError() }
+        let request = URLRequest(url: url as URL)
         return request
     }()
 
@@ -42,7 +42,7 @@ class NetworkControllerTests: XCTestCase {
         let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: LocalURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
+        networkController.execute(request: request, success: success, failure: failure)
         
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
@@ -61,7 +61,7 @@ class NetworkControllerTests: XCTestCase {
         let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadStatusURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
+        networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
@@ -79,7 +79,7 @@ class NetworkControllerTests: XCTestCase {
         let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadResponseURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
+        networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
     
@@ -97,7 +97,7 @@ class NetworkControllerTests: XCTestCase {
         let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: FailingURLProtocol.self)
         let networkController = NetworkController(configuration: configuration)
         
-        networkController.executeNetworkRequest(request: request, success: success, failure: failure)
+        networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(withTimeout: 15.0, handler: nil)
     }
 }
@@ -106,12 +106,12 @@ typealias Success = (Void) -> ()
 typealias Failure = (Void) -> ()
 
 extension NetworkController {
-    func executeNetworkRequest(request: NSURLRequest, success: Success, failure: Failure) {
-        self.dataForRequest(request as URLRequest).start { (result) -> () in
+    func execute(request: URLRequest, success: Success, failure: Failure) {
+        self.data(for: request).start { (result) -> () in
             switch result {
-            case .Success:
+            case .success:
                 success()
-            case .Failure:
+            case .failure:
                 failure()
             }
         }

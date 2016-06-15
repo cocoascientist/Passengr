@@ -13,11 +13,11 @@ public typealias TaskFuture = Future<NSData>
 public typealias TaskCompletion = (Data?, URLResponse?, NSError?) -> Void
 
 public enum TaskError: ErrorProtocol {
-    case Offline
-    case NoData
-    case BadResponse
-    case BadStatusCode(Int)
-    case Other(NSError)
+    case offline
+    case noData
+    case badResponse
+    case badStatusCode(Int)
+    case other(NSError)
 }
 
 public struct NetworkController: Reachable {
@@ -40,47 +40,47 @@ public struct NetworkController: Reachable {
     - returns: A TaskFuture associated with the request
     */
     
-    public func dataForRequest(_ request: URLRequest) -> TaskFuture {
+    public func data(for request: URLRequest) -> TaskFuture {
         
         let future: TaskFuture = Future() { completion in
             
             let fulfill: (result: TaskResult) -> Void = {(taskResult) in
                 switch taskResult {
-                case .Success(let data):
-                    completion(.Success(data))
-                case .Failure(let error):
-                    completion(.Failure(error))
+                case .success(let data):
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
             
             let completion: TaskCompletion = { (data, response, err) in
                 guard let data = data else {
                     guard let err = err else {
-                        return fulfill(result: .Failure(TaskError.NoData))
+                        return fulfill(result: .failure(TaskError.noData))
                     }
                     
-                    return fulfill(result: .Failure(TaskError.Other(err)))
+                    return fulfill(result: .failure(TaskError.other(err)))
                 }
                 
                 guard let response = response as? HTTPURLResponse else {
-                    return fulfill(result: .Failure(TaskError.BadResponse))
+                    return fulfill(result: .failure(TaskError.badResponse))
                 }
                 
                 switch response.statusCode {
                 case 200...204:
-                    fulfill(result: .Success(data))
+                    fulfill(result: .success(data))
                 default:
-                    fulfill(result: .Failure(TaskError.BadStatusCode(response.statusCode)))
+                    fulfill(result: .failure(TaskError.badStatusCode(response.statusCode)))
                 }
             }
             
             let task = self.session.dataTask(with: request, completionHandler: completion)
             
             switch self.reachable {
-            case .Online:
+            case .online:
                 task.resume()
-            case .Offline:
-                fulfill(result: .Failure(TaskError.Offline))
+            case .offline:
+                fulfill(result: .failure(TaskError.offline))
             }
         }
         

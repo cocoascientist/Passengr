@@ -24,6 +24,8 @@ class PassDetailCell: UICollectionViewCell {
     
     @IBOutlet var containerView: UIView!
     
+    static let reuseIdentifier = "\(PassDetailCell.self)"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()

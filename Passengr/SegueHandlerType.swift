@@ -14,12 +14,11 @@ protocol SegueHandlerType {
 
 extension SegueHandlerType where Self: UIViewController, SegueIdentifier.RawValue == String {
     
-    
     func preformSegueWithIdentifier(segueIdentifer identifier: SegueIdentifier, sender: AnyObject?) {
         performSegue(withIdentifier: identifier.rawValue, sender: sender)
     }
     
-    func segueIdentifierForSegue(segue: UIStoryboardSegue) -> SegueIdentifier {
+    func segueIdentifier(for segue: UIStoryboardSegue) -> SegueIdentifier {
         guard let identifer = segue.identifier,
             segueIdentifier = SegueIdentifier(rawValue: identifer)
         else {

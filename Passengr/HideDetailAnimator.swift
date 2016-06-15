@@ -25,17 +25,17 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = transitionContext.containerView()
         containerView.backgroundColor = AppStyle.Color.LightBlue
         
-        let itemSize = ListViewLayout.listLayoutItemSizeForBounds(UIScreen.main().bounds)
+        let itemSize = ListViewLayout.listLayoutItemSize(for: UIScreen.main().bounds)
         
         // Find origin rect
         guard let originIndexPath = fromCollectionView.indexPathsForVisibleItems().first else { return }
         let originAttributes = fromCollectionView.layoutAttributesForItem(at: originIndexPath)
-        let originRect = originRectFromAttributes(attributes: originAttributes)
+        let originRect = self.originRect(from: originAttributes)
         let snapshotRect = CGRect(x: originRect.origin.x, y: originRect.origin.y, width: originRect.size.width, height: itemSize.height)
         
         // Find destination rect
         let destinationAttributes = toCollectionView.layoutAttributesForItem(at: originIndexPath)
-        let destinationRect = destinationRectFromAttributes(attributes: destinationAttributes)
+        let destinationRect = self.destinationRect(from: destinationAttributes)
         
         let firstRect = CGRect(x: originRect.origin.x, y: originRect.origin.y, width: originRect.size.width, height: destinationRect.size.height)
         let secondRect = destinationRect
@@ -52,7 +52,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         snapshot.clipsToBounds = true
         
         snapshot.frame = frame
-        lineView.frame = lineViewFrameWithBounds(bounds: snapshot.bounds)
+        lineView.frame = lineViewFrame(with: snapshot.bounds)
         
         containerView.addSubview(toViewController.view)
         containerView.addSubview(snapshot)
@@ -64,12 +64,12 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3, animations: { 
                 snapshot.frame = containerView.convert(firstRect, from: fromCollectionView)
-                lineView.frame = self.lineViewFrameWithBounds(bounds: snapshot.bounds)
+                lineView.frame = self.lineViewFrame(with: snapshot.bounds)
             })
             
             UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.3, animations: { 
                 snapshot.frame = secondRect
-                lineView.frame = self.lineViewFrameWithBounds(bounds: snapshot.bounds)
+                lineView.frame = self.lineViewFrame(with: snapshot.bounds)
             })
             
             UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.3, animations: { 
@@ -86,16 +86,16 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: [], animations: animations, completion: completion)
     }
     
-    private func originRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
+    private func originRect(from attributes: UICollectionViewLayoutAttributes?) -> CGRect {
         return attributes?.frame ?? CGRect.zero
     }
     
-    private func destinationRectFromAttributes(attributes: UICollectionViewLayoutAttributes?) -> CGRect {
+    private func destinationRect(from attributes: UICollectionViewLayoutAttributes?) -> CGRect {
         guard let frame = attributes?.frame else { return CGRect.zero }
         return CGRect(x: frame.origin.x, y: frame.origin.y + 64.0, width: frame.size.width, height: frame.size.height)
     }
     
-    private func lineViewFrameWithBounds(bounds: CGRect) -> CGRect {
+    private func lineViewFrame(with bounds: CGRect) -> CGRect {
         return CGRect(x: bounds.minX, y: bounds.maxY - 0.5, width: bounds.width, height: 1.0)
     }
 }

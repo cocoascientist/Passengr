@@ -27,9 +27,9 @@ class PassSignaler {
                 
                 self.futureForPassInfo(info).start({ (result) -> () in
                     switch result {
-                    case .Success(let info):
+                    case .success(let info):
                         updates.append(info)
-                    case .Failure(let error):
+                    case .failure(let error):
                         self.error = error
                     }
                     
@@ -41,13 +41,13 @@ class PassSignaler {
             
             group.notify(queue: queue, execute: { 
                 if let error = self.error {
-                    completion(Result.Failure(error))
+                    completion(Result.failure(error))
                 }
                 else if updates.count == 0 {
-                    completion(Result.Failure(PassError.NoData))
+                    completion(Result.failure(PassError.noData))
                 }
                 else {
-                    completion(Result.Success(updates))
+                    completion(Result.success(updates))
                 }
             })
         }
@@ -61,15 +61,15 @@ class PassSignaler {
         let future: PassFuture = Future() { completion in
             
             guard let urlString = info[PassInfoKeys.ReferenceURL] else {
-                return completion(Result.Failure(PassError.NoData))
+                return completion(Result.failure(PassError.noData))
             }
             
             guard let url = URL(string: urlString) else {
-                return completion(Result.Failure(PassError.NoData))
+                return completion(Result.failure(PassError.noData))
             }
             
             let request = URLRequest(url: url)
-            let future = self.controller.dataForRequest(request)
+            let future = self.controller.data(for: request)
             
             future.start { (result) -> () in
                 
@@ -90,17 +90,17 @@ class PassSignaler {
 }
 
 enum PassError: ErrorProtocol {
-    case NoData
-    case Offline
+    case noData
+    case offline
 }
 
 extension PassError {
     init(error: TaskError) {
         switch error {
-        case .Offline:
-            self = PassError.Offline
+        case .offline:
+            self = PassError.offline
         default:
-            self = PassError.NoData
+            self = PassError.noData
         }
     }
 }
@@ -108,9 +108,9 @@ extension PassError {
 extension PassError: CustomStringConvertible {
     var description: String {
         switch self {
-        case .Offline:
+        case .offline:
             return NSLocalizedString("Connection is Offline", comment: "Connection is Offline")
-        case .NoData:
+        case .noData:
             return NSLocalizedString("No Data Received", comment: "No Data Received")
         }
     }

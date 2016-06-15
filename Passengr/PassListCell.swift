@@ -12,6 +12,8 @@ class PassListCell: UICollectionViewCell {
     @IBOutlet var statusView: UIView!
     @IBOutlet var titleLabel: UILabel!
     
+    static let reuseIdentifier = "\(PassListCell.self)"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
