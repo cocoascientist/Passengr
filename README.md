@@ -6,7 +6,7 @@ Read a full write up about the development of Passengr at [cocoascientist.com](h
 
 ## Requirements
 
-* Xcode 7.3.1
+* Xcode 8
 * Swift 3
 
 ## Screenshot
