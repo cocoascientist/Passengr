@@ -24,7 +24,7 @@ struct AppStyle {
 
 extension UIColor {
     class func hexColor(string: String) -> UIColor {
-        let set = NSCharacterSet.whitespacesAndNewlines()
+        let set = NSCharacterSet.whitespacesAndNewlines
         var colorString = string.trimmingCharacters(in: set).uppercased()
         
         if (colorString.hasPrefix("#")) {

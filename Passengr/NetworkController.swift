@@ -25,10 +25,10 @@ public struct NetworkController: Reachable {
     private let configuration: URLSessionConfiguration
     private let session: URLSession
     
-    init(configuration: URLSessionConfiguration = URLSessionConfiguration.default()) {
+    init(configuration: URLSessionConfiguration = URLSessionConfiguration.default) {
         self.configuration = configuration
         
-        let queue = OperationQueue.main()
+        let queue = OperationQueue.main
         self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: queue)
     }
     

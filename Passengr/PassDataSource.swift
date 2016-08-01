@@ -168,7 +168,7 @@ class PassDataSource: NSObject, NSCoding {
     }
     
     internal func loadOrCreateInitialModel() {
-        if FileManager.default().fileExists(atPath: modelURL.path!) == false {
+        if FileManager.default.fileExists(atPath: modelURL.path!) == false {
             createInitialModelAtURL(url: modelURL)
         }
         
@@ -217,7 +217,7 @@ class PassDataSource: NSObject, NSCoding {
     }()
     
     private var modelURL: URL {
-        let urls = FileManager.default().urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
         return try! urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     

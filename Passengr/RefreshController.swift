@@ -24,11 +24,11 @@ class RefreshController: NSObject {
         
         super.init()
         
-        NotificationCenter.default().addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     deinit {
-        NotificationCenter.default().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setControlState(state: RefreshState) {
@@ -101,8 +101,8 @@ class RefreshController: NSObject {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .mediumStyle
-        formatter.timeStyle = .shortStyle
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         return formatter
     }()
 }

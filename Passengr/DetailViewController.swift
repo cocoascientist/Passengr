@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = String(PassDetailCell)
+private let reuseIdentifier = String(PassDetailCell.self)
 
 class DetailViewController: UICollectionViewController {
     
@@ -38,7 +38,7 @@ class DetailViewController: UICollectionViewController {
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
 
-        let nib = UINib(nibName: String(PassDetailCell), bundle: nil)
+        let nib = UINib(nibName: String(PassDetailCell.self), bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     

@@ -29,7 +29,7 @@ class NetworkControllerTests: XCTestCase {
     }
 
     func testCanRequestPassSuccessfully() {
-        let expected = expectation(withDescription: "Request should be successful")
+        let expected = expectation(description: "Request should be successful")
         
         let success: Success = {
             expected.fulfill()
@@ -44,11 +44,11 @@ class NetworkControllerTests: XCTestCase {
         
         networkController.execute(request: request, success: success, failure: failure)
         
-        waitForExpectations(withTimeout: 15.0, handler: nil)
+        waitForExpectations(timeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadStatusCode() {
-        let expected = expectation(withDescription: "Request should not be successful")
+        let expected = expectation(description: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
@@ -62,11 +62,11 @@ class NetworkControllerTests: XCTestCase {
         let networkController = NetworkController(configuration: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
-        waitForExpectations(withTimeout: 15.0, handler: nil)
+        waitForExpectations(timeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadResponse() {
-        let expected = expectation(withDescription: "Request should not be successful")
+        let expected = expectation(description: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
@@ -80,11 +80,11 @@ class NetworkControllerTests: XCTestCase {
         let networkController = NetworkController(configuration: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
-        waitForExpectations(withTimeout: 15.0, handler: nil)
+        waitForExpectations(timeout: 15.0, handler: nil)
     }
     
     func testCanHandleBadURL() {
-        let expected = expectation(withDescription: "Request should not be successful")
+        let expected = expectation(description: "Request should not be successful")
         
         let success: Success = {
             XCTFail("Request should fail")
@@ -98,7 +98,7 @@ class NetworkControllerTests: XCTestCase {
         let networkController = NetworkController(configuration: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
-        waitForExpectations(withTimeout: 15.0, handler: nil)
+        waitForExpectations(timeout: 15.0, handler: nil)
     }
 }
 

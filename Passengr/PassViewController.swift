@@ -76,7 +76,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: .plain, target: nil, action: nil)
 
         // Register cell classes
-        let nib = UINib(nibName: String(PassListCell), bundle: nil)
+        let nib = UINib(nibName: String(PassListCell.self), bundle: nil)
         self.collectionView?.register(nib, forCellWithReuseIdentifier: PassListCell.reuseIdentifier)
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
