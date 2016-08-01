@@ -14,7 +14,7 @@ private typealias PassFuture = Future<PassInfo>
 class PassSignaler {
     
     private let controller = NetworkController()
-    private var error: ErrorProtocol? = nil
+    private var error: Error? = nil
     
     func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
@@ -89,7 +89,7 @@ class PassSignaler {
     }
 }
 
-enum PassError: ErrorProtocol {
+enum PassError: Error {
     case noData
     case offline
 }

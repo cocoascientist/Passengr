@@ -10,9 +10,9 @@ import Foundation
 
 public typealias TaskResult = Result<NSData>
 public typealias TaskFuture = Future<NSData>
-public typealias TaskCompletion = (Data?, URLResponse?, NSError?) -> Void
+public typealias TaskCompletion = (Data?, URLResponse?, Error?) -> Void
 
-public enum TaskError: ErrorProtocol {
+public enum TaskError: Error {
     case offline
     case noData
     case badResponse

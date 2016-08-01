@@ -39,7 +39,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         let control = UIRefreshControl()
         
         control.addTarget(self, action: #selector(RefreshController.handleRefresh(_:)), for: .valueChanged)
-        control.backgroundColor = UIColor.clear()
+        control.backgroundColor = UIColor.clear
         
         return control
     }()
@@ -89,13 +89,13 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         
         switch identifier {
         case .ShowDetailView:
-            guard let viewController = segue.destinationViewController as? DetailViewController else { return }
-            guard let indexPath = collectionView?.indexPathsForSelectedItems()?.first else { return }
+            guard let viewController = segue.destination as? DetailViewController else { return }
+            guard let indexPath = collectionView?.indexPathsForSelectedItems?.first else { return }
             
             viewController.indexPath = indexPath
             viewController.dataSource = dataSource
         case .ShowEditView:
-            guard let navController = segue.destinationViewController as? UINavigationController else { return }
+            guard let navController = segue.destination as? UINavigationController else { return }
             guard let viewController = navController.childViewControllers.first as? EditViewController else { return }
             
             viewController.dataSource = dataSource
@@ -175,7 +175,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     private func handleUpdatingChange() {
         guard let dataSource = dataSource else { return }
         
-        UIApplication.shared().isNetworkActivityIndicatorVisible = dataSource.updating
+        UIApplication.shared.isNetworkActivityIndicatorVisible = dataSource.updating
         
         if !dataSource.updating {
             self.refreshController.setControlState(state: .Idle)
@@ -201,6 +201,6 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
 extension PassViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return ListViewLayout.listLayoutItemSize(for: UIScreen.main().bounds)
+        return ListViewLayout.listLayoutItemSize(for: UIScreen.main.bounds)
     }
 }

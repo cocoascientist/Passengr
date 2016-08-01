@@ -10,20 +10,20 @@ protocol ResultType {
     associatedtype Value
     
     init(success value: Value)
-    init(failure error: ErrorProtocol)
+    init(failure error: Error)
     
     func map<U>(_ f: (Value) -> U) -> Result<U>
 }
 
 public enum Result<T>: ResultType {
     case success(T)
-    case failure(ErrorProtocol)
+    case failure(Error)
     
     init(success value: T) {
         self = .success(value)
     }
     
-    init(failure error: ErrorProtocol) {
+    init(failure error: Error) {
         self = .failure(error)
     }
 }

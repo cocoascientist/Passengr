@@ -37,7 +37,7 @@ class RefreshController: NSObject {
         }
         
         let title = titleForState(state: state)
-        refreshControl.attributedTitle = AttributedString(string: title)
+        refreshControl.attributedTitle = NSAttributedString(string: title)
         
         transitionToState(state: state)
     }
@@ -48,7 +48,7 @@ class RefreshController: NSObject {
         }
         
         let title = titleForError(error: error)
-        refreshControl.attributedTitle = AttributedString(string: title)
+        refreshControl.attributedTitle = NSAttributedString(string: title)
         
         transitionToState(state: .Error)
     }
@@ -63,7 +63,7 @@ class RefreshController: NSObject {
         if state == .Updating {
             // FIXME
             let delayTime = DispatchTime.now()
-            DispatchQueue.main.after(when: delayTime, execute: { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: delayTime, execute: { [weak self] in
                 self?.dataSource?.reloadData()
             })
             

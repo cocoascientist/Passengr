@@ -22,13 +22,13 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
-        let containerView = transitionContext.containerView()
+        let containerView = transitionContext.containerView
         containerView.backgroundColor = AppStyle.Color.LightBlue
         
-        let itemSize = ListViewLayout.listLayoutItemSize(for: UIScreen.main().bounds)
+        let itemSize = ListViewLayout.listLayoutItemSize(for: UIScreen.main.bounds)
         
         // Find origin rect
-        guard let originIndexPath = fromCollectionView.indexPathsForVisibleItems().first else { return }
+        guard let originIndexPath = fromCollectionView.indexPathsForVisibleItems.first else { return }
         let originAttributes = fromCollectionView.layoutAttributesForItem(at: originIndexPath)
         let originRect = self.originRect(from: originAttributes)
         let snapshotRect = CGRect(x: originRect.origin.x, y: originRect.origin.y, width: originRect.size.width, height: itemSize.height)
@@ -46,7 +46,7 @@ class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let frame = containerView.convert(snapshotRect, from: fromCollectionView)
         
         let lineView = UIView()
-        lineView.backgroundColor = UIColor.lightGray()
+        lineView.backgroundColor = UIColor.lightGray
         
         snapshot.addSubview(lineView)
         snapshot.clipsToBounds = true

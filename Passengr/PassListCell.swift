@@ -25,11 +25,11 @@ class PassListCell: UICollectionViewCell {
     }
     
     override func draw(_ rect: CGRect) {
-        UIColor.lightGray().setStroke()
+        UIColor.lightGray.setStroke()
         UIBezierPath(rect: rect).stroke()
     }
     
     func setup() {
-        self.backgroundColor = UIColor.white()
+        self.backgroundColor = UIColor.white
     }
 }

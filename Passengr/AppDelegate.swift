@@ -27,11 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
         navController.delegate = self
         
-        let attributes = [NSForegroundColorAttributeName: UIColor.white()]
+        let attributes = [NSForegroundColorAttributeName: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
         UINavigationBar.appearance().barTintColor = AppStyle.Color.ForestGreen
-        UINavigationBar.appearance().tintColor = UIColor.white()
+        UINavigationBar.appearance().tintColor = UIColor.white
         
         return true
     }

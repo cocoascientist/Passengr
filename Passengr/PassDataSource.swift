@@ -22,7 +22,7 @@ class PassDataSource: NSObject, NSCoding {
     dynamic private(set) var error: NSError? = nil
     
     var orderedPasses: [Pass] {
-        return self.passes.sorted(isOrderedBefore: { (first, second) -> Bool in
+        return self.passes.sorted(by: { (first, second) -> Bool in
             return Int(first.order) < Int(second.order)
         })
     }
@@ -93,7 +93,7 @@ class PassDataSource: NSObject, NSCoding {
             })
         }
         
-        let raiseError: (ErrorProtocol) -> () = { error in
+        let raiseError: (Error) -> () = { error in
             DispatchQueue.main.async(execute: { [weak self] () -> Void in
                 self?.updating = false
                 let info = [NSLocalizedDescriptionKey: "\(error)"]
@@ -124,7 +124,7 @@ class PassDataSource: NSObject, NSCoding {
                 completion(Result.success(passes))
             }
             
-            let failure: (ErrorProtocol) -> Void = { error in
+            let failure: (Error) -> Void = { error in
                 completion(Result.failure(error))
             }
             
@@ -168,7 +168,7 @@ class PassDataSource: NSObject, NSCoding {
     }
     
     internal func loadOrCreateInitialModel() {
-        if FileManager.default.fileExists(atPath: modelURL.path!) == false {
+        if FileManager.default.fileExists(atPath: modelURL.path) == false {
             createInitialModelAtURL(url: modelURL)
         }
         
@@ -205,20 +205,20 @@ class PassDataSource: NSObject, NSCoding {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "EEEE MMMM d, yyyy hh:mm a"
         return formatter
     }()
     
     private lazy var seedData: [CascadePass] = {
-        return CascadePass.allPasses().sorted(isOrderedBefore: { (first, second) -> Bool in
+        return CascadePass.allPasses().sorted(by: { (first, second) -> Bool in
             return first.name < second.name
         })
     }()
     
     private var modelURL: URL {
-        let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
-        return try! urls[urls.count - 1].appendingPathComponent("passengr.plist")
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     
     private func didWritePasses(passes: [Pass], toURL url: URL) -> Bool {

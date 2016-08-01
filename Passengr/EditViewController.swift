@@ -105,7 +105,7 @@ class EditViewController: UITableViewController {
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
         cell.swtch.tag = indexPath.row
-        cell.swtch.isOn = pass.enabled.boolValue
+        cell.swtch.isOn = pass.enabled
         
         let action = #selector(EditViewController.handleSwitchChange(_:))
         cell.swtch.removeTarget(self, action: action, for: .touchUpInside)

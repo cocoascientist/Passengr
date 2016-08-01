@@ -87,7 +87,7 @@ class DetailViewController: UICollectionViewController {
     // MARK: - UIScrollView
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let indexPath = self.collectionView?.indexPathsForVisibleItems().first else { return }
+        guard let indexPath = self.collectionView?.indexPathsForVisibleItems.first else { return }
         self.indexPath = indexPath
         self.setTitleTextFromIndexPath(indexPath: indexPath)
     }
@@ -120,6 +120,6 @@ class DetailViewController: UICollectionViewController {
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return DetailViewLayout.detailLayoutItemSize(forBounds: UIScreen.main().bounds)
+        return DetailViewLayout.detailLayoutItemSize(forBounds: UIScreen.main.bounds)
     }
 }
