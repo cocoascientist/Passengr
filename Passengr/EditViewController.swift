@@ -43,7 +43,7 @@ class EditViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? PassEditCell else { fatalError() }
         
-        configure(cell: cell, forIndexPath: indexPath)
+        configure(cell: cell, for: indexPath)
         
         return cell
     }
@@ -99,7 +99,7 @@ class EditViewController: UITableViewController {
     
     // MARK: - Private
     
-    private func configure(cell: UITableViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func configure(cell: UITableViewCell, for indexPath: NSIndexPath) {
         guard let cell = cell as? PassEditCell else { return }
         
         let pass = passes[indexPath.row]

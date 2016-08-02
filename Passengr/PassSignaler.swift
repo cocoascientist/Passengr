@@ -16,7 +16,7 @@ class PassSignaler {
     private let controller = NetworkController()
     private var error: Error? = nil
     
-    func futureForPassesInfo(infos: [PassInfo]) -> PassesFuture {
+    func future(for infos: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
             
             let group = DispatchGroup()

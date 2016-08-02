@@ -47,7 +47,7 @@ class PassDataSource: NSObject, NSCoding {
     // MARK: - Public
     
     func saveDataStore() {
-        if didWritePasses(passes: passes, toURL: modelURL) == false {
+        if didWrite(passes: passes, to: modelURL) == false {
             print("error saving passes to url: \(modelURL)")
         }
     }
@@ -58,14 +58,12 @@ class PassDataSource: NSObject, NSCoding {
     
     // MARK: - NSCoding
     
-    @objc(encodeWithCoder:)
     func encode(with coder: NSCoder) {
         coder.encode(self.lastUpdated, forKey: "lastUpdated")
         coder.encode(self.passes, forKey: "passes")
 
     }
     
-    @objc(initWithCoder:)
     required convenience init?(coder aDecoder: NSCoder) {
         guard
             let passes = aDecoder.decodeObject(forKey: "passes") as? [Pass],
@@ -120,7 +118,7 @@ class PassDataSource: NSObject, NSCoding {
         let future: PassUpdatesFuture = Future() { completion in
             
             let success: ([PassInfo]) -> Void = { info in
-                let passes = self.passesFromPassInfoUpdates(updates: info)
+                let passes = self.passes(from: info)
                 completion(Result.success(passes))
             }
             
@@ -132,7 +130,7 @@ class PassDataSource: NSObject, NSCoding {
                 return pass.passInfo
             }
             
-            let future = self.signaler.futureForPassesInfo(infos: infos)
+            let future = self.signaler.future(for: infos)
             future.start { (result) -> () in
                 switch result {
                 case .success(let infos):
@@ -146,7 +144,7 @@ class PassDataSource: NSObject, NSCoding {
         return future
     }
     
-    private func passesFromPassInfoUpdates(updates: [PassInfo]) -> [Pass] {
+    private func passes(from updates: [PassInfo]) -> [Pass] {
         
         let passes = updates.flatMap { (passInfo) -> Pass? in
             guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
@@ -198,7 +196,7 @@ class PassDataSource: NSObject, NSCoding {
             order += 1
         }
         
-        if didWritePasses(passes: passes, toURL: modelURL) == false {
+        if didWrite(passes: passes, to: modelURL) == false {
             fatalError("cannot saved model to url: \(modelURL)")
         }
     }
@@ -221,7 +219,7 @@ class PassDataSource: NSObject, NSCoding {
         return urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     
-    private func didWritePasses(passes: [Pass], toURL url: URL) -> Bool {
+    private func didWrite(passes: [Pass], to url: URL) -> Bool {
         do {
             let data = NSKeyedArchiver.archivedData(withRootObject: passes)
             try data.write(to: url, options: .atomicWrite)

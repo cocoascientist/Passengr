@@ -46,7 +46,7 @@ class DetailViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         self.collectionView?.scrollToItem(at: self.indexPath, at: .centeredHorizontally, animated: true)
-        self.setTitleTextFromIndexPath(indexPath: self.indexPath)
+        self.setTitleText(for: self.indexPath)
     }
     
     override func encodeRestorableState(with coder: NSCoder) {
@@ -79,7 +79,7 @@ class DetailViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-        configure(cell: cell, forIndexPath: indexPath)
+        configure(cell: cell, for: indexPath)
         
         return cell
     }
@@ -89,17 +89,17 @@ class DetailViewController: UICollectionViewController {
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let indexPath = self.collectionView?.indexPathsForVisibleItems.first else { return }
         self.indexPath = indexPath
-        self.setTitleTextFromIndexPath(indexPath: indexPath)
+        self.setTitleText(for: indexPath)
     }
     
     // MARK: - Private
     
-    private func setTitleTextFromIndexPath(indexPath: NSIndexPath) -> Void {
+    private func setTitleText(for indexPath: NSIndexPath) -> Void {
         let pass = passes[indexPath.row]
         self.title = pass.name
     }
     
-    private func configure(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, for indexPath: NSIndexPath) {
         guard let cell = cell as? PassDetailCell else { return }
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
@@ -120,6 +120,6 @@ class DetailViewController: UICollectionViewController {
 
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return DetailViewLayout.detailLayoutItemSize(forBounds: UIScreen.main.bounds)
+        return DetailViewLayout.detailLayoutItemSize(for: UIScreen.main.bounds)
     }
 }

@@ -148,7 +148,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PassListCell.reuseIdentifier, for: indexPath)
         
-        configure(cell: cell, forIndexPath: indexPath)
+        configure(cell: cell, for: indexPath)
         
         return cell
     }
@@ -163,7 +163,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     // MARK: - Actions
     
     func handleRefresh(sender: AnyObject) {
-        self.refreshController.setControlState(state: .Updating)
+        self.refreshController.setControlState(state: .updating)
     }
 
     // MARK: - Private
@@ -178,7 +178,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         UIApplication.shared.isNetworkActivityIndicatorVisible = dataSource.updating
         
         if !dataSource.updating {
-            self.refreshController.setControlState(state: .Idle)
+            self.refreshController.setControlState(state: .idle)
         }
     }
     
@@ -189,7 +189,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.refreshController.setControlState(error: error)
     }
     
-    private func configure(cell: UICollectionViewCell, forIndexPath indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, for indexPath: NSIndexPath) {
         guard let cell = cell as? PassListCell else { return }
         
         let pass = passes[indexPath.row]

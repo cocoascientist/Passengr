@@ -9,9 +9,9 @@
 import UIKit
 
 enum RefreshState {
-    case Idle
-    case Updating
-    case Error
+    case idle
+    case updating
+    case error
 }
 
 class RefreshController: NSObject {
@@ -36,10 +36,10 @@ class RefreshController: NSObject {
             fatalError("refreshControl should not be nil")
         }
         
-        let title = titleForState(state: state)
-        refreshControl.attributedTitle = NSAttributedString(string: title)
+        let string = title(for: state)
+        refreshControl.attributedTitle = NSAttributedString(string: string)
         
-        transitionToState(state: state)
+        transition(to: state)
     }
     
     func setControlState(error: NSError) {
@@ -47,10 +47,10 @@ class RefreshController: NSObject {
             fatalError("refreshControl should not be nil")
         }
         
-        let title = titleForError(error: error)
-        refreshControl.attributedTitle = NSAttributedString(string: title)
+        let string = title(for: error)
+        refreshControl.attributedTitle = NSAttributedString(string: string)
         
-        transitionToState(state: .Error)
+        transition(to: .error)
     }
     
     func handleRefresh(_ notification: NSNotification) {
@@ -59,10 +59,9 @@ class RefreshController: NSObject {
     
     // MARK: - Private
     
-    private func transitionToState(state: RefreshState) {
-        if state == .Updating {
-            // FIXME
-            let delayTime = DispatchTime.now()
+    private func transition(to state: RefreshState) {
+        if state == .updating {
+            let delayTime = DispatchTime.now() + 1
             DispatchQueue.main.asyncAfter(deadline: delayTime, execute: { [weak self] in
                 self?.dataSource?.reloadData()
             })
@@ -73,30 +72,30 @@ class RefreshController: NSObject {
         }
     }
     
-    private func titleForState(state: RefreshState) -> String {
+    private func title(for state: RefreshState) -> String {
         guard let dataSource = dataSource else {
             fatalError("dataSource should not be nil")
         }
         
         switch state {
-        case .Error:
+        case .error:
             return NSLocalizedString("Error", comment: "Error")
-        case .Updating:
+        case .updating:
             return NSLocalizedString("Updating...", comment: "Updating")
-        case .Idle:
+        case .idle:
             let dateString = self.dateFormatter.string(from: dataSource.lastUpdated)
             let prefix = NSLocalizedString("Updated on", comment: "Updated on")
             return "\(prefix) \(dateString)"
         }
     }
     
-    private func titleForError(error: NSError) -> String {
-        var title = titleForState(state: .Error)
+    private func title(for error: NSError) -> String {
+        var string = title(for: .error)
         if let message = error.userInfo[NSLocalizedDescriptionKey] as? String {
-            title = "\(title): \(message)"
+            string = "\(string): \(message)"
         }
         
-        return title
+        return string
     }
     
     private lazy var dateFormatter: DateFormatter = {
