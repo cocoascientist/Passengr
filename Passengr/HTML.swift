@@ -23,8 +23,13 @@ class HTMLNode {
         guard let textValue = xmlNodeListGetString(document, children, 1) else { return "" }
         defer { free(textValue) }
         
-        guard let value = String(validatingUTF8: UnsafePointer<CChar>(textValue)) else { return "" }
-        return value
+        let value = textValue.withMemoryRebound(to: CChar.self, capacity: 1) {
+            return String(validatingUTF8: $0)
+        }
+        
+        guard value != nil else { return  "" }
+        
+        return value!
     }()
     
     func xpath(xpath: String) -> [HTMLNode] {
@@ -62,7 +67,9 @@ class HTMLDoc {
         
         // HTML_PARSE_RECOVER | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING
         let htmlParseOptions: CInt = 1 << 0 | 1 << 5 | 1 << 6
-        self.documentPtr = htmlReadMemory(UnsafePointer<Int8>(data.bytes), CInt(data.length), nil, cEncoding, htmlParseOptions)
+        
+        let bytes = data.bytes.assumingMemoryBound(to: Int8.self)
+        self.documentPtr = htmlReadMemory(bytes, CInt(data.length), nil, cEncoding, htmlParseOptions)
     }
     
     deinit {

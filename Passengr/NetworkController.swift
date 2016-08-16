@@ -8,8 +8,8 @@
 
 import Foundation
 
-public typealias TaskResult = Result<NSData>
-public typealias TaskFuture = Future<NSData>
+public typealias TaskResult = Result<Data>
+public typealias TaskFuture = Future<Data>
 public typealias TaskCompletion = (Data?, URLResponse?, Error?) -> Void
 
 public enum TaskError: Error {
@@ -17,7 +17,7 @@ public enum TaskError: Error {
     case noData
     case badResponse
     case badStatusCode(Int)
-    case other(NSError)
+    case other(Error)
 }
 
 public struct NetworkController: Reachable {
@@ -25,7 +25,7 @@ public struct NetworkController: Reachable {
     private let configuration: URLSessionConfiguration
     private let session: URLSession
     
-    init(configuration: URLSessionConfiguration = URLSessionConfiguration.default) {
+    init(with configuration: URLSessionConfiguration = URLSessionConfiguration.default) {
         self.configuration = configuration
         
         let queue = OperationQueue.main
@@ -44,7 +44,7 @@ public struct NetworkController: Reachable {
         
         let future: TaskFuture = Future() { completion in
             
-            let fulfill: (result: TaskResult) -> Void = {(taskResult) in
+            let fulfill: (_ result: TaskResult) -> Void = {(taskResult) in
                 switch taskResult {
                 case .success(let data):
                     completion(.success(data))
@@ -56,21 +56,21 @@ public struct NetworkController: Reachable {
             let completion: TaskCompletion = { (data, response, err) in
                 guard let data = data else {
                     guard let err = err else {
-                        return fulfill(result: .failure(TaskError.noData))
+                        return fulfill(.failure(TaskError.noData))
                     }
                     
-                    return fulfill(result: .failure(TaskError.other(err)))
+                    return fulfill(.failure(TaskError.other(err)))
                 }
                 
                 guard let response = response as? HTTPURLResponse else {
-                    return fulfill(result: .failure(TaskError.badResponse))
+                    return fulfill(.failure(TaskError.badResponse))
                 }
                 
                 switch response.statusCode {
                 case 200...204:
-                    fulfill(result: .success(data))
+                    fulfill(.success(data))
                 default:
-                    fulfill(result: .failure(TaskError.badStatusCode(response.statusCode)))
+                    fulfill(.failure(TaskError.badStatusCode(response.statusCode)))
                 }
             }
             
@@ -80,7 +80,7 @@ public struct NetworkController: Reachable {
             case .online:
                 task.resume()
             case .offline:
-                fulfill(result: .failure(TaskError.offline))
+                fulfill(.failure(TaskError.offline))
             }
         }
         

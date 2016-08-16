@@ -8,7 +8,7 @@
 
 import UIKit
 
-let context = UnsafeMutablePointer<Void>(nil)
+let context = UnsafeMutableRawPointer(bitPattern: 0)
 
 class PassViewController: UICollectionViewController, SegueHandlerType {
     
@@ -76,7 +76,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: buttonTite, style: .plain, target: nil, action: nil)
 
         // Register cell classes
-        let nib = UINib(nibName: String(PassListCell.self), bundle: nil)
+        let nib = UINib(nibName: String(describing: PassListCell.self), bundle: nil)
         self.collectionView?.register(nib, forCellWithReuseIdentifier: PassListCell.reuseIdentifier)
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
@@ -84,7 +84,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.collectionView?.addSubview(refreshControl)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = SegueIdentifier(rawValue: segue.identifier!) else { return }
         
         switch identifier {
@@ -102,7 +102,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?, context: UnsafeMutablePointer<Void>?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if context == context {
             if keyPath == "passes" {
                 handlePassesChange()
@@ -189,7 +189,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         self.refreshController.setControlState(error: error)
     }
     
-    private func configure(cell: UICollectionViewCell, for indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassListCell else { return }
         
         let pass = passes[indexPath.row]

@@ -10,11 +10,13 @@ import UIKit
 import XCTest
 import CoreLocation
 
+@testable import Passengr
+
 class NetworkControllerTests: XCTestCase {
     
     private lazy var request: URLRequest = {
         guard let url = URL(string: CascadePass.Snoqualmie.path) else { fatalError() }
-        let request = URLRequest(url: url as URL)
+        let request = URLRequest(url: url)
         return request
     }()
 
@@ -39,8 +41,8 @@ class NetworkControllerTests: XCTestCase {
             XCTFail("Request should not fail")
         }
         
-        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: LocalURLProtocol.self)
-        let networkController = NetworkController(configuration: configuration)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(LocalURLProtocol.self)
+        let networkController = NetworkController(with: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
         
@@ -58,8 +60,8 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadStatusURLProtocol.self)
-        let networkController = NetworkController(configuration: configuration)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(BadStatusURLProtocol.self)
+        let networkController = NetworkController(with: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(timeout: 15.0, handler: nil)
@@ -76,8 +78,8 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: BadResponseURLProtocol.self)
-        let networkController = NetworkController(configuration: configuration)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(BadResponseURLProtocol.self)
+        let networkController = NetworkController(with: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(timeout: 15.0, handler: nil)
@@ -94,8 +96,8 @@ class NetworkControllerTests: XCTestCase {
             expected.fulfill()
         }
         
-        let configuration = URLSessionConfiguration.configurationWithProtocol(protocolClass: FailingURLProtocol.self)
-        let networkController = NetworkController(configuration: configuration)
+        let configuration = URLSessionConfiguration.configurationWithProtocol(FailingURLProtocol.self)
+        let networkController = NetworkController(with: configuration)
         
         networkController.execute(request: request, success: success, failure: failure)
         waitForExpectations(timeout: 15.0, handler: nil)

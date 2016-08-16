@@ -183,7 +183,7 @@ class PassDataSource: NSObject, NSCoding {
         self.refreshFromRemoteData()
     }
     
-    private func createInitialModelAtURL(url: NSURL) {
+    private func createInitialModelAtURL(url: URL) {
         var order = 0
         var passes: [Pass] = []
         

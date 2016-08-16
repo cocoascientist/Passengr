@@ -8,6 +8,8 @@
 
 import XCTest
 
+@testable import Passengr
+
 class HTMLParserTests: XCTestCase {
     
     override func setUp() {
@@ -21,10 +23,9 @@ class HTMLParserTests: XCTestCase {
     }
     
     func testCanParseHTML() {
-        let file = Bundle(for: self.dynamicType).path(forResource: "test", ofType: "html")
-        let data = NSData(contentsOfFile: file!)
-        
-        let info = Parser.passInfoFromResponse(response: data!)
+        let url = Bundle(for: type(of: self)).url(forResource: "test", withExtension: "html")
+        let data = try! Data(contentsOf: url!)
+        let info = Parser.passInfoFromResponse(response: data)
         
         XCTAssert(info.count == 4, "Info count should be 4")
         XCTAssert(info[PassInfoKeys.Eastbound] == "No restrictions", "eastbound is wrong")

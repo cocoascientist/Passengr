@@ -21,7 +21,7 @@ class LocalURLProtocol: URLProtocol {
         guard let client = self.client else { fatalError("Client is missing") }
         guard let url = request.url else { fatalError("URL is missing") }
         
-        let data = self.dataForRequest(request) ?? NSData()
+        let data = self.dataFor(request: request) ??  Data()
         let headers = ["Content-Type": "text/html"]
         
         guard let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1", headerFields: headers) else {
@@ -29,7 +29,7 @@ class LocalURLProtocol: URLProtocol {
         }
         
         client.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        client.urlProtocol(self, didLoad: data as Data)
+        client.urlProtocol(self, didLoad: data)
         client.urlProtocolDidFinishLoading(self)
     }
     
@@ -37,13 +37,13 @@ class LocalURLProtocol: URLProtocol {
         // all data return at once, nothing to do
     }
     
-    private func dataForRequest(_ request: NSURLRequest) -> NSData? {
-        let bundle = Bundle(for: self.dynamicType)
-        guard let file = bundle.path(forResource: "test", ofType: "html") else {
+    private func dataFor(request: URLRequest) -> Data? {
+        let bundle = Bundle(for: type(of: self))
+        guard let url = bundle.url(forResource: "test", withExtension: "html") else {
             return nil
         }
         
-        let data = NSData(contentsOfFile: file)
+        let data = try! Data(contentsOf: url)
         return data
     }
 }

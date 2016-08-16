@@ -8,6 +8,8 @@
 
 import XCTest
 
+@testable import Passengr
+
 class DataSourceTests: XCTestCase {
     
     class TestableDataSource: PassDataSource {

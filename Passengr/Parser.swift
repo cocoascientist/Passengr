@@ -13,18 +13,9 @@ enum ParseError: Error {
 }
 
 func passInfoFromData(data: NSData) -> Result<PassInfo> {
-    let queries: [String: String] = {
-        return [
-            "conditions": "//span[@id='PassInfoConditions']",
-            "eastbound": "//span[@id='PassInfoRestrictionsOne']",
-            "westbound": "//span[@id='PassInfoRestrictionsTwo']",
-            "last_updated": "//span[@id='PassInfoLastUpdate']"
-        ]
-    }()
-    
     let doc = HTMLDoc(data: data)
     guard let root = doc.root else {
-        return Result.failure(ParseError.noRootDoc)
+        return .failure(ParseError.noRootDoc)
     }
     
     var info: [String: String] = [:]
@@ -33,21 +24,12 @@ func passInfoFromData(data: NSData) -> Result<PassInfo> {
         info[key] = value
     }
     
-    return Result.success(info)
+    return .success(info)
 }
 
-class Parser {
-    private class var queries: [String: String] {
-        return [
-            "conditions": "//span[@id='PassInfoConditions']",
-            "eastbound": "//span[@id='PassInfoRestrictionsOne']",
-            "westbound": "//span[@id='PassInfoRestrictionsTwo']",
-            "last_updated": "//span[@id='PassInfoLastUpdate']"
-        ]
-    }
-    
-    class func passInfoFromResponse(response data: NSData) -> PassInfo {
-        let doc = HTMLDoc(data: data)
+public class Parser {
+    class func passInfoFromResponse(response data: Data) -> PassInfo {
+        let doc = HTMLDoc(data: NSData(data: data))
         guard let root = doc.root else {
             return [:]
         }
@@ -61,3 +43,12 @@ class Parser {
         return info
     }
 }
+
+private let queries: [String: String] = {
+    return [
+        "conditions": "//span[@id='PassInfoConditions']",
+        "eastbound": "//span[@id='PassInfoRestrictionsOne']",
+        "westbound": "//span[@id='PassInfoRestrictionsTwo']",
+        "last_updated": "//span[@id='PassInfoLastUpdate']"
+    ]
+}()

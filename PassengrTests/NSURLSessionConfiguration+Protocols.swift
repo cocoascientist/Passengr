@@ -9,7 +9,7 @@
 import Foundation
 
 extension URLSessionConfiguration {
-    class func configurationWithProtocol(protocolClass: AnyClass) -> URLSessionConfiguration {
+    class func configurationWithProtocol(_ protocolClass: AnyClass) -> URLSessionConfiguration {
         let protocolClasses: [AnyClass]? = [protocolClass]
         
         let configuration = URLSessionConfiguration.ephemeral

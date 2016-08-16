@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = String(PassDetailCell.self)
+private let reuseIdentifier = String(describing: PassDetailCell.self)
 
 class DetailViewController: UICollectionViewController {
     
@@ -38,7 +38,7 @@ class DetailViewController: UICollectionViewController {
         
         self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
 
-        let nib = UINib(nibName: String(PassDetailCell.self), bundle: nil)
+        let nib = UINib(nibName: String(describing: PassDetailCell.self), bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
@@ -94,12 +94,12 @@ class DetailViewController: UICollectionViewController {
     
     // MARK: - Private
     
-    private func setTitleText(for indexPath: NSIndexPath) -> Void {
+    private func setTitleText(for indexPath: IndexPath) -> Void {
         let pass = passes[indexPath.row]
         self.title = pass.name
     }
     
-    private func configure(cell: UICollectionViewCell, for indexPath: NSIndexPath) {
+    private func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassDetailCell else { return }
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
@@ -107,7 +107,7 @@ class DetailViewController: UICollectionViewController {
         cell.conditionsLabel.text = pass.conditions
         cell.eastboundLabel.text = pass.eastbound
         cell.westboundLabel.text = pass.westbound
-        cell.lastUpdatedLabel.text = self.dateFormatter.string(from: pass.lastModified as Date)
+        cell.lastUpdatedLabel.text = self.dateFormatter.string(from: pass.lastModified)
         cell.statusView.backgroundColor = pass.color
     }
     
