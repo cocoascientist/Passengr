@@ -8,11 +8,11 @@
 
 import UIKit
 
-class PassListCell: UICollectionViewCell {
+final class PassListCell: UICollectionViewCell {
     @IBOutlet var statusView: UIView!
     @IBOutlet var titleLabel: UILabel!
     
-    static let reuseIdentifier = "\(PassListCell.self)"
+    static let reuseIdentifier = String(describing: PassListCell.self)
     
     override func awakeFromNib() {
         super.awakeFromNib()

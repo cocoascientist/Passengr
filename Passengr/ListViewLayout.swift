@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewLayout: UICollectionViewFlowLayout {
+final class ListViewLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         

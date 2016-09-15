@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class ShowDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private let duration = 0.75
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

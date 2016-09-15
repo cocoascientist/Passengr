@@ -10,13 +10,13 @@ import UIKit
 
 private let reuseIdentifier = String(describing: PassDetailCell.self)
 
-class DetailViewController: UICollectionViewController {
+final class DetailViewController: UICollectionViewController {
     
     var dataSource: PassDataSource?
     
     var indexPath = IndexPath(row: 0, section: 0)
     
-    private var passes: [Pass] {
+    fileprivate var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -94,12 +94,12 @@ class DetailViewController: UICollectionViewController {
     
     // MARK: - Private
     
-    private func setTitleText(for indexPath: IndexPath) -> Void {
+    fileprivate func setTitleText(for indexPath: IndexPath) -> Void {
         let pass = passes[indexPath.row]
         self.title = pass.name
     }
     
-    private func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
+    fileprivate func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassDetailCell else { return }
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
@@ -111,7 +111,7 @@ class DetailViewController: UICollectionViewController {
         cell.statusView.backgroundColor = pass.color
     }
     
-    private lazy var dateFormatter: DateFormatter = {
+    fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
         return formatter

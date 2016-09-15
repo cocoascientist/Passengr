@@ -24,11 +24,9 @@ extension Pass {
     var color: UIColor {
         if self.isOpen {
             return AppStyle.Color.Green
-        }
-        else if self.isClosed {
+        } else if self.isClosed {
             return AppStyle.Color.Red
-        }
-        else {
+        } else {
             return AppStyle.Color.Orange
         }
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Pass: NSObject, NSCoding {
+final class Pass: NSObject {
     let name: String
     let url: String
     
@@ -17,7 +17,7 @@ class Pass: NSObject, NSCoding {
     var westbound: String = ""
     
     var order: Int
-    var enabled: Bool
+    var isEnabled: Bool
     
     var lastModified: Date = Date()
     
@@ -25,17 +25,19 @@ class Pass: NSObject, NSCoding {
         self.name = name
         self.url = url
         self.order = order
-        self.enabled = enabled
+        self.isEnabled = enabled
         super.init()
     }
-    
-    required convenience init?(coder aDecoder: NSCoder) {
+}
+
+extension Pass: NSCoding {
+    convenience init?(coder aDecoder: NSCoder) {
         guard
             let name = aDecoder.decodeObject(forKey: "name") as? String,
             let url = aDecoder.decodeObject(forKey: "url") as? String
             else { return nil }
         
-        let enabled = aDecoder.decodeBool(forKey: "enabled")
+        let enabled = aDecoder.decodeBool(forKey: "isEnabled")
         let order = aDecoder.decodeInteger(forKey: "order")
         
         self.init(name: name, url: url, order: order, enabled: enabled)
@@ -54,7 +56,7 @@ class Pass: NSObject, NSCoding {
     func encode(with coder: NSCoder) {
         coder.encode(name, forKey: "name")
         coder.encode(url, forKey: "url")
-        coder.encode(enabled, forKey: "enabled")
+        coder.encode(isEnabled, forKey: "isEnabled")
         coder.encode(order, forKey: "order")
         coder.encode(conditions, forKey: "conditions")
         coder.encode(westbound, forKey: "westbound")
@@ -71,7 +73,7 @@ extension Pass: PassInfoType {
         ]
     }
     
-    func updateUsingPassInfo(info: [String: String]) {
+    func update(using info: [String: String]) {
         self.conditions = info[PassInfoKeys.Conditions] ?? ""
         self.westbound = info[PassInfoKeys.Westbound] ?? ""
         self.eastbound = info[PassInfoKeys.Eastbound] ?? ""

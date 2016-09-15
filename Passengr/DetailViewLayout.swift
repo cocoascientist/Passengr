@@ -10,7 +10,7 @@ import UIKit
 
 private let padding: CGFloat = 8.0
 
-class DetailViewLayout: UICollectionViewFlowLayout {
+final class DetailViewLayout: UICollectionViewFlowLayout {
     
     override init() {
         super.init()

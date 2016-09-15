@@ -10,11 +10,11 @@ import UIKit
 
 private let reuseIdentifier = String(describing: PassEditCell.self)
 
-class EditViewController: UITableViewController {
+final class EditViewController: UITableViewController {
     
     var dataSource: PassDataSource?
     
-    private var passes: [Pass] {
+    fileprivate var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -41,7 +41,7 @@ class EditViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? PassEditCell else { fatalError() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
         configure(cell: cell, for: indexPath)
         
@@ -77,7 +77,7 @@ class EditViewController: UITableViewController {
     
     // MARK: - Actions
 
-    @IBAction func handleDoneButton(_ sender: AnyObject) {
+    @IBAction internal func handleDoneButton(_ sender: AnyObject) {
         defer { self.dismiss(animated: true, completion: nil) }
         guard let dataSource = dataSource else {
             fatalError("data soure should not be nil")
@@ -88,24 +88,24 @@ class EditViewController: UITableViewController {
         dataSource.didChangeValue(forKey: "passes")
     }
 
-    @IBAction func handleSwitchChange(_ sender: AnyObject) {
+    @IBAction internal func handleSwitchChange(_ sender: AnyObject) {
         guard let swtch = sender as? UISwitch else { return }
         let pass = self.passes[swtch.tag]
         
-        pass.enabled = swtch.isOn
+        pass.isEnabled = swtch.isOn
         
         dataSource?.saveDataStore()
     }
     
     // MARK: - Private
     
-    private func configure(cell: UITableViewCell, for indexPath: IndexPath) {
+    fileprivate func configure(cell: UITableViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassEditCell else { return }
         
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
         cell.swtch.tag = indexPath.row
-        cell.swtch.isOn = pass.enabled
+        cell.swtch.isOn = pass.isEnabled
         
         let action = #selector(EditViewController.handleSwitchChange(_:))
         cell.swtch.removeTarget(self, action: action, for: .touchUpInside)

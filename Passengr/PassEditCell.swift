@@ -8,17 +8,12 @@
 
 import UIKit
 
-class PassEditCell: UITableViewCell {
+final class PassEditCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var swtch: UISwitch!
     
     static let reuseIdentifier = "\(PassEditCell.self)"
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

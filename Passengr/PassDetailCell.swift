@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PassDetailCell: UICollectionViewCell {
+final class PassDetailCell: UICollectionViewCell {
     @IBOutlet var statusView: UIView!
     @IBOutlet var titleLabel: UILabel!
     

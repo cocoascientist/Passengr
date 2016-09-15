@@ -9,20 +9,20 @@
 import Foundation
 
 typealias PassesFuture = Future<[PassInfo]>
-private typealias PassFuture = Future<PassInfo>
+typealias PassFuture = Future<PassInfo>
 
-class PassSignaler {
+final class PassSignaler {
     
     private let controller = NetworkController()
     private var error: Error? = nil
     
-    func future(for infos: [PassInfo]) -> PassesFuture {
+    func future(for passInfo: [PassInfo]) -> PassesFuture {
         let future: PassesFuture = Future() { completion in
             
             let group = DispatchGroup()
             var updates: [PassInfo] = []
             
-            for info in infos {
+            for info in passInfo {
                 group.enter()
                 
                 self.futureForPassInfo(info).start({ (result) -> () in
@@ -42,11 +42,9 @@ class PassSignaler {
             group.notify(queue: queue, execute: { 
                 if let error = self.error {
                     completion(Result.failure(error))
-                }
-                else if updates.count == 0 {
+                } else if updates.count == 0 {
                     completion(Result.failure(PassError.noData))
-                }
-                else {
+                } else {
                     completion(Result.success(updates))
                 }
             })

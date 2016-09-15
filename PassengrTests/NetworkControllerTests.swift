@@ -108,7 +108,7 @@ typealias Success = (Void) -> ()
 typealias Failure = (Void) -> ()
 
 extension NetworkController {
-    func execute(request: URLRequest, success: Success, failure: Failure) {
+    func execute(request: URLRequest, success: @escaping Success, failure: @escaping Failure) {
         self.data(for: request).start { (result) -> () in
             switch result {
             case .success:

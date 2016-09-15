@@ -14,7 +14,7 @@ enum RefreshState {
     case error
 }
 
-class RefreshController: NSObject {
+final class RefreshController: NSObject {
     weak var refreshControl: UIRefreshControl?
     weak var dataSource: PassDataSource?
     
@@ -57,14 +57,21 @@ class RefreshController: NSObject {
         self.dataSource?.reloadData()
     }
     
-    // MARK: - Private
-    
-    private func transition(to state: RefreshState) {
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
+}
+
+extension RefreshController {
+    fileprivate func transition(to state: RefreshState) {
         if state == .updating {
             let delayTime = DispatchTime.now() + 1
             DispatchQueue.main.asyncAfter(deadline: delayTime, execute: { [weak self] in
                 self?.dataSource?.reloadData()
-            })
+                })
             
         }
         else {
@@ -72,7 +79,7 @@ class RefreshController: NSObject {
         }
     }
     
-    private func title(for state: RefreshState) -> String {
+    fileprivate func title(for state: RefreshState) -> String {
         guard let dataSource = dataSource else {
             fatalError("dataSource should not be nil")
         }
@@ -89,7 +96,7 @@ class RefreshController: NSObject {
         }
     }
     
-    private func title(for error: NSError) -> String {
+    fileprivate func title(for error: NSError) -> String {
         var string = title(for: .error)
         if let message = error.userInfo[NSLocalizedDescriptionKey] as? String {
             string = "\(string): \(message)"
@@ -97,11 +104,4 @@ class RefreshController: NSObject {
         
         return string
     }
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
 }

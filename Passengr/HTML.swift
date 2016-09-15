@@ -8,8 +8,8 @@
 
 import Foundation
 
-class HTMLNode {
-    private let nodePtr: xmlNodePtr
+final class HTMLNode {
+    internal let nodePtr: xmlNodePtr
     private let node: xmlNode
     
     init(node nodePtr: xmlNodePtr) {
@@ -31,8 +31,10 @@ class HTMLNode {
         
         return value!
     }()
-    
-    func xpath(xpath: String) -> [HTMLNode] {
+}
+
+extension HTMLNode {
+    func evaluate(xpath: String) -> [HTMLNode] {
         let document = nodePtr.pointee.doc
         guard let context = xmlXPathNewContext(document) else { return [] }
         defer { xmlXPathFreeContext(context) }
@@ -48,19 +50,19 @@ class HTMLNode {
         }
         
         let size = Int(nodeSet.pointee.nodeNr)
-        let nodes: [HTMLNode] = [Int](0..<size).map {
-            let node = nodeSet.pointee.nodeTab[$0]
-            return HTMLNode(node: node!)
+        let nodes: [HTMLNode] = [Int](0..<size).flatMap {
+            guard let node = nodeSet.pointee.nodeTab[$0] else { return nil }
+            return HTMLNode(node: node)
         }
         
         return nodes
     }
 }
 
-class HTMLDoc {
+final class HTMLDoc {
     final let documentPtr: htmlDocPtr
     
-    init(data: NSData) {
+    init?(data: Data) {
         let cfEncoding = CFStringConvertNSStringEncodingToEncoding(String.Encoding.utf8.rawValue)
         let cfEncodingAsString = CFStringConvertEncodingToIANACharSetName(cfEncoding)
         let cEncoding = CFStringGetCStringPtr(cfEncodingAsString, 0)
@@ -68,8 +70,13 @@ class HTMLDoc {
         // HTML_PARSE_RECOVER | HTML_PARSE_NOERROR | HTML_PARSE_NOWARNING
         let htmlParseOptions: CInt = 1 << 0 | 1 << 5 | 1 << 6
         
-        let bytes = data.bytes.assumingMemoryBound(to: Int8.self)
-        self.documentPtr = htmlReadMemory(bytes, CInt(data.length), nil, cEncoding, htmlParseOptions)
+        var ptr: htmlDocPtr? = nil
+        data.withUnsafeBytes { (bytes: UnsafePointer<Int8>) -> Void in
+            ptr = htmlReadMemory(bytes, CInt(data.count), nil, cEncoding, htmlParseOptions)
+        }
+        
+        guard let _ = ptr else { return nil }
+        self.documentPtr = ptr!
     }
     
     deinit {
@@ -77,12 +84,11 @@ class HTMLDoc {
         self._root = nil
     }
     
-    private weak var _root: HTMLNode?
+    fileprivate weak var _root: HTMLNode?
     var root: HTMLNode? {
         if let root = _root {
             return root
-        }
-        else {
+        } else {
             guard let root = xmlDocGetRootElement(documentPtr) else { return nil }
             let node = HTMLNode(node: root)
             self._root = node

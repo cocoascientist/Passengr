@@ -10,7 +10,7 @@ import UIKit
 
 let context = UnsafeMutableRawPointer(bitPattern: 0)
 
-class PassViewController: UICollectionViewController, SegueHandlerType {
+final class PassViewController: UICollectionViewController, SegueHandlerType {
     
     var dataSource: PassDataSource? {
         didSet {
@@ -27,7 +27,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
         case ShowEditView = "ShowEditView"
     }
     
-    private var passes: [Pass] {
+    fileprivate var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -113,8 +113,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
             else if keyPath == "error" {
                 handleErrorChange()
             }
-        }
-        else {
+        } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
@@ -162,7 +161,7 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     
     // MARK: - Actions
     
-    func handleRefresh(sender: AnyObject) {
+    func handleRefresh(_ sender: AnyObject) {
         self.refreshController.setControlState(state: .updating)
     }
 
@@ -175,9 +174,9 @@ class PassViewController: UICollectionViewController, SegueHandlerType {
     private func handleUpdatingChange() {
         guard let dataSource = dataSource else { return }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = dataSource.updating
+        UIApplication.shared.isNetworkActivityIndicatorVisible = dataSource.isUpdating
         
-        if !dataSource.updating {
+        if !dataSource.isUpdating {
             self.refreshController.setControlState(state: .idle)
         }
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     private let duration = 0.75
     

@@ -19,5 +19,5 @@ typealias PassInfo = [String: String]
 
 protocol PassInfoType {
     var passInfo: PassInfo { get }
-    func updateUsingPassInfo(info: PassInfo)
+    func update(using info: PassInfo)
 }
