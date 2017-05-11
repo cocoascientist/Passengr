@@ -11,7 +11,7 @@ Read a full write up about the development of Passengr at [cocoascientist.com](h
 
 ## Screenshot
 
-![](http://d28raka3g96xuj.cloudfront.net/assets/passengr/images/passengr-demo.gif)
+![](http://i.imgur.com/xvmiBCo.gif)
 
 ## Credits
 
