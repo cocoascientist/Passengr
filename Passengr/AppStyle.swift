@@ -29,7 +29,7 @@ extension UIColor {
         
         if (colorString.hasPrefix("#")) {
             let index = colorString.index(after: colorString.startIndex)
-            colorString = colorString[index..<colorString.endIndex]
+            colorString = String(colorString[index..<colorString.endIndex])
         }
         
         if (colorString.characters.count != 6) {

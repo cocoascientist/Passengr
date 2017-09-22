@@ -12,14 +12,14 @@ typealias PassUpdatesFuture = Future<[Pass]>
 
 class PassDataSource: NSObject, NSCoding {
     
-    dynamic private(set) var passes: [Pass] {
+    @objc dynamic private(set) var passes: [Pass] {
         didSet {
             self.lastUpdated = Date()
         }
     }
     
-    dynamic private(set) var isUpdating: Bool = false
-    dynamic private(set) var error: NSError? = nil
+    @objc dynamic private(set) var isUpdating: Bool = false
+    @objc dynamic private(set) var error: NSError? = nil
     
     var orderedPasses: [Pass] {
         return self.passes.sorted(by: { (first, second) -> Bool in

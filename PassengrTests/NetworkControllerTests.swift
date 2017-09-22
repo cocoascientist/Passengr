@@ -104,8 +104,8 @@ class NetworkControllerTests: XCTestCase {
     }
 }
 
-typealias Success = (Void) -> ()
-typealias Failure = (Void) -> ()
+typealias Success = () -> ()
+typealias Failure = () -> ()
 
 extension NetworkController {
     func execute(request: URLRequest, success: @escaping Success, failure: @escaping Failure) {

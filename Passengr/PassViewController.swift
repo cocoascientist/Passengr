@@ -161,7 +161,7 @@ final class PassViewController: UICollectionViewController, SegueHandlerType {
     
     // MARK: - Actions
     
-    func handleRefresh(_ sender: AnyObject) {
+    @objc func handleRefresh(_ sender: AnyObject) {
         self.refreshController.setControlState(state: .updating)
     }
 

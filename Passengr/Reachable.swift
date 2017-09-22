@@ -52,8 +52,8 @@ extension ReachabilityType {
 extension ReachabilityType: CustomDebugStringConvertible  {
     public var debugDescription: String {
         switch self {
-            case .online(let type):
-                return "online (\(type))"
+            case .online:
+                return "online"
             case .offline:
                 return "offline"
         }

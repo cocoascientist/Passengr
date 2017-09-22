@@ -53,7 +53,7 @@ final class RefreshController: NSObject {
         transition(to: .error)
     }
     
-    func handleRefresh(_ notification: NSNotification) {
+    @objc func handleRefresh(_ notification: NSNotification) {
         self.dataSource?.reloadData()
     }
     
