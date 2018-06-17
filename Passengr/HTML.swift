@@ -50,7 +50,7 @@ extension HTMLNode {
         }
         
         let size = Int(nodeSet.pointee.nodeNr)
-        let nodes: [HTMLNode] = [Int](0..<size).flatMap {
+        let nodes: [HTMLNode] = [Int](0..<size).compactMap {
             guard let node = nodeSet.pointee.nodeTab[$0] else { return nil }
             return HTMLNode(node: node)
         }

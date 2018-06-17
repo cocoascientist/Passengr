@@ -32,7 +32,7 @@ extension UIColor {
             colorString = String(colorString[index..<colorString.endIndex])
         }
         
-        if (colorString.characters.count != 6) {
+        if (colorString.count != 6) {
             return UIColor.gray
         }
         

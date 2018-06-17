@@ -146,7 +146,7 @@ class PassDataSource: NSObject, NSCoding {
     
     fileprivate func passes(from updates: [PassInfo]) -> [Pass] {
         
-        let passes = updates.flatMap { (passInfo) -> Pass? in
+        let passes = updates.compactMap { (passInfo) -> Pass? in
             guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
             
             let filtered = self.passes.filter { $0.name == name }
