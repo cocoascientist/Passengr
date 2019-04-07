@@ -12,7 +12,7 @@ enum ParseError: Error {
     case noRootDoc
 }
 
-func passInfoFromData(data: Data) -> Result<PassInfo> {
+func passInfoFromData(data: Data) -> Result<PassInfo, Error> {
     let doc = HTMLDoc(data: data)
     guard let root = doc?.root else {
         return .failure(ParseError.noRootDoc)

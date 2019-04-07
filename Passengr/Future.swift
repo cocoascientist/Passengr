@@ -15,7 +15,7 @@ public protocol FutureType {
 }
 
 public struct Future<T>: FutureType {
-    public typealias ResultType = Result<T>
+    public typealias ResultType = Result<T, Error>
     public typealias Completion = (ResultType) -> ()
     public typealias AsyncOperation = (@escaping Completion) -> ()
     

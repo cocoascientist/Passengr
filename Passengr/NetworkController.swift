@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias TaskResult = Result<Data>
+public typealias TaskResult = Result<Data, Error>
 public typealias TaskFuture = Future<Data>
 public typealias TaskCompletion = (Data?, URLResponse?, Error?) -> Void
 

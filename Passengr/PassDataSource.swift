@@ -80,7 +80,7 @@ class PassDataSource: NSObject, NSCoding {
     // MARK: - Private
     
     private func refreshFromRemoteData() {
-        typealias PassesResult = Result<[Pass]>
+        typealias PassesResult = Result<[Pass], Error>
         
         let refresh: ([Pass]) -> () = { [weak self] passes in
             
