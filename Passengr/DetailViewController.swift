@@ -16,7 +16,7 @@ final class DetailViewController: UICollectionViewController {
     
     var indexPath = IndexPath(row: 0, section: 0)
     
-    fileprivate var passes: [Pass] {
+    private var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -36,7 +36,7 @@ final class DetailViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
+        self.collectionView?.backgroundColor = AppStyle.Color.lightBlue
 
         let nib = UINib(nibName: String(describing: PassDetailCell.self), bundle: nil)
         self.collectionView!.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
@@ -94,12 +94,12 @@ final class DetailViewController: UICollectionViewController {
     
     // MARK: - Private
     
-    fileprivate func setTitleText(for indexPath: IndexPath) -> Void {
+    private func setTitleText(for indexPath: IndexPath) -> Void {
         let pass = passes[indexPath.row]
         self.title = pass.name
     }
     
-    fileprivate func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
+    private func configure(cell: UICollectionViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassDetailCell else { return }
         let pass = passes[indexPath.row]
         cell.titleLabel.text = pass.name
@@ -111,7 +111,7 @@ final class DetailViewController: UICollectionViewController {
         cell.statusView.backgroundColor = pass.color
     }
     
-    fileprivate lazy var dateFormatter: DateFormatter = {
+    private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE MMMM d, yyyy h:mm a"
         return formatter

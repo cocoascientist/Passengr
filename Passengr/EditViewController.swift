@@ -14,7 +14,7 @@ final class EditViewController: UITableViewController {
     
     var dataSource: PassDataSource?
     
-    fileprivate var passes: [Pass] {
+    private var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -67,7 +67,7 @@ final class EditViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
     
@@ -99,7 +99,7 @@ final class EditViewController: UITableViewController {
     
     // MARK: - Private
     
-    fileprivate func configure(cell: UITableViewCell, for indexPath: IndexPath) {
+    private func configure(cell: UITableViewCell, for indexPath: IndexPath) {
         guard let cell = cell as? PassEditCell else { return }
         
         let pass = passes[indexPath.row]

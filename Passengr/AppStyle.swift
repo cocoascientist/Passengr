@@ -8,17 +8,17 @@
 
 import UIKit
 
-struct AppStyle {
-    struct Color {
-        static let Red = UIColor.hexColor(string: "#e64e42")
-        static let Orange = UIColor.hexColor(string: "#e57e31")
-        static let Green = UIColor.hexColor(string: "#39cb75")
-        static let ForestGreen = UIColor.hexColor(string: "#2e5037")
-        static let LightBlue = UIColor.hexColor(string: "#f8f8ff")
+enum AppStyle {
+    enum Color {
+        static let red = UIColor.hexColor(string: "#e64e42")
+        static let orange = UIColor.hexColor(string: "#e57e31")
+        static let green = UIColor.hexColor(string: "#39cb75")
+        static let forestGreen = UIColor.hexColor(string: "#2e5037")
+        static let lightBlue = UIColor.hexColor(string: "#f8f8ff")
     }
     
-    struct Font {
-        static let Copperplate = UIFont(name: "Copperplate", size: 14.0)
+    enum Font {
+        static let copperplate = UIFont(name: "Copperplate", size: 14.0)
     }
 }
 

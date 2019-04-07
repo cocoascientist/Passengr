@@ -23,7 +23,7 @@ final class HideDetailAnimator: NSObject, UIViewControllerAnimatedTransitioning 
         guard let toCollectionView = toViewController.collectionView else { return }
         guard let fromCollectionView = fromViewController.collectionView else { return }
         let containerView = transitionContext.containerView
-        containerView.backgroundColor = AppStyle.Color.LightBlue
+        containerView.backgroundColor = AppStyle.Color.lightBlue
         
         let itemSize = ListViewLayout.listLayoutItemSize(for: UIScreen.main.bounds)
         

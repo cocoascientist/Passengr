@@ -9,8 +9,8 @@
 import UIKit
 
 final class PassListCell: UICollectionViewCell {
-    @IBOutlet var statusView: UIView!
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet weak var statusView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
     
     static let reuseIdentifier = String(describing: PassListCell.self)
     

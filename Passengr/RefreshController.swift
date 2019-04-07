@@ -24,7 +24,7 @@ final class RefreshController: NSObject {
         
         super.init()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(RefreshController.handleRefresh(_:)), name: NSNotification.Name.didBecomeActiveNotification, object: nil)
     }
     
     deinit {
@@ -57,7 +57,7 @@ final class RefreshController: NSObject {
         self.dataSource?.reloadData()
     }
     
-    fileprivate lazy var dateFormatter: DateFormatter = {
+    private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
@@ -66,20 +66,19 @@ final class RefreshController: NSObject {
 }
 
 extension RefreshController {
-    fileprivate func transition(to state: RefreshState) {
+    private func transition(to state: RefreshState) {
         if state == .updating {
             let delayTime = DispatchTime.now() + 1
             DispatchQueue.main.asyncAfter(deadline: delayTime, execute: { [weak self] in
                 self?.dataSource?.reloadData()
-                })
-            
+            })
         }
         else {
             self.refreshControl?.endRefreshing()
         }
     }
     
-    fileprivate func title(for state: RefreshState) -> String {
+    private func title(for state: RefreshState) -> String {
         guard let dataSource = dataSource else {
             fatalError("dataSource should not be nil")
         }
@@ -96,7 +95,7 @@ extension RefreshController {
         }
     }
     
-    fileprivate func title(for error: NSError) -> String {
+    private func title(for error: NSError) -> String {
         var string = title(for: .error)
         if let message = error.userInfo[NSLocalizedDescriptionKey] as? String {
             string = "\(string): \(message)"

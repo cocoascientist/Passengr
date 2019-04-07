@@ -84,7 +84,7 @@ final class HTMLDoc {
         self._root = nil
     }
     
-    fileprivate weak var _root: HTMLNode?
+    private weak var _root: HTMLNode?
     var root: HTMLNode? {
         if let root = _root {
             return root

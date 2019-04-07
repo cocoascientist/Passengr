@@ -9,20 +9,20 @@
 import UIKit
 
 final class PassDetailCell: UICollectionViewCell {
-    @IBOutlet var statusView: UIView!
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet weak var statusView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
     
-    @IBOutlet var conditionsTitleLabel: UILabel!
-    @IBOutlet var eastboundTitleLabel: UILabel!
-    @IBOutlet var westboundTitleLabel: UILabel!
+    @IBOutlet weak var conditionsTitleLabel: UILabel!
+    @IBOutlet weak var eastboundTitleLabel: UILabel!
+    @IBOutlet weak var westboundTitleLabel: UILabel!
     
-    @IBOutlet var eastboundLabel: UILabel!
-    @IBOutlet var westboundLabel: UILabel!
-    @IBOutlet var conditionsLabel: UILabel!
+    @IBOutlet weak var eastboundLabel: UILabel!
+    @IBOutlet weak var westboundLabel: UILabel!
+    @IBOutlet weak var conditionsLabel: UILabel!
     
-    @IBOutlet var lastUpdatedLabel: UILabel!
+    @IBOutlet weak var lastUpdatedLabel: UILabel!
     
-    @IBOutlet var containerView: UIView!
+    @IBOutlet weak var containerView: UIView!
     
     static let reuseIdentifier = "\(PassDetailCell.self)"
     
@@ -33,13 +33,13 @@ final class PassDetailCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         self.titleLabel.text = ""
+        self.lastUpdatedLabel.text = ""
         
         self.eastboundLabel.text = ""
         self.westboundLabel.text = ""
         self.conditionsLabel.text = ""
-        
-        self.lastUpdatedLabel.text = ""
     }
     
     override func draw(_ rect: CGRect) {
@@ -54,9 +54,9 @@ final class PassDetailCell: UICollectionViewCell {
         self.conditionsLabel.preferredMaxLayoutWidth = 280.0
         self.westboundLabel.preferredMaxLayoutWidth = 280.0
         
-        self.conditionsTitleLabel.font = AppStyle.Font.Copperplate
-        self.eastboundTitleLabel.font = AppStyle.Font.Copperplate
-        self.westboundTitleLabel.font = AppStyle.Font.Copperplate
+        self.conditionsTitleLabel.font = AppStyle.Font.copperplate
+        self.eastboundTitleLabel.font = AppStyle.Font.copperplate
+        self.westboundTitleLabel.font = AppStyle.Font.copperplate
         
         self.westboundTitleLabel.textColor = UIColor.darkGray
         self.eastboundTitleLabel.textColor = UIColor.darkGray

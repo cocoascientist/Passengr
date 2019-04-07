@@ -18,7 +18,7 @@ final class DetailViewLayout: UICollectionViewFlowLayout {
         self.minimumInteritemSpacing = 0.0
         self.minimumLineSpacing = 30.0
         self.scrollDirection = .horizontal
-        self.sectionInset = UIEdgeInsetsMake(8.0, 15.0, 0.0, 15.0)
+        self.sectionInset = UIEdgeInsets(top: 8.0, left: 15.0, bottom: 0.0, right: 15.0)
     }
     
     required init?(coder aDecoder: NSCoder) {

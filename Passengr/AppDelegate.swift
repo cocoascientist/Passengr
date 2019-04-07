@@ -15,22 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let dataSource = PassDataSource()
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
-        guard let viewController = navController.childViewControllers.first as? PassViewController else { return false }
+        guard let viewController = navController.children.first as? PassViewController else { return false }
         viewController.dataSource = dataSource
         
         return true
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         guard let navController = self.window?.rootViewController as? UINavigationController else { return false }
         navController.delegate = self
         
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
-        UINavigationBar.appearance().barTintColor = AppStyle.Color.ForestGreen
+        UINavigationBar.appearance().barTintColor = AppStyle.Color.forestGreen
         UINavigationBar.appearance().tintColor = UIColor.white
         
         return true
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let _ = toVC as? DetailViewController, let _ = fromVC as? PassViewController {
             return ShowDetailAnimator()
         }

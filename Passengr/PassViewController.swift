@@ -27,7 +27,7 @@ final class PassViewController: UICollectionViewController, SegueHandlerType {
         case ShowEditView = "ShowEditView"
     }
     
-    fileprivate var passes: [Pass] {
+    private var passes: [Pass] {
         guard let dataSource = dataSource else {
             fatalError("data source is missing")
         }
@@ -79,9 +79,13 @@ final class PassViewController: UICollectionViewController, SegueHandlerType {
         let nib = UINib(nibName: String(describing: PassListCell.self), bundle: nil)
         self.collectionView?.register(nib, forCellWithReuseIdentifier: PassListCell.reuseIdentifier)
         
-        self.collectionView?.backgroundColor = AppStyle.Color.LightBlue
+        self.collectionView?.backgroundColor = AppStyle.Color.lightBlue
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.addSubview(refreshControl)
+        
+        if #available(iOS 11.0, *) {
+            self.collectionView?.contentInsetAdjustmentBehavior = UIScrollView.ContentInsetAdjustmentBehavior.always
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -96,7 +100,7 @@ final class PassViewController: UICollectionViewController, SegueHandlerType {
             viewController.dataSource = dataSource
         case .ShowEditView:
             guard let navController = segue.destination as? UINavigationController else { return }
-            guard let viewController = navController.childViewControllers.first as? EditViewController else { return }
+            guard let viewController = navController.children.first as? EditViewController else { return }
             
             viewController.dataSource = dataSource
         }

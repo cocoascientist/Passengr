@@ -79,7 +79,7 @@ class PassDataSource: NSObject, NSCoding {
     
     // MARK: - Private
     
-    fileprivate func refreshFromRemoteData() {
+    private func refreshFromRemoteData() {
         typealias PassesResult = Result<[Pass]>
         
         let refresh: ([Pass]) -> () = { [weak self] passes in
@@ -113,7 +113,7 @@ class PassDataSource: NSObject, NSCoding {
         }
     }
     
-    fileprivate func futureForPassUpdates() -> PassUpdatesFuture {
+    private func futureForPassUpdates() -> PassUpdatesFuture {
         
         let future: PassUpdatesFuture = Future() { completion in
             
@@ -144,7 +144,7 @@ class PassDataSource: NSObject, NSCoding {
         return future
     }
     
-    fileprivate func passes(from updates: [PassInfo]) -> [Pass] {
+    private func passes(from updates: [PassInfo]) -> [Pass] {
         
         let passes = updates.compactMap { (passInfo) -> Pass? in
             guard let name = passInfo[PassInfoKeys.Title] else { fatalError() }
@@ -165,7 +165,7 @@ class PassDataSource: NSObject, NSCoding {
         return passes
     }
     
-    fileprivate func loadOrCreateInitialModel() {
+    private func loadOrCreateInitialModel() {
         if FileManager.default.fileExists(atPath: modelURL.path) == false {
             createInitialModelAtURL(url: modelURL)
         }
@@ -183,7 +183,7 @@ class PassDataSource: NSObject, NSCoding {
         self.refreshFromRemoteData()
     }
     
-    fileprivate func createInitialModelAtURL(url: URL) {
+    private func createInitialModelAtURL(url: URL) {
         var order = 0
         var passes: [Pass] = []
         
@@ -201,25 +201,25 @@ class PassDataSource: NSObject, NSCoding {
         }
     }
     
-    fileprivate lazy var dateFormatter: DateFormatter = {
+    private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "EEEE MMMM d, yyyy hh:mm a"
         return formatter
     }()
     
-    fileprivate lazy var seedData: [CascadePass] = {
+    private lazy var seedData: [CascadePass] = {
         return CascadePass.allPasses().sorted(by: { (first, second) -> Bool in
             return first.name < second.name
         })
     }()
     
-    fileprivate var modelURL: URL {
+    private var modelURL: URL {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count - 1].appendingPathComponent("passengr.plist")
     }
     
-    fileprivate func didWrite(passes: [Pass], to url: URL) -> Bool {
+    private func didWrite(passes: [Pass], to url: URL) -> Bool {
         do {
             let data = NSKeyedArchiver.archivedData(withRootObject: passes)
             try data.write(to: url, options: .atomicWrite)
