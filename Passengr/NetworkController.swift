@@ -44,7 +44,7 @@ public struct NetworkController: Reachable {
         
         let future: TaskFuture = Future() { completion in
             
-            let fulfill: (_ result: TaskResult) -> Void = {(taskResult) in
+            let fulfill: (_ result: TaskResult) -> Void = { (taskResult) in
                 switch taskResult {
                 case .success(let data):
                     completion(.success(data))

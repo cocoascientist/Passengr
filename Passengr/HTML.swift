@@ -71,7 +71,8 @@ final class HTMLDoc {
         let htmlParseOptions: CInt = 1 << 0 | 1 << 5 | 1 << 6
         
         var ptr: htmlDocPtr? = nil
-        data.withUnsafeBytes { (bytes: UnsafePointer<Int8>) -> Void in
+        data.withUnsafeBytes { result -> Void in
+            guard let bytes = result.baseAddress?.assumingMemoryBound(to: Int8.self) else { return }
             ptr = htmlReadMemory(bytes, CInt(data.count), nil, cEncoding, htmlParseOptions)
         }
         
