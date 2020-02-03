@@ -2,7 +2,7 @@
 
 An iPhone app for showing driving conditions across the Cascade Mountain Passes.
 
-Read a full write up about the development of Passengr at [cocoascientist.com](http://www.cocoascientist.com/passengr-driving-info-cascades.html).
+Read a full write up about the development of Passengr at [cocoascientist.com](https://cocoascientist.com/articles/passengr-driving-info-cascades/).
 
 ## Requirements
 
